@@ -1,3 +1,6 @@
+"use client"
+
+import { useEffect, useState } from "react"
 import { ArrowRight, Phone } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
@@ -9,25 +12,70 @@ const stats = [
 ]
 
 export function HeroSection() {
+  const [offset, setOffset] = useState(0)
+
+  useEffect(() => {
+    const prefersReduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches
+    if (prefersReduced) return
+
+    let raf = 0
+    const onScroll = () => {
+      cancelAnimationFrame(raf)
+      raf = requestAnimationFrame(() => setOffset(window.scrollY))
+    }
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => {
+      window.removeEventListener("scroll", onScroll)
+      cancelAnimationFrame(raf)
+    }
+  }, [])
+
   return (
     <section
       id="home"
       className="relative overflow-hidden bg-accent text-accent-foreground"
     >
-      <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 py-20 sm:px-6 lg:grid-cols-2 lg:gap-10 lg:px-8 lg:py-28">
+      {/* Subtle parallax background layer */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-0 opacity-[0.07]"
+        style={{
+          backgroundImage:
+            "url(/placeholder.svg?height=900&width=1600&query=architectural%20blueprint%20grid%20technical%20drawing)",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          transform: `translate3d(0, ${offset * 0.18}px, 0) scale(1.1)`,
+        }}
+      />
+
+      <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-12 px-4 py-20 sm:px-6 lg:grid-cols-2 lg:gap-10 lg:px-8 lg:py-28">
         <div className="flex flex-col gap-7">
-          <span className="inline-flex w-fit items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-gold backdrop-blur-sm">
+          <span
+            className="animate-fade-blur inline-flex w-fit items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-gold backdrop-blur-sm"
+            style={{ animationDelay: "0.1s" }}
+          >
             Architects · Engineers · Consultant
           </span>
-          <h1 className="font-heading text-5xl font-extrabold uppercase leading-[0.95] tracking-tight text-balance sm:text-6xl">
+          <h1
+            className="animate-fade-blur font-heading text-5xl font-extrabold uppercase leading-[0.95] tracking-tight text-balance sm:text-6xl"
+            style={{ animationDelay: "0.25s" }}
+          >
             Build Your <span className="text-gold">Dream Home</span>
           </h1>
-          <p className="max-w-xl text-lg leading-relaxed text-accent-foreground/75">
+          <p
+            className="animate-fade-blur max-w-xl text-lg leading-relaxed text-accent-foreground/75"
+            style={{ animationDelay: "0.45s" }}
+          >
             Kazi Constructions delivers residential, commercial, and industrial
             projects with precision engineering, transparent costing, and
             uncompromising craftsmanship across Hyderabad.
           </p>
-          <div className="flex flex-col gap-3 sm:flex-row">
+          <div
+            className="animate-fade-blur flex flex-col gap-3 sm:flex-row"
+            style={{ animationDelay: "0.65s" }}
+          >
             <Button size="lg" nativeButton={false} render={<a href="#services" />}>
               Our Services
               <ArrowRight className="h-4 w-4" />
@@ -45,7 +93,10 @@ export function HeroSection() {
           </div>
         </div>
 
-        <div className="relative">
+        <div
+          className="animate-scale-in relative"
+          style={{ animationDelay: "0.4s" }}
+        >
           <div className="overflow-hidden rounded-2xl border border-accent-foreground/15 bg-card shadow-2xl">
             <video
               className="aspect-square w-full object-cover"
@@ -61,10 +112,14 @@ export function HeroSection() {
         </div>
       </div>
 
-      <div className="relative border-t border-accent-foreground/15">
+      <div className="relative z-10 border-t border-accent-foreground/15">
         <dl className="mx-auto grid max-w-7xl grid-cols-2 gap-6 px-4 py-10 sm:px-6 sm:grid-cols-4 lg:px-8">
-          {stats.map((stat) => (
-            <div key={stat.label}>
+          {stats.map((stat, i) => (
+            <div
+              key={stat.label}
+              className="animate-fade-blur"
+              style={{ animationDelay: `${0.8 + i * 0.12}s` }}
+            >
               <dt className="font-heading text-3xl font-extrabold text-gold">
                 {stat.value}
               </dt>
