@@ -49,7 +49,7 @@ export function HeroSection() {
         }}
       />
 
-      <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-12 px-4 py-20 sm:px-6 lg:grid-cols-2 lg:gap-14 lg:px-8 lg:py-28">
+      <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-12 px-4 pb-20 pt-28 sm:px-6 lg:grid-cols-2 lg:gap-14 lg:px-8 lg:pb-28 lg:pt-36">
         <div
           className="animate-scale-in relative order-1"
           style={{ animationDelay: "0.3s" }}
