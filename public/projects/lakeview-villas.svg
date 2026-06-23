@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" role="img" aria-label="Lakeview villas blueprint">
+  <rect width="800" height="600" fill="#0f2a47"/>
+  <g stroke="#3b82c4" stroke-width="1" opacity="0.35">
+    <path d="M0 60 H800 M0 120 H800 M0 180 H800 M0 240 H800 M0 300 H800 M0 360 H800 M0 420 H800 M0 480 H800 M0 540 H800"/>
+    <path d="M60 0 V600 M120 0 V600 M180 0 V600 M240 0 V600 M300 0 V600 M360 0 V600 M420 0 V600 M480 0 V600 M540 0 V600 M600 0 V600 M660 0 V600 M720 0 V600"/>
+  </g>
+  <g fill="none" stroke="#7db8e8" stroke-width="4">
+    <path d="M150 400 V280 L270 200 L390 280 V400 Z"/>
+    <path d="M410 400 V300 L520 230 L630 300 V400 Z"/>
+    <path d="M120 290 L270 185 L420 290"/>
+    <path d="M385 310 L520 215 L655 310"/>
+  </g>
+  <path d="M120 430 q80 -20 160 0 t160 0 t160 0 t40 0" fill="none" stroke="#7db8e8" stroke-width="3" opacity="0.7"/>
+  <text x="400" y="525" font-family="Arial, sans-serif" font-size="30" font-weight="bold" fill="#cfe4f7" text-anchor="middle" letter-spacing="2">RESIDENTIAL</text>
+</svg>

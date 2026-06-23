@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" role="img" aria-label="Residential villa blueprint">
+  <rect width="800" height="600" fill="#0f2a47"/>
+  <g stroke="#3b82c4" stroke-width="1" opacity="0.35">
+    <path d="M0 60 H800 M0 120 H800 M0 180 H800 M0 240 H800 M0 300 H800 M0 360 H800 M0 420 H800 M0 480 H800 M0 540 H800"/>
+    <path d="M60 0 V600 M120 0 V600 M180 0 V600 M240 0 V600 M300 0 V600 M360 0 V600 M420 0 V600 M480 0 V600 M540 0 V600 M600 0 V600 M660 0 V600 M720 0 V600"/>
+  </g>
+  <g fill="none" stroke="#7db8e8" stroke-width="4">
+    <path d="M210 420 V250 L400 150 L590 250 V420 Z"/>
+    <path d="M170 270 L400 130 L630 270"/>
+    <rect x="280" y="320" width="70" height="100"/>
+    <rect x="450" y="320" width="90" height="70"/>
+  </g>
+  <g fill="#7db8e8">
+    <rect x="466" y="336" width="28" height="38"/>
+    <rect x="500" y="336" width="28" height="38"/>
+  </g>
+  <text x="400" y="520" font-family="Arial, sans-serif" font-size="30" font-weight="bold" fill="#cfe4f7" text-anchor="middle" letter-spacing="2">RESIDENTIAL</text>
+</svg>

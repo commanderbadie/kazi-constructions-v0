@@ -42,8 +42,7 @@ export function HeroSection() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 -z-0 opacity-[0.07]"
         style={{
-          backgroundImage:
-            "url(/placeholder.svg?height=900&width=1600&query=architectural%20blueprint%20grid%20technical%20drawing)",
+          backgroundImage: "url(/blueprint-grid.svg)",
           backgroundSize: "cover",
           backgroundPosition: "center",
           transform: `translate3d(0, ${offset * 0.18}px, 0) scale(1.1)`,

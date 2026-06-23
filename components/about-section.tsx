@@ -22,7 +22,7 @@ export function AboutSection() {
       <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8">
         <Reveal className="relative">
           <img
-            src="/placeholder.svg?height=600&width=800&query=construction%20team%20reviewing%20blueprints%20on%20site"
+            src="/about-site.svg"
             alt="Kazi Constructions team reviewing blueprints on a job site"
             className="aspect-[4/3] w-full rounded-xl object-cover"
           />
