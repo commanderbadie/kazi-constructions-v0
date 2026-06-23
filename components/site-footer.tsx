@@ -18,11 +18,11 @@ export function SiteFooter() {
         <div className="grid gap-10 md:grid-cols-4">
           <div className="md:col-span-2">
             <div className="flex items-center gap-2.5">
-              <span className="flex h-9 w-9 items-center justify-center rounded-md bg-primary text-primary-foreground">
+              <span className="flex h-9 w-9 items-center justify-center rounded-md bg-gold text-gold-foreground">
                 <Building2 className="h-5 w-5" aria-hidden="true" />
               </span>
               <span className="font-heading text-lg font-extrabold uppercase tracking-tight">
-                Kazi <span className="text-primary">Constructions</span>
+                Kazi <span className="text-gold">Constructions</span>
               </span>
             </div>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-accent-foreground/60">
@@ -41,7 +41,7 @@ export function SiteFooter() {
                   <li key={link}>
                     <a
                       href="#"
-                      className="text-sm text-accent-foreground/60 transition-colors hover:text-primary"
+                      className="text-sm text-accent-foreground/60 transition-colors hover:text-gold"
                     >
                       {link}
                     </a>

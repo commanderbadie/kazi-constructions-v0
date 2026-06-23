@@ -40,8 +40,8 @@ export function SiteNavbar() {
         </nav>
 
         <div className="hidden md:block">
-          <Button asChild>
-            <a href="#contact">Get a Quote</a>
+          <Button nativeButton={false} render={<a href="#contact" />}>
+            Get a Quote
           </Button>
         </div>
 
@@ -69,10 +69,12 @@ export function SiteNavbar() {
                 {link.label}
               </a>
             ))}
-            <Button asChild className="mt-2">
-              <a href="#contact" onClick={() => setOpen(false)}>
-                Get a Quote
-              </a>
+            <Button
+              className="mt-2"
+              nativeButton={false}
+              render={<a href="#contact" onClick={() => setOpen(false)} />}
+            >
+              Get a Quote
             </Button>
           </nav>
         </div>

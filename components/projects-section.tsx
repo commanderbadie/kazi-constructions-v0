@@ -2,32 +2,38 @@ const projects = [
   {
     title: "Hillcrest Family Residence",
     category: "Residential",
-    image: "/modern-luxury-house-exterior.png",
+    image:
+      "/placeholder.svg?height=600&width=800&query=modern%20luxury%20house%20exterior",
   },
   {
     title: "Summit Business Tower",
     category: "Commercial",
-    image: "/modern-glass-office-tower.png",
+    image:
+      "/placeholder.svg?height=600&width=800&query=modern%20glass%20office%20tower",
   },
   {
     title: "Heritage Loft Renovation",
     category: "Renovation",
-    image: "/renovated-industrial-loft-interior.jpg",
+    image:
+      "/placeholder.svg?height=600&width=800&query=renovated%20industrial%20loft%20interior",
   },
   {
     title: "Lakeview Villas",
     category: "Residential",
-    image: "/luxury-villa-with-pool.png",
+    image:
+      "/placeholder.svg?height=600&width=800&query=luxury%20villa%20with%20pool",
   },
   {
     title: "Metro Retail Plaza",
     category: "Commercial",
-    image: "/modern-retail-shopping-plaza.jpg",
+    image:
+      "/placeholder.svg?height=600&width=800&query=modern%20retail%20shopping%20plaza",
   },
   {
     title: "Aspen Interior Suite",
     category: "Interior",
-    image: "/modern-luxury-interior-living-room.jpg",
+    image:
+      "/placeholder.svg?height=600&width=800&query=modern%20luxury%20interior%20living%20room",
   },
 ]
 
@@ -63,7 +69,7 @@ export function ProjectsSection() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-accent/90 via-accent/10 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 p-5">
-                <span className="text-xs font-semibold uppercase tracking-wider text-primary">
+                <span className="text-xs font-semibold uppercase tracking-wider text-gold">
                   {project.category}
                 </span>
                 <h3 className="mt-1 font-heading text-lg font-bold text-accent-foreground">
