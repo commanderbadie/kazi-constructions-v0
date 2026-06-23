@@ -6,6 +6,7 @@ import { ProjectsSection } from "@/components/projects-section"
 import { ContactSection } from "@/components/contact-section"
 import { SiteFooter } from "@/components/site-footer"
 import { SectionDivider } from "@/components/section-divider"
+import { FloatingWidgets } from "@/components/floating-widgets"
 
 export default function Page() {
   return (
@@ -23,6 +24,7 @@ export default function Page() {
         <ContactSection />
       </main>
       <SiteFooter />
+      <FloatingWidgets />
     </div>
   )
 }
