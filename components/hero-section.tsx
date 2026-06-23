@@ -54,24 +54,11 @@ export function HeroSection() {
           className="animate-scale-in relative order-1"
           style={{ animationDelay: "0.3s" }}
         >
-          <div className="flex flex-col items-center justify-center gap-6 rounded-3xl border-2 border-gold/50 bg-gradient-to-br from-[#0f2a52] to-accent p-8 shadow-2xl sm:p-10">
-            <div className="aspect-square w-full max-w-[300px] overflow-hidden rounded-2xl shadow-lg">
-              <img
-                src="/kazi-logo.png"
-                alt="Kazi Constructions logo"
-                className="h-full w-full scale-110 object-cover"
-              />
-            </div>
-            <div className="flex flex-col items-center text-center">
-              <span className="font-heading text-2xl font-extrabold uppercase tracking-tight text-accent-foreground sm:text-3xl">
-                Kazi Constructions
-              </span>
-              <span className="mt-2 h-0.5 w-40 bg-gold" aria-hidden="true" />
-              <span className="mt-3 text-xs font-semibold uppercase tracking-[0.16em] text-primary sm:text-sm">
-                Architects - Engineers - Consultant
-              </span>
-            </div>
-          </div>
+          <img
+            src="/kazi-logo-hero.png"
+            alt="Kazi Constructions — Architects, Engineers, Consultant"
+            className="w-full rounded-3xl shadow-2xl"
+          />
         </div>
 
         <div className="order-2 flex flex-col gap-7">
