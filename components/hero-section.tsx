@@ -54,11 +54,13 @@ export function HeroSection() {
           className="animate-scale-in relative order-1"
           style={{ animationDelay: "0.3s" }}
         >
-          <img
-            src="/kazi-logo-hero.png"
-            alt="Kazi Constructions — Architects, Engineers, Consultant"
-            className="w-full rounded-3xl shadow-2xl"
-          />
+          <div className="overflow-hidden rounded-2xl shadow-2xl">
+            <img
+              src="/kazi-logo-hero.png"
+              alt="Kazi Constructions — Architects, Engineers, Consultant"
+              className="block w-full scale-[1.14]"
+            />
+          </div>
         </div>
 
         <div className="order-2 flex flex-col gap-7">

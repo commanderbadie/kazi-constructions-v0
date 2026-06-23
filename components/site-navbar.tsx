@@ -23,7 +23,7 @@ export function SiteNavbar() {
     >
       <div className="relative mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <a href="#home" aria-label="Kazi Constructions home">
-          <BrandLogo className="gap-3" blend />
+          <BrandLogo className="gap-3" />
         </a>
 
         <nav

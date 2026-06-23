@@ -5,20 +5,15 @@ type BrandLogoProps = {
   /** Use the inverted lockup (light text) on dark backgrounds. */
   inverted?: boolean
   showTagline?: boolean
-  /** Blend the logo's light background into a light surface (e.g. marble). */
-  blend?: boolean
 }
 
-export function BrandLogo({ className, inverted, showTagline, blend }: BrandLogoProps) {
+export function BrandLogo({ className, inverted, showTagline }: BrandLogoProps) {
   return (
     <span className={cn("flex items-center gap-2.5", className)}>
       <img
-        src="/kazi-logo.png"
+        src="/kazi-logo-transparent.png"
         alt="Kazi Constructions logo"
-        className={cn(
-          "h-12 w-12 shrink-0 object-contain",
-          blend && "mix-blend-multiply",
-        )}
+        className="h-12 w-12 shrink-0 object-contain"
       />
       <span className="flex flex-col leading-none">
         <span
