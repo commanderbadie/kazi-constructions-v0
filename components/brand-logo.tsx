@@ -31,7 +31,7 @@ export function BrandLogo({ className, inverted, showTagline }: BrandLogoProps) 
               inverted ? "text-accent-foreground/60" : "text-muted-foreground",
             )}
           >
-            Architects · Engineers · Consultant
+            Architects · Engineers · Consultants
           </span>
         )}
       </span>
