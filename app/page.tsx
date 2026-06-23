@@ -5,6 +5,7 @@ import { ServicesSection } from "@/components/services-section"
 import { ProjectsSection } from "@/components/projects-section"
 import { ContactSection } from "@/components/contact-section"
 import { SiteFooter } from "@/components/site-footer"
+import { SectionDivider } from "@/components/section-divider"
 
 export default function Page() {
   return (
@@ -12,9 +13,13 @@ export default function Page() {
       <SiteNavbar />
       <main>
         <HeroSection />
+        <SectionDivider />
         <AboutSection />
+        <SectionDivider />
         <ServicesSection />
+        <SectionDivider />
         <ProjectsSection />
+        <SectionDivider />
         <ContactSection />
       </main>
       <SiteFooter />
