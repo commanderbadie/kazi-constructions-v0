@@ -16,14 +16,26 @@ const navLinks = [
 export function SiteNavbar() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [overLight, setOverLight] = useState(false)
   const [activeIndex, setActiveIndex] = useState(0)
   const [indicator, setIndicator] = useState({ left: 0, width: 0 })
 
   const linkRefs = useRef<Array<HTMLAnchorElement | null>>([])
 
-  // Toggle the solid (marble) header once the user scrolls past the hero top.
+  // Toggle the solid (marble) header once the user scrolls past the hero top,
+  // and go transparent again while the header band overlaps the Services section.
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24)
+    const HEADER = 80 // h-20
+    const onScroll = () => {
+      setScrolled(window.scrollY > 24)
+      const services = document.getElementById("services")
+      if (services) {
+        const r = services.getBoundingClientRect()
+        setOverLight(r.top <= HEADER && r.bottom >= HEADER)
+      } else {
+        setOverLight(false)
+      }
+    }
     onScroll()
     window.addEventListener("scroll", onScroll, { passive: true })
     return () => window.removeEventListener("scroll", onScroll)
@@ -65,16 +77,20 @@ export function SiteNavbar() {
     return () => window.removeEventListener("resize", updateIndicator)
   }, [activeIndex])
 
+  // Transparent at the very top (over the dark hero) and again over the
+  // light Services section; solid marble everywhere in between.
+  const transparent = !scrolled || overLight
+  // Light text only while the header sits over the dark hero.
   const onDark = !scrolled
 
   return (
     <header
       className={`fixed top-0 z-50 w-full transition-all duration-500 ${
-        scrolled
-          ? "border-b border-[#e3ddd0] bg-cover bg-center shadow-sm"
-          : "border-b border-transparent bg-transparent"
+        transparent
+          ? "border-b border-transparent bg-transparent"
+          : "border-b border-[#e3ddd0] bg-cover bg-center shadow-sm"
       }`}
-      style={scrolled ? { backgroundImage: "url(/marble-header.svg)" } : undefined}
+      style={!transparent ? { backgroundImage: "url(/marble-header.svg)" } : undefined}
     >
       <div className="relative mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <a href="#home" aria-label="Kazi Constructions home">
