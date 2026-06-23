@@ -28,13 +28,14 @@ export function AboutSection() {
             About Kazi Constructions
           </span>
           <h2 className="mt-3 font-heading text-3xl font-extrabold uppercase tracking-tight text-balance sm:text-4xl">
-            Building spaces that stand the test of time
+            Our Commitment
           </h2>
           <p className="mt-5 leading-relaxed text-muted-foreground">
-            For over two decades, Kazi Constructions has transformed blueprints
-            into landmarks. We combine modern engineering, skilled craftsmanship,
-            and transparent communication to deliver projects that exceed
-            expectations every single time.
+            At Kazi Constructions, we believe in quality, transparency, and
+            trust. Every project we undertake is a reflection of our engineering
+            excellence and architectural creativity — built to last and designed
+            to inspire. Led by Kazi Waheeduddin Siddiqi, B.Tech (Civil), GHMC
+            Licensed Engineer and Autodesk Certified Draftsman.
           </p>
 
           <div className="mt-8 grid gap-6 sm:grid-cols-2">

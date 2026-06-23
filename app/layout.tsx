@@ -47,7 +47,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${archivo.variable} bg-background`}
+      className={`light ${geistSans.variable} ${archivo.variable} bg-background`}
     >
       <body className="font-sans antialiased">
         {children}

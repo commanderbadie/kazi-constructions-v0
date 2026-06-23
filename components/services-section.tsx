@@ -1,10 +1,14 @@
 import {
-  Home,
-  Building,
+  Building2,
+  Handshake,
+  ShieldCheck,
   Hammer,
-  Sofa,
-  TreePine,
-  ClipboardCheck,
+  Factory,
+  Ruler,
+  ClipboardList,
+  Compass,
+  Calculator,
+  HardHat,
   type LucideIcon,
 } from "lucide-react"
 
@@ -16,40 +20,64 @@ type Service = {
 
 const services: Service[] = [
   {
-    icon: Home,
-    title: "Residential",
+    icon: Building2,
+    title: "Residential & Commercial Building Construction",
     description:
-      "Custom homes, multi-family units, and additions built to your lifestyle with quality at every level.",
+      "End-to-end construction of homes, apartments, and commercial buildings built to last.",
   },
   {
-    icon: Building,
-    title: "Commercial",
+    icon: Handshake,
+    title: "Turnkey Construction Contracts (Design-Build)",
     description:
-      "Offices, retail, and industrial facilities engineered for durability, efficiency, and brand impact.",
+      "Single-point responsibility from design through handover for a hassle-free build.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Structural Retrofitting & Strengthening",
+    description:
+      "Reinforce and upgrade existing structures for safety, compliance, and longevity.",
   },
   {
     icon: Hammer,
-    title: "Renovation",
+    title: "Building Renovation & Remodeling",
     description:
-      "Breathe new life into existing spaces with structural upgrades, remodels, and full restorations.",
+      "Transform existing spaces with structural upgrades, remodels, and restorations.",
   },
   {
-    icon: Sofa,
-    title: "Interior",
+    icon: Factory,
+    title: "Industrial & Warehouse Construction",
     description:
-      "Thoughtful interior fit-outs and finishes that balance form, function, and lasting comfort.",
+      "Durable, efficient industrial sheds and warehouses engineered for heavy use.",
   },
   {
-    icon: TreePine,
-    title: "Exterior",
+    icon: Ruler,
+    title: "Architectural Design & Space Planning",
     description:
-      "Facades, landscaping, and hardscaping that boost curb appeal and protect your investment.",
+      "Functional, aesthetic layouts that make the most of every square foot.",
   },
   {
-    icon: ClipboardCheck,
-    title: "Consultancy",
+    icon: ClipboardList,
+    title: "Project Planning & Management",
     description:
-      "Expert planning, cost estimation, and project management to keep your build on track.",
+      "Detailed scheduling and coordination to keep your project on time and on budget.",
+  },
+  {
+    icon: Compass,
+    title: "Civil & Structural Engineering Consultancy",
+    description:
+      "Expert engineering analysis, design, and certification you can rely on.",
+  },
+  {
+    icon: Calculator,
+    title: "Quantity Estimate & Costing",
+    description:
+      "Accurate BOQs and cost estimates for transparent, predictable budgeting.",
+  },
+  {
+    icon: HardHat,
+    title: "Site Management & Coordination",
+    description:
+      "On-site supervision and vendor coordination for smooth, quality execution.",
   },
 ]
 
@@ -62,7 +90,7 @@ export function ServicesSection() {
             What we do
           </span>
           <h2 className="mt-3 font-heading text-3xl font-extrabold uppercase tracking-tight text-balance sm:text-4xl">
-            Comprehensive construction services
+            Our Services
           </h2>
           <p className="mt-4 leading-relaxed text-muted-foreground">
             One trusted partner for every stage of your project, from concept to
@@ -79,7 +107,9 @@ export function ServicesSection() {
               <span className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
                 <service.icon className="h-6 w-6" aria-hidden="true" />
               </span>
-              <h3 className="mt-5 font-heading text-xl font-bold">{service.title}</h3>
+              <h3 className="mt-5 font-heading text-lg font-bold leading-snug text-balance">
+                {service.title}
+              </h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                 {service.description}
               </p>

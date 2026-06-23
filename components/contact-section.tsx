@@ -2,14 +2,19 @@
 
 import type React from "react"
 import { useState } from "react"
-import { MapPin, Phone, Mail, Clock } from "lucide-react"
+import { MapPin, Phone, Mail, AtSign } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 const details = [
-  { icon: MapPin, label: "Address", value: "124 Builder's Avenue, Nairobi, Kenya" },
-  { icon: Phone, label: "Phone", value: "+254 700 123 456" },
-  { icon: Mail, label: "Email", value: "hello@kaziconstructions.com" },
-  { icon: Clock, label: "Hours", value: "Mon – Sat, 8:00 AM – 6:00 PM" },
+  {
+    icon: MapPin,
+    label: "Address",
+    value:
+      "4-25-2/3/3, Wadi-E-Mahmood, Suleman Nagar, Rajendra Nagar, PVNR Pillar No.242-500052, Hyderabad",
+  },
+  { icon: Phone, label: "Phone", value: "+91 8801958508" },
+  { icon: Mail, label: "Email", value: "builders.kazi@gmail.com" },
+  { icon: AtSign, label: "Instagram", value: "kazi_constructions" },
 ]
 
 const inputClass =
@@ -90,7 +95,7 @@ export function ContactSection() {
                   <label htmlFor="phone" className="mb-1.5 block text-sm font-medium">
                     Phone
                   </label>
-                  <input id="phone" name="phone" placeholder="+254 700 000 000" className={inputClass} />
+                  <input id="phone" name="phone" placeholder="+91 98765 43210" className={inputClass} />
                 </div>
                 <div>
                   <label htmlFor="service" className="mb-1.5 block text-sm font-medium">
@@ -100,12 +105,16 @@ export function ContactSection() {
                     <option value="" disabled>
                       Select a service
                     </option>
-                    <option>Residential</option>
-                    <option>Commercial</option>
-                    <option>Renovation</option>
-                    <option>Interior</option>
-                    <option>Exterior</option>
-                    <option>Consultancy</option>
+                    <option>Residential &amp; Commercial Construction</option>
+                    <option>Turnkey (Design-Build) Contract</option>
+                    <option>Structural Retrofitting &amp; Strengthening</option>
+                    <option>Renovation &amp; Remodeling</option>
+                    <option>Industrial &amp; Warehouse Construction</option>
+                    <option>Architectural Design &amp; Planning</option>
+                    <option>Project Planning &amp; Management</option>
+                    <option>Civil &amp; Structural Consultancy</option>
+                    <option>Quantity Estimate &amp; Costing</option>
+                    <option>Site Management &amp; Coordination</option>
                   </select>
                 </div>
               </div>
