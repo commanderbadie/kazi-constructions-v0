@@ -96,17 +96,12 @@ export function HeroSection() {
           className="animate-scale-in relative"
           style={{ animationDelay: "0.4s" }}
         >
-          <div className="overflow-hidden rounded-2xl border border-accent-foreground/15 bg-card shadow-2xl">
-            <video
-              className="aspect-square w-full object-cover"
-              autoPlay
-              muted
-              loop
-              playsInline
-              poster="/kazi-logo.png"
-            >
-              <source src="/kazi-animation.mp4" type="video/mp4" />
-            </video>
+          <div className="flex items-center justify-center overflow-hidden rounded-2xl border border-accent-foreground/15 bg-card p-8 shadow-2xl sm:p-12">
+            <img
+              src="/kazi-logo.png"
+              alt="Kazi Constructions logo"
+              className="aspect-square w-full max-w-md object-contain"
+            />
           </div>
         </div>
       </div>
