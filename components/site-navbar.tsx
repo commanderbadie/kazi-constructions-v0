@@ -23,16 +23,18 @@ export function SiteNavbar() {
   const linkRefs = useRef<Array<HTMLAnchorElement | null>>([])
 
   // Toggle the solid (marble) header once the user scrolls past the hero top,
-  // and go transparent again from the Services section through the end of the page.
+  // and go transparent again across the Services → Contact range.
   useEffect(() => {
     const HEADER = 80 // h-20
     const onScroll = () => {
       setScrolled(window.scrollY > 24)
       const services = document.getElementById("services")
-      if (services) {
-        const r = services.getBoundingClientRect()
-        // Transparent once Services reaches the header and onward to page end.
-        setOverLight(r.top <= HEADER)
+      const contact = document.getElementById("contact")
+      if (services && contact) {
+        const start = services.getBoundingClientRect().top <= HEADER
+        // Stay transparent until the Contact section has scrolled past the header.
+        const beforeFooter = contact.getBoundingClientRect().bottom >= HEADER
+        setOverLight(start && beforeFooter)
       } else {
         setOverLight(false)
       }
