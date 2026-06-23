@@ -74,7 +74,7 @@ export function HeroSection() {
             className="animate-fade-blur inline-flex w-fit items-center gap-2 rounded-full border border-gold/50 bg-gold/10 px-5 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-gold backdrop-blur-sm sm:text-sm"
             style={{ animationDelay: "0.1s" }}
           >
-            Architects · Engineers · Consultant
+            Architects · Engineers · Consultants
           </span>
           <h1
             className="animate-fade-blur font-heading text-5xl font-extrabold uppercase leading-[0.95] tracking-tight text-balance sm:text-6xl lg:text-7xl"
