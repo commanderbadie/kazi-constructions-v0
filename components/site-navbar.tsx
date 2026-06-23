@@ -24,11 +24,15 @@ export function SiteNavbar() {
         </a>
 
         <nav className="hidden items-center gap-8 md:flex" aria-label="Primary">
-          {navLinks.map((link) => (
+          {navLinks.map((link, i) => (
             <a
               key={link.href}
               href={link.href}
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              className={
+                i === 0
+                  ? "relative text-sm font-semibold text-foreground after:absolute after:-bottom-1.5 after:left-0 after:h-0.5 after:w-full after:bg-gold after:content-['']"
+                  : "text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              }
             >
               {link.label}
             </a>
@@ -36,7 +40,11 @@ export function SiteNavbar() {
         </nav>
 
         <div className="hidden md:block">
-          <Button nativeButton={false} render={<a href="#contact" />}>
+          <Button
+            nativeButton={false}
+            className="bg-gold text-gold-foreground hover:bg-gold/90"
+            render={<a href="#contact" />}
+          >
             Get a Quote
           </Button>
         </div>
@@ -66,7 +74,7 @@ export function SiteNavbar() {
               </a>
             ))}
             <Button
-              className="mt-2"
+              className="mt-2 bg-gold text-gold-foreground hover:bg-gold/90"
               nativeButton={false}
               render={<a href="#contact" onClick={() => setOpen(false)} />}
             >

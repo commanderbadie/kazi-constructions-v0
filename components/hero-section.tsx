@@ -49,19 +49,44 @@ export function HeroSection() {
         }}
       />
 
-      <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-12 px-4 py-20 sm:px-6 lg:grid-cols-2 lg:gap-10 lg:px-8 lg:py-28">
-        <div className="flex flex-col gap-7">
+      <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-12 px-4 py-20 sm:px-6 lg:grid-cols-2 lg:gap-14 lg:px-8 lg:py-28">
+        <div
+          className="animate-scale-in relative order-1"
+          style={{ animationDelay: "0.3s" }}
+        >
+          <div className="flex flex-col items-center justify-center gap-6 rounded-3xl border-2 border-gold/50 bg-gradient-to-br from-[#0f2a52] to-accent p-8 shadow-2xl sm:p-10">
+            <div className="aspect-square w-full max-w-[300px] overflow-hidden rounded-2xl shadow-lg">
+              <img
+                src="/kazi-logo.png"
+                alt="Kazi Constructions logo"
+                className="h-full w-full scale-110 object-cover"
+              />
+            </div>
+            <div className="flex flex-col items-center text-center">
+              <span className="font-heading text-2xl font-extrabold uppercase tracking-tight text-accent-foreground sm:text-3xl">
+                Kazi Constructions
+              </span>
+              <span className="mt-2 h-0.5 w-40 bg-gold" aria-hidden="true" />
+              <span className="mt-3 text-xs font-semibold uppercase tracking-[0.16em] text-primary sm:text-sm">
+                Architects - Engineers - Consultant
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div className="order-2 flex flex-col gap-7">
           <span
-            className="animate-fade-blur inline-flex w-fit items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-gold backdrop-blur-sm"
+            className="animate-fade-blur inline-flex w-fit items-center gap-2 rounded-full border border-gold/50 bg-gold/10 px-5 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-gold backdrop-blur-sm sm:text-sm"
             style={{ animationDelay: "0.1s" }}
           >
             Architects · Engineers · Consultant
           </span>
           <h1
-            className="animate-fade-blur font-heading text-5xl font-extrabold uppercase leading-[0.95] tracking-tight text-balance sm:text-6xl"
+            className="animate-fade-blur font-heading text-5xl font-extrabold uppercase leading-[0.95] tracking-tight text-balance sm:text-6xl lg:text-7xl"
             style={{ animationDelay: "0.25s" }}
           >
-            Build Your <span className="text-gold">Dream Home</span>
+            <span className="block">Build Your</span>
+            <span className="block text-gold">Dream Home</span>
           </h1>
           <p
             className="animate-fade-blur max-w-xl text-lg leading-relaxed text-accent-foreground/75"
@@ -89,19 +114,6 @@ export function HeroSection() {
               <Phone className="h-4 w-4" />
               Get a Quote
             </Button>
-          </div>
-        </div>
-
-        <div
-          className="animate-scale-in relative"
-          style={{ animationDelay: "0.4s" }}
-        >
-          <div className="flex items-center justify-center overflow-hidden rounded-2xl border border-accent-foreground/15 bg-card p-8 shadow-2xl sm:p-12">
-            <img
-              src="/kazi-logo.png"
-              alt="Kazi Constructions logo"
-              className="aspect-square w-full max-w-md object-contain"
-            />
           </div>
         </div>
       </div>
