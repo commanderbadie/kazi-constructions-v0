@@ -54,10 +54,16 @@ export function HeroSection() {
           className="animate-scale-in relative order-1"
           style={{ animationDelay: "0.3s" }}
         >
-          <div className="overflow-hidden rounded-2xl shadow-2xl">
+          <div
+            className="overflow-hidden rounded-2xl border-2 border-gold shadow-2xl"
+            style={{
+              boxShadow:
+                "0 0 0 1px var(--gold), 0 0 24px 2px color-mix(in oklch, var(--gold) 55%, transparent), 0 0 48px 6px color-mix(in oklch, var(--gold) 30%, transparent)",
+            }}
+          >
             <img
               src="/kazi-logo-hero.png"
-              alt="Kazi Constructions — Architects, Engineers, Consultant"
+              alt="Kazi Constructions — Architects, Engineers, Consultants"
               className="block w-full scale-[1.14]"
             />
           </div>
