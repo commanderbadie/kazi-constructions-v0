@@ -153,7 +153,8 @@ export function FloatingWidgets() {
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Enquire on WhatsApp"
-          className="group/wa relative flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-transform duration-300 hover:scale-110"
+          className="group/wa relative flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-[0_0_28px_6px_rgba(37,211,102,0.7)]"
+          style={{ boxShadow: "0 0 18px 3px rgba(37,211,102,0.55)" }}
         >
           <span className="pulse-ring absolute inset-0 rounded-full bg-[#25D366]" aria-hidden="true" />
           <WhatsAppIcon className="relative h-7 w-7" />
@@ -165,7 +166,11 @@ export function FloatingWidgets() {
           onClick={() => setChatOpen((v) => !v)}
           aria-label={chatOpen ? "Close assistant" : "Open assistant"}
           aria-expanded={chatOpen}
-          className="flex h-14 w-14 items-center justify-center rounded-full bg-accent text-accent-foreground shadow-lg ring-1 ring-gold/40 transition-transform duration-300 hover:scale-110"
+          className="flex h-14 w-14 items-center justify-center rounded-full bg-accent text-accent-foreground shadow-lg ring-1 ring-gold/40 transition-all duration-300 hover:scale-110 hover:shadow-[0_0_28px_6px_color-mix(in_oklch,var(--gold)_70%,transparent)]"
+          style={{
+            boxShadow:
+              "0 0 18px 3px color-mix(in oklch, var(--gold) 55%, transparent)",
+          }}
         >
           {chatOpen ? <X className="h-6 w-6" /> : <MessageCircle className="h-6 w-6" />}
         </button>
