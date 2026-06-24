@@ -7,9 +7,9 @@ import { ProjectImage } from "@/components/project-image"
 import { cn } from "@/lib/utils"
 
 type Project = {
-  title: string
+  title?: string
   category: string
-  location: string
+  location?: string
   description: string
   image: string
   gallery?: string[]
@@ -36,11 +36,9 @@ const circulationGallery = Array.from(
 
 const projects: Project[] = [
   {
-    title: "Hillcrest Family Residence",
     category: "Residential",
-    location: "Rajendra Nagar, Hyderabad",
     description:
-      "A modern 4-bedroom villa with open-plan living, completed turnkey from design to handover.",
+      "A close-up look at our residential work — on-site construction progress, interiors and finished living spaces.",
     image: "/gallery/circulation/circulation-1.jpg",
     gallery: circulationGallery,
   },
@@ -59,14 +57,6 @@ const projects: Project[] = [
     description:
       "Full structural retrofit and interior remodel transforming an old warehouse into loft living.",
     image: "/projects/renovation-loft.svg",
-  },
-  {
-    title: "Lakeview Villas",
-    category: "Residential",
-    location: "Shamshabad, Hyderabad",
-    description:
-      "A gated community of premium villas with landscaped pools and contemporary architecture.",
-    image: "/projects/lakeview-villas.svg",
   },
   {
     title: "Metro Retail Plaza",
@@ -183,7 +173,7 @@ export function ProjectsSection() {
               const hasGallery = !!project.gallery?.length
               return (
                 <article
-                  key={project.title}
+                  key={project.image}
                   className="group h-full overflow-hidden rounded-xl border border-border bg-card shadow-sm transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/10"
                 >
                   <button
@@ -191,8 +181,8 @@ export function ProjectsSection() {
                     onClick={() => hasGallery && setGalleryProject(project)}
                     aria-label={
                       hasGallery
-                        ? `View ${project.title} gallery`
-                        : project.title
+                        ? `View ${project.title ?? project.category} gallery`
+                        : project.title ?? project.category
                     }
                     className={cn(
                       "relative block w-full overflow-hidden text-left",
@@ -212,14 +202,23 @@ export function ProjectsSection() {
                     )}
                   </button>
                   <div className="p-6">
-                    <h3 className="font-heading text-lg font-bold leading-snug text-foreground">
-                      {project.title}
-                    </h3>
-                    <p className="mt-2 flex items-center gap-1.5 text-sm font-medium text-primary">
-                      <MapPin className="h-4 w-4 shrink-0" aria-hidden="true" />
-                      {project.location}
-                    </p>
-                    <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                    {project.title && (
+                      <h3 className="font-heading text-lg font-bold leading-snug text-foreground">
+                        {project.title}
+                      </h3>
+                    )}
+                    {project.location && (
+                      <p className="mt-2 flex items-center gap-1.5 text-sm font-medium text-primary">
+                        <MapPin className="h-4 w-4 shrink-0" aria-hidden="true" />
+                        {project.location}
+                      </p>
+                    )}
+                    <p
+                      className={cn(
+                        "text-sm leading-relaxed text-muted-foreground",
+                        (project.title || project.location) && "mt-3",
+                      )}
+                    >
                       {project.description}
                     </p>
                   </div>
