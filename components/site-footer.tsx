@@ -99,7 +99,7 @@ export function SiteFooter() {
             </div>
           </div>
 
-          <div className="lg:col-span-2 lg:col-start-6">
+          <div className="lg:col-span-2">
             <FooterColumn title="Company" links={companyLinks} />
           </div>
 
