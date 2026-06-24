@@ -65,10 +65,10 @@ export function ContactSection() {
                   Email
                 </p>
                 <a
-                  href="mailto:builders.kazi@gmail.com"
+                  href="mailto:kaziwaheeduddinsiddiqi@gmail.com"
                   className="mt-2 block font-medium text-primary transition-colors hover:text-primary/80"
                 >
-                  builders.kazi@gmail.com
+                  kaziwaheeduddinsiddiqi@gmail.com
                 </a>
               </div>
               <div>
@@ -222,10 +222,10 @@ export function ContactSection() {
                     Email
                   </p>
                   <a
-                    href="mailto:builders.kazi@gmail.com"
+                    href="mailto:kaziwaheeduddinsiddiqi@gmail.com"
                     className="mt-2 block break-all text-white/90 transition-colors hover:text-gold"
                   >
-                    builders.kazi@gmail.com
+                    kaziwaheeduddinsiddiqi@gmail.com
                   </a>
                 </div>
                 <div>
