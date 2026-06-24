@@ -143,26 +143,90 @@ export function ContactSection() {
           </div>
         </div>
 
-        <div className="mt-12">
-          <div className="mb-4 flex items-center gap-2">
-            <MapPin className="h-5 w-5 text-primary" aria-hidden="true" />
-            <h3 className="font-heading text-lg font-bold uppercase tracking-tight">
-              Visit our office
-            </h3>
+        <div className="mt-16">
+          <div className="text-center">
+            <span className="inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.2em] text-gold">
+              <span className="h-px w-8 bg-gold" aria-hidden="true" />
+              Find Us
+            </span>
+            <h2 className="mt-3 font-heading text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
+              Visit Our <span className="font-normal italic text-primary">Office</span>
+            </h2>
           </div>
-          <div className="overflow-hidden rounded-xl border border-border bg-card shadow-sm">
-            <iframe
-              title="Kazi Constructions office location on Google Maps"
-              src={`https://maps.google.com/maps?q=${encodeURIComponent(
-                "Wadi-E-Mahmood, Suleman Nagar, Rajendra Nagar, Hyderabad 500052",
-              )}&z=15&output=embed`}
-              width="100%"
-              height="400"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              className="block w-full border-0"
-              allowFullScreen
-            />
+
+          <div className="mt-10 grid gap-6 lg:grid-cols-3">
+            <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-md lg:col-span-2">
+              <iframe
+                title="Kazi Constructions office location on Google Maps"
+                src={`https://maps.google.com/maps?q=${encodeURIComponent(
+                  "KAZI CONSTRUCTIONS, Suleman Nagar, Chintalmet, Hyderabad, Telangana 500052",
+                )}&z=15&output=embed`}
+                width="100%"
+                height="100%"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="block h-full min-h-[420px] w-full border-0"
+                allowFullScreen
+              />
+            </div>
+
+            <div className="flex flex-col rounded-2xl bg-navy p-8 text-white">
+              <div className="space-y-6">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-gold">
+                    Address
+                  </p>
+                  <p className="mt-2 leading-relaxed text-white/90">
+                    4-25-2/3/3, Wadi-E-Mahmood, Suleman Nagar
+                    <br />
+                    Rajendra Nagar, Attapure, Hyderabad &ndash; 500052
+                  </p>
+                </div>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-gold">
+                    Phone
+                  </p>
+                  <a
+                    href="tel:+918801958508"
+                    className="mt-2 block text-white/90 transition-colors hover:text-gold"
+                  >
+                    +91 88019 58508
+                  </a>
+                </div>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-gold">
+                    Email
+                  </p>
+                  <a
+                    href="mailto:builders.kazi@gmail.com"
+                    className="mt-2 block break-all text-white/90 transition-colors hover:text-gold"
+                  >
+                    builders.kazi@gmail.com
+                  </a>
+                </div>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-gold">
+                    Office Hours
+                  </p>
+                  <p className="mt-2 leading-relaxed text-white/90">
+                    Mon&ndash;Fri: 8:00am &ndash; 6:00pm
+                    <br />
+                    Sat: 9:00am &ndash; 1:00pm
+                  </p>
+                </div>
+              </div>
+
+              <a
+                href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+                  "KAZI CONSTRUCTIONS, Suleman Nagar, Chintalmet, Hyderabad, Telangana 500052",
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-8 inline-flex w-full items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-semibold uppercase tracking-wider text-primary-foreground transition-colors hover:bg-primary/90"
+              >
+                Get Directions
+              </a>
+            </div>
           </div>
         </div>
       </div>
