@@ -43,8 +43,8 @@ export function AboutSection() {
             At Kazi Constructions, we believe in quality, transparency, and
             trust. Every project we undertake is a reflection of our engineering
             excellence and architectural creativity — built to last and designed
-            to inspire. Led by Kazi Waheeduddin Siddiqi, B.Tech (Civil), GHMC
-            Licensed Engineer and Autodesk Certified Draftsman.
+            to inspire. Led by Kazi Waheeduddin Siddiqi, B.Tech (Civil), M.Tech
+            (Civil), GHMC Licensed Engineer and Autodesk Certified Draftsman.
           </p>
 
           <div className="mt-8 grid gap-6 sm:grid-cols-2">
