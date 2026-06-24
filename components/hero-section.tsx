@@ -95,14 +95,19 @@ export function HeroSection() {
             className="animate-fade-blur flex flex-col gap-3 sm:flex-row"
             style={{ animationDelay: "0.65s" }}
           >
-            <Button size="lg" nativeButton={false} render={<a href="#services" />}>
+            <Button
+              size="lg"
+              className="h-auto rounded-full px-7 py-3.5 text-sm font-semibold uppercase tracking-wide"
+              nativeButton={false}
+              render={<a href="#services" />}
+            >
               Our Services
               <ArrowRight className="h-4 w-4" />
             </Button>
             <Button
               size="lg"
               variant="outline"
-              className="border-accent-foreground/30 bg-transparent text-accent-foreground hover:bg-accent-foreground/10 hover:text-accent-foreground"
+              className="h-auto rounded-full border-accent-foreground/40 bg-transparent px-7 py-3.5 text-sm font-semibold uppercase tracking-wide text-accent-foreground hover:bg-accent-foreground/10 hover:text-accent-foreground"
               nativeButton={false}
               render={<a href="#contact" />}
             >
