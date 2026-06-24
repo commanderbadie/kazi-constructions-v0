@@ -281,3 +281,30 @@
     animation: none;
   }
 }
+
+
+/* Section divider: glowing gold line + pulsing diamond accent */
+.kazi-divider-line {
+  box-shadow: 0 0 8px 0 color-mix(in oklch, var(--gold) 55%, transparent);
+}
+
+.kazi-divider-diamond {
+  box-shadow: 0 0 10px 2px color-mix(in oklch, var(--gold) 70%, transparent);
+  animation: kazi-gold-pulse 3s ease-in-out infinite;
+}
+
+@keyframes kazi-gold-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 8px 1px color-mix(in oklch, var(--gold) 60%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 18px 5px color-mix(in oklch, var(--gold) 80%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kazi-divider-diamond {
+    animation: none;
+  }
+}
