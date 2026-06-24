@@ -58,6 +58,8 @@ const inputClass =
 export function LeadPopup() {
   const [open, setOpen] = useState(false)
   const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState(false)
 
   useEffect(() => {
     if (typeof window === "undefined") return
@@ -89,9 +91,32 @@ export function LeadPopup() {
 
   if (!open) return null
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    setSubmitted(true)
+    const form = e.currentTarget
+    const fd = new FormData(form)
+
+    setSubmitting(true)
+    setError(false)
+    try {
+      const res = await fetch("/api/lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: fd.get("name"),
+          phone: fd.get("phone"),
+          location: fd.get("location"),
+          source: "popup",
+        }),
+      })
+      const json = await res.json()
+      if (!res.ok || !json.ok) throw new Error("failed")
+      setSubmitted(true)
+    } catch {
+      setError(true)
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -155,6 +180,7 @@ export function LeadPopup() {
             <form onSubmit={handleSubmit} className="mt-6 space-y-4">
               <input
                 type="text"
+                name="name"
                 required
                 placeholder="Full Name*"
                 aria-label="Full Name"
@@ -167,6 +193,7 @@ export function LeadPopup() {
                 </span>
                 <input
                   type="tel"
+                  name="phone"
                   required
                   placeholder="Mobile Number*"
                   aria-label="Mobile Number"
@@ -175,6 +202,7 @@ export function LeadPopup() {
               </div>
               <input
                 type="text"
+                name="location"
                 required
                 placeholder="Location of your plot*"
                 aria-label="Location of your plot"
@@ -182,10 +210,16 @@ export function LeadPopup() {
               />
               <button
                 type="submit"
-                className="w-full rounded-lg bg-[#ef6c2d] px-6 py-3.5 text-base font-bold uppercase tracking-wide text-white shadow-md transition-colors hover:bg-[#d95f24]"
+                disabled={submitting}
+                className="w-full rounded-lg bg-[#ef6c2d] px-6 py-3.5 text-base font-bold uppercase tracking-wide text-white shadow-md transition-colors hover:bg-[#d95f24] disabled:cursor-not-allowed disabled:opacity-70"
               >
-                Start Your Construction
+                {submitting ? "Sending..." : "Start Your Construction"}
               </button>
+              {error && (
+                <p className="text-sm font-medium text-destructive" role="alert">
+                  Something went wrong. Please try again.
+                </p>
+              )}
             </form>
 
             <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
