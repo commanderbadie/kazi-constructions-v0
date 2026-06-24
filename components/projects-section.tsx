@@ -7,9 +7,9 @@ import { ProjectImage } from "@/components/project-image"
 import { cn } from "@/lib/utils"
 
 type Project = {
-  title: string
+  title?: string
   category: string
-  location: string
+  location?: string
   description: string
   image: string
   gallery?: string[]
@@ -29,53 +29,41 @@ const interiorGallery = [
   "/gallery/interior/dressing-table-16.jpg",
 ]
 
+const circulationGallery = Array.from(
+  { length: 15 },
+  (_, i) => `/gallery/circulation/circulation-${i + 1}.jpg`,
+)
+
 const projects: Project[] = [
   {
-    title: "Hillcrest Family Residence",
     category: "Residential",
-    location: "Rajendra Nagar, Hyderabad",
     description:
-      "A modern 4-bedroom villa with open-plan living, completed turnkey from design to handover.",
-    image: "/projects/residential-villa.svg",
+      "A close-up look at our residential work — on-site construction progress, interiors and finished living spaces.",
+    image: "/gallery/circulation/circulation-1.jpg",
+    gallery: circulationGallery,
   },
   {
-    title: "Summit Business Tower",
     category: "Commercial",
-    location: "Gachibowli, Hyderabad",
     description:
-      "A 12-storey glass office tower built with structural steel and energy-efficient facades.",
+      "Commercial builds — office towers and workspaces with structural steel and energy-efficient facades.",
     image: "/projects/commercial-tower.svg",
   },
   {
-    title: "Heritage Loft Renovation",
     category: "Renovation",
-    location: "Attapur, Hyderabad",
     description:
-      "Full structural retrofit and interior remodel transforming an old warehouse into loft living.",
+      "Renovation & retrofit work — structural strengthening and full interior remodels that transform existing spaces.",
     image: "/projects/renovation-loft.svg",
   },
   {
-    title: "Lakeview Villas",
-    category: "Residential",
-    location: "Shamshabad, Hyderabad",
-    description:
-      "A gated community of premium villas with landscaped pools and contemporary architecture.",
-    image: "/projects/lakeview-villas.svg",
-  },
-  {
-    title: "Metro Retail Plaza",
     category: "Commercial",
-    location: "Mehdipatnam, Hyderabad",
     description:
-      "A multi-level retail and dining plaza delivered on schedule with full site coordination.",
+      "Retail, dining and mixed-use developments delivered on schedule with full site coordination.",
     image: "/projects/retail-plaza.svg",
   },
   {
-    title: "Aspen Interior Suite",
     category: "Interior",
-    location: "Banjara Hills, Hyderabad",
     description:
-      "Bespoke interior fit-out featuring custom joinery, lighting design, and premium finishes.",
+      "Interior fit-outs — modular kitchens, custom joinery, dressing units and premium finishes.",
     image: "/gallery/interior/modular-kitchen.jpg",
     gallery: interiorGallery,
   },
@@ -177,7 +165,7 @@ export function ProjectsSection() {
               const hasGallery = !!project.gallery?.length
               return (
                 <article
-                  key={project.title}
+                  key={project.image}
                   className="group h-full overflow-hidden rounded-xl border border-border bg-card shadow-sm transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/10"
                 >
                   <button
@@ -185,8 +173,8 @@ export function ProjectsSection() {
                     onClick={() => hasGallery && setGalleryProject(project)}
                     aria-label={
                       hasGallery
-                        ? `View ${project.title} gallery`
-                        : project.title
+                        ? `View ${project.title ?? project.category} gallery`
+                        : project.title ?? project.category
                     }
                     className={cn(
                       "relative block w-full overflow-hidden text-left",
@@ -206,14 +194,23 @@ export function ProjectsSection() {
                     )}
                   </button>
                   <div className="p-6">
-                    <h3 className="font-heading text-lg font-bold leading-snug text-foreground">
-                      {project.title}
-                    </h3>
-                    <p className="mt-2 flex items-center gap-1.5 text-sm font-medium text-primary">
-                      <MapPin className="h-4 w-4 shrink-0" aria-hidden="true" />
-                      {project.location}
-                    </p>
-                    <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                    {project.title && (
+                      <h3 className="font-heading text-lg font-bold leading-snug text-foreground">
+                        {project.title}
+                      </h3>
+                    )}
+                    {project.location && (
+                      <p className="mt-2 flex items-center gap-1.5 text-sm font-medium text-primary">
+                        <MapPin className="h-4 w-4 shrink-0" aria-hidden="true" />
+                        {project.location}
+                      </p>
+                    )}
+                    <p
+                      className={cn(
+                        "text-sm leading-relaxed text-muted-foreground",
+                        (project.title || project.location) && "mt-3",
+                      )}
+                    >
                       {project.description}
                     </p>
                   </div>
