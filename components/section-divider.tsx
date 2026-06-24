@@ -14,10 +14,10 @@ export function SectionDivider({ onDark }: SectionDividerProps) {
       role="presentation"
       aria-hidden="true"
     >
-      <div className="mx-auto flex max-w-7xl items-center gap-4 px-4 py-1 sm:px-6 lg:px-8">
-        <span className="h-px flex-1 bg-gradient-to-r from-transparent to-gold/60" />
-        <span className="h-1.5 w-1.5 rotate-45 bg-gold" />
-        <span className="h-px flex-1 bg-gradient-to-l from-transparent to-gold/60" />
+      <div className="mx-auto flex max-w-7xl items-center gap-4 px-4 py-3 sm:px-6 lg:px-8">
+        <span className="kazi-divider-line h-0.5 flex-1 rounded-full bg-gradient-to-r from-transparent via-gold/70 to-gold" />
+        <span className="kazi-divider-diamond h-2 w-2 rotate-45 rounded-[1px] bg-gold" />
+        <span className="kazi-divider-line h-0.5 flex-1 rounded-full bg-gradient-to-l from-transparent via-gold/70 to-gold" />
       </div>
     </div>
   )

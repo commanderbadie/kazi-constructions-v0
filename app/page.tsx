@@ -1,6 +1,7 @@
 import { SiteNavbar } from "@/components/site-navbar"
 import { HeroSection } from "@/components/hero-section"
 import { AboutSection } from "@/components/about-section"
+import { ProcessSection } from "@/components/process-section"
 import { ServicesSection } from "@/components/services-section"
 import { ProjectsSection } from "@/components/projects-section"
 import { ContactSection } from "@/components/contact-section"
@@ -16,6 +17,7 @@ export default function Page() {
         <HeroSection />
         <SectionDivider />
         <AboutSection />
+        <ProcessSection />
         <SectionDivider />
         <ServicesSection />
         <SectionDivider />
