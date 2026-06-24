@@ -43,35 +43,27 @@ const projects: Project[] = [
     gallery: circulationGallery,
   },
   {
-    title: "Summit Business Tower",
     category: "Commercial",
-    location: "Gachibowli, Hyderabad",
     description:
-      "A 12-storey glass office tower built with structural steel and energy-efficient facades.",
+      "Commercial builds — office towers and workspaces with structural steel and energy-efficient facades.",
     image: "/projects/commercial-tower.svg",
   },
   {
-    title: "Heritage Loft Renovation",
     category: "Renovation",
-    location: "Attapur, Hyderabad",
     description:
-      "Full structural retrofit and interior remodel transforming an old warehouse into loft living.",
+      "Renovation & retrofit work — structural strengthening and full interior remodels that transform existing spaces.",
     image: "/projects/renovation-loft.svg",
   },
   {
-    title: "Metro Retail Plaza",
     category: "Commercial",
-    location: "Mehdipatnam, Hyderabad",
     description:
-      "A multi-level retail and dining plaza delivered on schedule with full site coordination.",
+      "Retail, dining and mixed-use developments delivered on schedule with full site coordination.",
     image: "/projects/retail-plaza.svg",
   },
   {
-    title: "Aspen Interior Suite",
     category: "Interior",
-    location: "Banjara Hills, Hyderabad",
     description:
-      "Bespoke interior fit-out featuring custom joinery, lighting design, and premium finishes.",
+      "Interior fit-outs — modular kitchens, custom joinery, dressing units and premium finishes.",
     image: "/gallery/interior/modular-kitchen.jpg",
     gallery: interiorGallery,
   },
