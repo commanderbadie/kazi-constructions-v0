@@ -1,6 +1,10 @@
+"use client"
+
+import { useMemo, useState } from "react"
 import { MapPin } from "lucide-react"
 import { Reveal } from "@/components/reveal"
 import { ProjectImage } from "@/components/project-image"
+import { cn } from "@/lib/utils"
 
 type Project = {
   title: string
@@ -62,6 +66,21 @@ const projects: Project[] = [
 ]
 
 export function ProjectsSection() {
+  const [activeFilter, setActiveFilter] = useState("All")
+
+  const filters = useMemo(
+    () => ["All", ...Array.from(new Set(projects.map((p) => p.category)))],
+    [],
+  )
+
+  const visibleProjects = useMemo(
+    () =>
+      activeFilter === "All"
+        ? projects
+        : projects.filter((p) => p.category === activeFilter),
+    [activeFilter],
+  )
+
   return (
     <section id="projects" className="bg-background py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -80,9 +99,28 @@ export function ProjectsSection() {
           </p>
         </Reveal>
 
-        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {projects.map((project, index) => (
-            <Reveal key={project.title} delay={index * 120}>
+        <div className="mt-10 flex flex-wrap justify-center gap-3">
+          {filters.map((filter) => (
+            <button
+              key={filter}
+              type="button"
+              onClick={() => setActiveFilter(filter)}
+              aria-pressed={activeFilter === filter}
+              className={cn(
+                "rounded-full px-6 py-2.5 text-sm font-semibold uppercase tracking-wider transition-colors",
+                activeFilter === filter
+                  ? "bg-navy text-white shadow-sm"
+                  : "border border-border text-muted-foreground hover:border-navy/40 hover:text-foreground",
+              )}
+            >
+              {filter}
+            </button>
+          ))}
+        </div>
+
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {visibleProjects.map((project, index) => (
+            <Reveal key={project.title} delay={index * 80}>
               <article className="group h-full overflow-hidden rounded-xl border border-border bg-card shadow-sm transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/10">
                 <div className="relative overflow-hidden">
                   <ProjectImage src={project.image} alt={project.title} />
