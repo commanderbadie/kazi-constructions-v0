@@ -25,7 +25,7 @@ const faqs: Faq[] = [
   {
     label: "How can I contact you?",
     answer:
-      "Call us at +91 8801958508, email builders.kazi@gmail.com, or find us on Instagram @kazi_constructions. We're based in Rajendra Nagar, Hyderabad.",
+      "Call us at +91 8801958508, email kaziwaheeduddinsiddiqi@gmail.com, or find us on Instagram @kazi_constructions. We're based in Rajendra Nagar, Hyderabad.",
   },
   {
     label: "Where are you located?",

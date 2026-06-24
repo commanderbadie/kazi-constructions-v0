@@ -115,10 +115,10 @@ export function SiteFooter() {
             <ul className="mt-5 space-y-3 text-sm text-accent-foreground/70">
               <li>
                 <a
-                  href="mailto:builders.kazi@gmail.com"
+                  href="mailto:kaziwaheeduddinsiddiqi@gmail.com"
                   className="transition-colors hover:text-gold"
                 >
-                  builders.kazi@gmail.com
+                  kaziwaheeduddinsiddiqi@gmail.com
                 </a>
               </li>
               <li>
