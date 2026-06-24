@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { MapPin } from "lucide-react"
 import { Reveal } from "@/components/reveal"
 import { ProjectImage } from "@/components/project-image"
@@ -12,7 +12,22 @@ type Project = {
   location: string
   description: string
   image: string
+  gallery?: string[]
 }
+
+const interiorGallery = [
+  "/gallery/interior/modular-kitchen.jpg",
+  "/gallery/interior/interior-pics.jpg",
+  "/gallery/interior/dressing-table-4.jpg",
+  "/gallery/interior/dressing-table-5.jpg",
+  "/gallery/interior/dressing-table-8.jpg",
+  "/gallery/interior/dressing-table-9.jpg",
+  "/gallery/interior/dressing-table-10.jpg",
+  "/gallery/interior/dressing-table-12.jpg",
+  "/gallery/interior/dressing-table-13.jpg",
+  "/gallery/interior/dressing-table-14.jpg",
+  "/gallery/interior/dressing-table-16.jpg",
+]
 
 const projects: Project[] = [
   {
@@ -62,11 +77,14 @@ const projects: Project[] = [
     description:
       "Bespoke interior fit-out featuring custom joinery, lighting design, and premium finishes.",
     image: "/gallery/interior/modular-kitchen.jpg",
+    gallery: interiorGallery,
   },
 ]
 
 export function ProjectsSection() {
   const [activeFilter, setActiveFilter] = useState("All")
+  const [galleryProject, setGalleryProject] = useState<Project | null>(null)
+  const [lightbox, setLightbox] = useState<number | null>(null)
 
   const filters = useMemo(
     () => ["All", ...Array.from(new Set(projects.map((p) => p.category)))],
@@ -80,6 +98,41 @@ export function ProjectsSection() {
         : projects.filter((p) => p.category === activeFilter),
     [activeFilter],
   )
+
+  const galleryImages = galleryProject?.gallery ?? []
+
+  useEffect(() => {
+    if (!galleryProject) return
+
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") {
+        if (lightbox !== null) setLightbox(null)
+        else setGalleryProject(null)
+      }
+      if (lightbox !== null) {
+        if (e.key === "ArrowRight")
+          setLightbox((i) => (i === null ? i : (i + 1) % galleryImages.length))
+        if (e.key === "ArrowLeft")
+          setLightbox((i) =>
+            i === null ? i : (i - 1 + galleryImages.length) % galleryImages.length,
+          )
+      }
+    }
+
+    document.addEventListener("keydown", onKey)
+    const prevOverflow = document.body.style.overflow
+    document.body.style.overflow = "hidden"
+
+    return () => {
+      document.removeEventListener("keydown", onKey)
+      document.body.style.overflow = prevOverflow
+    }
+  }, [galleryProject, lightbox, galleryImages.length])
+
+  function closeGallery() {
+    setLightbox(null)
+    setGalleryProject(null)
+  }
 
   return (
     <section id="projects" className="bg-background py-20 lg:py-28">
@@ -120,34 +173,172 @@ export function ProjectsSection() {
 
         <Reveal className="mt-12">
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {visibleProjects.map((project) => (
-              <article
-                key={project.title}
-                className="group h-full overflow-hidden rounded-xl border border-border bg-card shadow-sm transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/10"
-              >
-                <div className="relative overflow-hidden">
-                  <ProjectImage src={project.image} alt={project.title} />
-                  <span className="absolute left-4 top-4 rounded-full bg-gold px-3 py-1 text-xs font-semibold uppercase tracking-wider text-gold-foreground">
-                    {project.category}
-                  </span>
-                </div>
-                <div className="p-6">
-                  <h3 className="font-heading text-lg font-bold leading-snug text-foreground">
-                    {project.title}
-                  </h3>
-                  <p className="mt-2 flex items-center gap-1.5 text-sm font-medium text-primary">
-                    <MapPin className="h-4 w-4 shrink-0" aria-hidden="true" />
-                    {project.location}
-                  </p>
-                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                    {project.description}
-                  </p>
-                </div>
-              </article>
-            ))}
+            {visibleProjects.map((project) => {
+              const hasGallery = !!project.gallery?.length
+              return (
+                <article
+                  key={project.title}
+                  className="group h-full overflow-hidden rounded-xl border border-border bg-card shadow-sm transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/10"
+                >
+                  <button
+                    type="button"
+                    onClick={() => hasGallery && setGalleryProject(project)}
+                    aria-label={
+                      hasGallery
+                        ? `View ${project.title} gallery`
+                        : project.title
+                    }
+                    className={cn(
+                      "relative block w-full overflow-hidden text-left",
+                      hasGallery ? "cursor-pointer" : "cursor-default",
+                    )}
+                  >
+                    <ProjectImage src={project.image} alt={project.title} />
+                    <span className="absolute left-4 top-4 rounded-full bg-gold px-3 py-1 text-xs font-semibold uppercase tracking-wider text-gold-foreground">
+                      {project.category}
+                    </span>
+                    {hasGallery && (
+                      <span className="absolute inset-0 flex items-center justify-center bg-navy/0 opacity-0 transition-all duration-300 group-hover:bg-navy/55 group-hover:opacity-100">
+                        <span className="rounded-full border border-gold bg-navy/70 px-5 py-2 text-xs font-semibold uppercase tracking-wider text-gold">
+                          View Gallery ({project.gallery!.length})
+                        </span>
+                      </span>
+                    )}
+                  </button>
+                  <div className="p-6">
+                    <h3 className="font-heading text-lg font-bold leading-snug text-foreground">
+                      {project.title}
+                    </h3>
+                    <p className="mt-2 flex items-center gap-1.5 text-sm font-medium text-primary">
+                      <MapPin className="h-4 w-4 shrink-0" aria-hidden="true" />
+                      {project.location}
+                    </p>
+                    <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                      {project.description}
+                    </p>
+                  </div>
+                </article>
+              )
+            })}
           </div>
         </Reveal>
       </div>
+
+      {/* Gallery modal */}
+      {galleryProject && (
+        <div
+          className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto bg-navy/70 p-4 backdrop-blur-md duration-300 animate-in fade-in-0 sm:p-8"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${galleryProject.title} gallery`}
+          onClick={closeGallery}
+        >
+          <div
+            className="relative my-auto w-full max-w-5xl rounded-2xl border border-gold/20 bg-card p-6 shadow-2xl duration-300 animate-in fade-in-0 zoom-in-95 sm:p-8"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <span className="text-xs font-semibold uppercase tracking-[0.18em] text-gold">
+                  {galleryProject.category}
+                </span>
+                <h3 className="mt-1 font-heading text-2xl font-extrabold text-foreground">
+                  {galleryProject.title}
+                </h3>
+              </div>
+              <button
+                type="button"
+                onClick={closeGallery}
+                aria-label="Close gallery"
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-gold hover:text-gold"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="h-5 w-5">
+                  <path d="M18 6L6 18M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3">
+              {galleryImages.map((src, index) => (
+                <button
+                  key={src}
+                  type="button"
+                  onClick={() => setLightbox(index)}
+                  style={{ animationDelay: `${index * 45}ms` }}
+                  className="group/item relative aspect-[4/3] overflow-hidden rounded-xl border-2 border-gold shadow-md duration-500 animate-in fade-in-0 zoom-in-95 fill-mode-both focus:outline-none focus-visible:ring-2 focus-visible:ring-gold"
+                  aria-label={`Open image ${index + 1}`}
+                >
+                  <img
+                    src={src}
+                    alt={`${galleryProject.title} — photo ${index + 1}`}
+                    loading="lazy"
+                    className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover/item:scale-110"
+                  />
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Single-image lightbox */}
+      {galleryProject && lightbox !== null && (
+        <div
+          className="fixed inset-0 z-[110] flex items-center justify-center bg-black/90 p-4 backdrop-blur-md duration-200 animate-in fade-in-0"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Image viewer"
+          onClick={() => setLightbox(null)}
+        >
+          <button
+            type="button"
+            onClick={() => setLightbox(null)}
+            aria-label="Close"
+            className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="h-5 w-5">
+              <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+          </button>
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation()
+              setLightbox((i) =>
+                i === null ? i : (i - 1 + galleryImages.length) % galleryImages.length,
+              )
+            }}
+            aria-label="Previous image"
+            className="absolute left-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20 sm:left-6"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+          </button>
+          <img
+            src={galleryImages[lightbox]}
+            alt={`${galleryProject.title} — enlarged photo`}
+            className="max-h-[85vh] max-w-[90vw] rounded-lg border-2 border-gold object-contain shadow-2xl duration-300 animate-in zoom-in-95"
+            onClick={(e) => e.stopPropagation()}
+          />
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation()
+              setLightbox((i) => (i === null ? i : (i + 1) % galleryImages.length))
+            }}
+            aria-label="Next image"
+            className="absolute right-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20 sm:right-6"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
+              <path d="M9 6l6 6-6 6" />
+            </svg>
+          </button>
+          <span className="absolute bottom-5 left-1/2 -translate-x-1/2 rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white">
+            {lightbox + 1} / {galleryImages.length}
+          </span>
+        </div>
+      )}
     </section>
   )
 }
