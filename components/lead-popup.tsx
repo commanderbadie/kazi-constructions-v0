@@ -4,7 +4,7 @@ import type React from "react"
 import { useEffect, useState } from "react"
 
 const STORAGE_KEY = "kazi-lead-popup-seen"
-const DELAY_MS = 5000
+const DELAY_MS = 20000
 
 function IndiaFlag() {
   return (
@@ -119,7 +119,7 @@ export function LeadPopup() {
 
         {submitted ? (
           <div className="py-10 text-center">
-            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[#ef6c2d]/10 text-[#ef6c2d]">
+            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-7 w-7">
                 <path d="M20 6L9 17l-5-5" />
               </svg>
@@ -134,7 +134,7 @@ export function LeadPopup() {
             <button
               type="button"
               onClick={() => setOpen(false)}
-              className="mt-6 rounded-full bg-[#ef6c2d] px-6 py-3 text-sm font-semibold uppercase tracking-wider text-white transition-colors hover:bg-[#d95f24]"
+              className="mt-6 rounded-full bg-primary px-6 py-3 text-sm font-semibold uppercase tracking-wider text-primary-foreground transition-colors hover:bg-primary/90"
             >
               Close
             </button>
@@ -155,6 +155,7 @@ export function LeadPopup() {
             <form onSubmit={handleSubmit} className="mt-6 space-y-4">
               <input
                 type="text"
+                name="name"
                 required
                 placeholder="Full Name*"
                 aria-label="Full Name"
@@ -167,6 +168,7 @@ export function LeadPopup() {
                 </span>
                 <input
                   type="tel"
+                  name="phone"
                   required
                   placeholder="Mobile Number*"
                   aria-label="Mobile Number"
@@ -175,6 +177,7 @@ export function LeadPopup() {
               </div>
               <input
                 type="text"
+                name="location"
                 required
                 placeholder="Location of your plot*"
                 aria-label="Location of your plot"
@@ -182,16 +185,16 @@ export function LeadPopup() {
               />
               <button
                 type="submit"
-                className="w-full rounded-lg bg-[#ef6c2d] px-6 py-3.5 text-base font-bold uppercase tracking-wide text-white shadow-md transition-colors hover:bg-[#d95f24]"
+                className="w-full rounded-lg bg-primary px-6 py-3.5 text-base font-bold uppercase tracking-wide text-primary-foreground shadow-md transition-colors hover:bg-primary/90"
               >
                 Start Your Construction
               </button>
             </form>
 
             <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
-              <span className="text-[#ef6c2d]">*</span>By submitting, you agree to
+              <span className="text-gold">*</span>By submitting, you agree to
               our{" "}
-              <a href="#" className="font-medium text-[#ef6c2d] hover:underline">
+              <a href="#" className="font-medium text-primary hover:underline">
                 Privacy Policy,
               </a>{" "}
               allowing us to use your information as outlined
@@ -200,7 +203,7 @@ export function LeadPopup() {
             <div className="mt-6 grid grid-cols-3 gap-3 border-t border-border pt-6 text-center">
               {trustBadges.map((badge) => (
                 <div key={badge.label} className="flex flex-col items-center">
-                  <span className="text-[#ef6c2d]">{badge.icon}</span>
+                  <span className="text-gold">{badge.icon}</span>
                   <span className="mt-2 font-heading text-lg font-extrabold text-accent">
                     {badge.value}
                   </span>
