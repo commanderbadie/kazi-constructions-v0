@@ -142,6 +142,29 @@ export function ContactSection() {
             </form>
           </div>
         </div>
+
+        <div className="mt-12">
+          <div className="mb-4 flex items-center gap-2">
+            <MapPin className="h-5 w-5 text-primary" aria-hidden="true" />
+            <h3 className="font-heading text-lg font-bold uppercase tracking-tight">
+              Visit our office
+            </h3>
+          </div>
+          <div className="overflow-hidden rounded-xl border border-border bg-card shadow-sm">
+            <iframe
+              title="Kazi Constructions office location on Google Maps"
+              src={`https://maps.google.com/maps?q=${encodeURIComponent(
+                "Wadi-E-Mahmood, Suleman Nagar, Rajendra Nagar, Hyderabad 500052",
+              )}&z=15&output=embed`}
+              width="100%"
+              height="400"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="block w-full border-0"
+              allowFullScreen
+            />
+          </div>
+        </div>
       </div>
     </section>
   )
