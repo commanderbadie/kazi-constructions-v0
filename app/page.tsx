@@ -5,6 +5,7 @@ import { ProcessSection } from "@/components/process-section"
 import { TestimonialsSection } from "@/components/testimonials-section"
 import { ServicesSection } from "@/components/services-section"
 import { ProjectsSection } from "@/components/projects-section"
+import { WhoWeAreSection } from "@/components/who-we-are-section"
 import { ContactSection } from "@/components/contact-section"
 import { SiteFooter } from "@/components/site-footer"
 import { SectionDivider } from "@/components/section-divider"
@@ -24,6 +25,8 @@ export default function Page() {
         <ServicesSection />
         <SectionDivider />
         <ProjectsSection />
+        <SectionDivider />
+        <WhoWeAreSection />
         <SectionDivider />
         <ContactSection />
       </main>
