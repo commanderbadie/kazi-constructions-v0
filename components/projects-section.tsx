@@ -118,10 +118,13 @@ export function ProjectsSection() {
           ))}
         </div>
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {visibleProjects.map((project, index) => (
-            <Reveal key={project.title} delay={index * 80}>
-              <article className="group h-full overflow-hidden rounded-xl border border-border bg-card shadow-sm transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/10">
+        <Reveal className="mt-12">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {visibleProjects.map((project) => (
+              <article
+                key={project.title}
+                className="group h-full overflow-hidden rounded-xl border border-border bg-card shadow-sm transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/10"
+              >
                 <div className="relative overflow-hidden">
                   <ProjectImage src={project.image} alt={project.title} />
                   <span className="absolute left-4 top-4 rounded-full bg-gold px-3 py-1 text-xs font-semibold uppercase tracking-wider text-gold-foreground">
@@ -141,9 +144,9 @@ export function ProjectsSection() {
                   </p>
                 </div>
               </article>
-            </Reveal>
-          ))}
-        </div>
+            ))}
+          </div>
+        </Reveal>
       </div>
     </section>
   )
