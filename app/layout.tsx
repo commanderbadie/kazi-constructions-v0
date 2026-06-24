@@ -2,6 +2,7 @@ import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Geist, Archivo } from 'next/font/google'
 import { LeadPopup } from '@/components/lead-popup'
+import { Preloader } from '@/components/preloader'
 import './globals.css'
 
 const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] })
@@ -34,6 +35,7 @@ export default function RootLayout({
       className={`light ${geistSans.variable} ${archivo.variable} bg-background`}
     >
       <body className="font-sans antialiased">
+        <Preloader />
         {children}
         <LeadPopup />
         {process.env.NODE_ENV === 'production' && <Analytics />}

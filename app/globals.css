@@ -308,3 +308,65 @@
     animation: none;
   }
 }
+
+
+/* Site preloader: logo + running gold line */
+.kazi-preloader-logo {
+  animation: kazi-preloader-float 2.4s ease-in-out infinite;
+}
+
+.kazi-loader-track {
+  position: relative;
+  margin-top: 2.25rem;
+  height: 2px;
+  width: 200px;
+  overflow: hidden;
+  border-radius: 9999px;
+  background: color-mix(in oklch, var(--gold) 16%, transparent);
+}
+
+.kazi-loader-bar {
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  width: 42%;
+  border-radius: 9999px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--gold) 45%,
+    color-mix(in oklch, var(--gold) 80%, white),
+    var(--gold) 55%,
+    transparent
+  );
+  box-shadow: 0 0 12px 0 color-mix(in oklch, var(--gold) 70%, transparent);
+  animation: kazi-loader-run 1.3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes kazi-loader-run {
+  0% {
+    transform: translateX(-110%);
+  }
+  100% {
+    transform: translateX(345%);
+  }
+}
+
+@keyframes kazi-preloader-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kazi-preloader-logo {
+    animation: none;
+  }
+  .kazi-loader-bar {
+    animation-duration: 2.2s;
+  }
+}
