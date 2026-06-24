@@ -26,37 +26,10 @@ function WhatsAppIcon({ className }: { className?: string }) {
 
 export function ContactSection() {
   const [submitted, setSubmitted] = useState(false)
-  const [submitting, setSubmitting] = useState(false)
-  const [error, setError] = useState(false)
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    const form = e.currentTarget
-    const fd = new FormData(form)
-
-    setSubmitting(true)
-    setError(false)
-    try {
-      const res = await fetch("/api/lead", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: fd.get("name"),
-          email: fd.get("email"),
-          phone: fd.get("phone"),
-          message: fd.get("message"),
-          source: "consultation",
-        }),
-      })
-      const json = await res.json()
-      if (!res.ok || !json.ok) throw new Error("failed")
-      setSubmitted(true)
-      form.reset()
-    } catch {
-      setError(true)
-    } finally {
-      setSubmitting(false)
-    }
+    setSubmitted(true)
   }
 
   return (
@@ -181,20 +154,13 @@ export function ContactSection() {
 
               <button
                 type="submit"
-                disabled={submitting}
-                className="mt-6 w-full rounded-full bg-primary px-6 py-3.5 text-sm font-semibold uppercase tracking-wider text-primary-foreground shadow-md transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
+                className="mt-6 w-full rounded-full bg-primary px-6 py-3.5 text-sm font-semibold uppercase tracking-wider text-primary-foreground shadow-md transition-colors hover:bg-primary/90"
               >
-                {submitting ? "Sending..." : "Send Inquiry"}
+                Send Inquiry
               </button>
               {submitted && (
                 <p className="mt-4 text-sm font-medium text-primary" role="status">
                   Thanks! We&apos;ve received your message and will be in touch soon.
-                </p>
-              )}
-              {error && (
-                <p className="mt-4 text-sm font-medium text-destructive" role="alert">
-                  Sorry, something went wrong. Please try again or email us
-                  directly.
                 </p>
               )}
             </form>

@@ -58,8 +58,6 @@ const inputClass =
 export function LeadPopup() {
   const [open, setOpen] = useState(false)
   const [submitted, setSubmitted] = useState(false)
-  const [submitting, setSubmitting] = useState(false)
-  const [error, setError] = useState(false)
 
   useEffect(() => {
     if (typeof window === "undefined") return
@@ -91,32 +89,9 @@ export function LeadPopup() {
 
   if (!open) return null
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    const form = e.currentTarget
-    const fd = new FormData(form)
-
-    setSubmitting(true)
-    setError(false)
-    try {
-      const res = await fetch("/api/lead", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: fd.get("name"),
-          phone: fd.get("phone"),
-          location: fd.get("location"),
-          source: "popup",
-        }),
-      })
-      const json = await res.json()
-      if (!res.ok || !json.ok) throw new Error("failed")
-      setSubmitted(true)
-    } catch {
-      setError(true)
-    } finally {
-      setSubmitting(false)
-    }
+    setSubmitted(true)
   }
 
   return (
@@ -210,16 +185,10 @@ export function LeadPopup() {
               />
               <button
                 type="submit"
-                disabled={submitting}
-                className="w-full rounded-lg bg-[#ef6c2d] px-6 py-3.5 text-base font-bold uppercase tracking-wide text-white shadow-md transition-colors hover:bg-[#d95f24] disabled:cursor-not-allowed disabled:opacity-70"
+                className="w-full rounded-lg bg-[#ef6c2d] px-6 py-3.5 text-base font-bold uppercase tracking-wide text-white shadow-md transition-colors hover:bg-[#d95f24]"
               >
-                {submitting ? "Sending..." : "Start Your Construction"}
+                Start Your Construction
               </button>
-              {error && (
-                <p className="text-sm font-medium text-destructive" role="alert">
-                  Something went wrong. Please try again.
-                </p>
-              )}
             </form>
 
             <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
