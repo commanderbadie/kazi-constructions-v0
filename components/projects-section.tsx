@@ -61,7 +61,7 @@ const projects: Project[] = [
     location: "Banjara Hills, Hyderabad",
     description:
       "Bespoke interior fit-out featuring custom joinery, lighting design, and premium finishes.",
-    image: "/projects/interior-suite.svg",
+    image: "/gallery/interior/modular-kitchen.jpg",
   },
 ]
 
