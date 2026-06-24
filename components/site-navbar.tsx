@@ -140,11 +140,7 @@ export function SiteNavbar() {
           <Button
             size="lg"
             nativeButton={false}
-            className={`rounded-lg border px-6 shadow-md transition-colors duration-300 ${
-              onDark
-                ? "border-gold bg-gold text-gold-foreground hover:bg-gold/90"
-                : "border-gold/60 bg-accent text-accent-foreground hover:bg-accent/90"
-            }`}
+            className="h-auto rounded-full bg-primary px-6 py-2.5 text-sm font-semibold uppercase tracking-wide text-primary-foreground shadow-md transition-colors duration-300 hover:bg-primary/90"
             render={<a href="#contact" />}
           >
             Get a Quote
@@ -182,7 +178,7 @@ export function SiteNavbar() {
               </a>
             ))}
             <Button
-              className="mt-2 border border-gold/60 bg-accent text-accent-foreground hover:bg-accent/90"
+              className="mt-2 rounded-full bg-primary px-6 py-2.5 text-sm font-semibold uppercase tracking-wide text-primary-foreground hover:bg-primary/90"
               nativeButton={false}
               render={<a href="#contact" onClick={() => setOpen(false)} />}
             >
