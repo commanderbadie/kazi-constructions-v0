@@ -29,6 +29,11 @@ const interiorGallery = [
   "/gallery/interior/dressing-table-16.jpg",
 ]
 
+const circulationGallery = Array.from(
+  { length: 15 },
+  (_, i) => `/gallery/circulation/circulation-${i + 1}.jpg`,
+)
+
 const projects: Project[] = [
   {
     title: "Hillcrest Family Residence",
@@ -36,7 +41,8 @@ const projects: Project[] = [
     location: "Rajendra Nagar, Hyderabad",
     description:
       "A modern 4-bedroom villa with open-plan living, completed turnkey from design to handover.",
-    image: "/projects/residential-villa.svg",
+    image: "/gallery/circulation/circulation-1.jpg",
+    gallery: circulationGallery,
   },
   {
     title: "Summit Business Tower",
