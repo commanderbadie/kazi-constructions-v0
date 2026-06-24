@@ -1,0 +1,90 @@
+import { Star, Quote } from "lucide-react"
+import { Reveal } from "@/components/reveal"
+
+type Testimonial = {
+  quote: string
+  name: string
+  role: string
+  initials: string
+}
+
+const testimonials: Testimonial[] = [
+  {
+    quote:
+      "Kazi delivered our headquarters ahead of schedule and beyond our expectations. Their engineering discipline is exceptional.",
+    name: "Elena Vasquez",
+    role: "CEO, Meridian Group",
+    initials: "EV",
+  },
+  {
+    quote:
+      "From design to handover, every promise was kept. The craftsmanship in our estate is simply unmatched.",
+    name: "James Whitlock",
+    role: "Private Client",
+    initials: "JW",
+  },
+  {
+    quote:
+      "A rare partner that combines luxury finish with serious civil engineering capability. We trust them completely.",
+    name: "Dr. Amara Okoye",
+    role: "Director, City Infrastructure Authority",
+    initials: "AO",
+  },
+]
+
+export function TestimonialsSection() {
+  return (
+    <section id="testimonials" className="bg-muted py-20 lg:py-28">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <Reveal>
+          <div className="mx-auto max-w-2xl text-center">
+            <span className="inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.2em] text-gold">
+              <span className="h-px w-8 bg-gold" aria-hidden="true" />
+              Client Voices
+            </span>
+            <h2 className="mt-4 font-heading text-4xl font-extrabold tracking-tight text-balance text-foreground sm:text-5xl">
+              Trusted by those who{" "}
+              <span className="font-normal italic text-primary">
+                demand the best
+              </span>
+            </h2>
+          </div>
+        </Reveal>
+
+        <div className="mt-14 grid gap-6 md:grid-cols-3 lg:gap-8">
+          {testimonials.map((item, index) => (
+            <Reveal key={item.name} delay={index * 100}>
+              <figure className="relative h-full rounded-2xl border border-border bg-card p-8 shadow-sm">
+                <Quote
+                  className="absolute right-6 top-6 h-9 w-9 text-gold/25"
+                  aria-hidden="true"
+                />
+                <div className="flex gap-1 text-gold" aria-label="Rated 5 out of 5">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star key={i} className="h-4 w-4 fill-current" aria-hidden="true" />
+                  ))}
+                </div>
+                <blockquote className="mt-5 italic leading-relaxed text-foreground/80">
+                  {item.quote}
+                </blockquote>
+                <figcaption className="mt-6 flex items-center gap-3">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary">
+                    {item.initials}
+                  </span>
+                  <span>
+                    <span className="block font-bold text-foreground">
+                      {item.name}
+                    </span>
+                    <span className="block text-sm text-muted-foreground">
+                      {item.role}
+                    </span>
+                  </span>
+                </figcaption>
+              </figure>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
