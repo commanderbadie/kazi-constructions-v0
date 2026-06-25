@@ -15,19 +15,10 @@ type Project = {
   gallery?: string[]
 }
 
-const interiorGallery = [
-  "/gallery/interior/modular-kitchen.jpg",
-  "/gallery/interior/interior-pics.jpg",
-  "/gallery/interior/dressing-table-4.jpg",
-  "/gallery/interior/dressing-table-5.jpg",
-  "/gallery/interior/dressing-table-8.jpg",
-  "/gallery/interior/dressing-table-9.jpg",
-  "/gallery/interior/dressing-table-10.jpg",
-  "/gallery/interior/dressing-table-12.jpg",
-  "/gallery/interior/dressing-table-13.jpg",
-  "/gallery/interior/dressing-table-14.jpg",
-  "/gallery/interior/dressing-table-16.jpg",
-]
+const interiorGallery = Array.from(
+  { length: 15 },
+  (_, i) => `/gallery/interior/interior-${i + 1}.jpg`,
+)
 
 const circulationGallery = Array.from(
   { length: 15 },
@@ -64,7 +55,7 @@ const projects: Project[] = [
     category: "Interior",
     description:
       "Interior fit-outs — modular kitchens, custom joinery, dressing units and premium finishes.",
-    image: "/gallery/interior/modular-kitchen.jpg",
+    image: "/gallery/interior/interior-1.jpg",
     gallery: interiorGallery,
   },
 ]
