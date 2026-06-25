@@ -16,7 +16,7 @@ type Project = {
 }
 
 const interiorGallery = Array.from(
-  { length: 15 },
+  { length: 11 },
   (_, i) => `/gallery/interior/interior-${i + 1}.jpg`,
 )
 
