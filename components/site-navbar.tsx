@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react"
 import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { BrandLogo } from "@/components/brand-logo"
+import { useAuth } from "@/components/auth-provider"
 
 const navLinks = [
   { label: "Home", href: "#home" },
@@ -14,6 +15,7 @@ const navLinks = [
 ]
 
 export function SiteNavbar() {
+  const { user } = useAuth()
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [overLight, setOverLight] = useState(false)
@@ -136,7 +138,30 @@ export function SiteNavbar() {
           />
         </nav>
 
-        <div className="hidden md:block">
+        <div className="hidden items-center gap-3 md:flex">
+          {user ? (
+            <a
+              href="/account"
+              className={`text-sm font-semibold transition-colors duration-300 ${
+                onDark
+                  ? "text-accent-foreground/80 hover:text-accent-foreground"
+                  : "text-accent/80 hover:text-accent"
+              }`}
+            >
+              My Account
+            </a>
+          ) : (
+            <a
+              href="/login"
+              className={`text-sm font-semibold transition-colors duration-300 ${
+                onDark
+                  ? "text-accent-foreground/80 hover:text-accent-foreground"
+                  : "text-accent/80 hover:text-accent"
+              }`}
+            >
+              Log In
+            </a>
+          )}
           <Button
             size="lg"
             nativeButton={false}
@@ -184,6 +209,32 @@ export function SiteNavbar() {
             >
               Get a Quote
             </Button>
+            {user ? (
+              <a
+                href="/account"
+                onClick={() => setOpen(false)}
+                className="mt-1 rounded-md px-3 py-2.5 text-center text-sm font-semibold text-foreground hover:bg-muted"
+              >
+                My Account
+              </a>
+            ) : (
+              <div className="mt-1 flex gap-2">
+                <a
+                  href="/login"
+                  onClick={() => setOpen(false)}
+                  className="flex-1 rounded-md border border-border px-3 py-2.5 text-center text-sm font-semibold text-foreground hover:bg-muted"
+                >
+                  Log In
+                </a>
+                <a
+                  href="/signup"
+                  onClick={() => setOpen(false)}
+                  className="flex-1 rounded-md border border-border px-3 py-2.5 text-center text-sm font-semibold text-foreground hover:bg-muted"
+                >
+                  Sign Up
+                </a>
+              </div>
+            )}
           </nav>
         </div>
       )}
