@@ -141,6 +141,11 @@ export default function AccountPage() {
               it to unlock your full account. Once done, hit{" "}
               <span className="font-semibold">"I've verified"</span> below.
             </p>
+            <p className="mt-2 rounded-lg bg-white/5 px-3 py-2 text-sm text-accent-foreground/70">
+              📩 <span className="font-semibold text-accent-foreground/90">Can't find the email?</span>{" "}
+              Please check your <span className="font-semibold">spam / junk</span>{" "}
+              folder — it sometimes lands there. You can also tap "Resend email" below.
+            </p>
             <div className="mt-4 flex flex-wrap gap-3">
               <button
                 type="button"
