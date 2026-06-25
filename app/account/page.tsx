@@ -3,7 +3,9 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { sendEmailVerification } from "firebase/auth"
+import { collection, getDocs, query, where } from "firebase/firestore"
 import { getFirebaseAuth } from "@/lib/firebase"
+import { getDb, type Enquiry } from "@/lib/firestore"
 import { useAuth } from "@/components/auth-provider"
 import { BrandLogo } from "@/components/brand-logo"
 
@@ -12,6 +14,8 @@ export default function AccountPage() {
   const { user, loading, configured, signOut, refresh } = useAuth()
   const [notice, setNotice] = useState<string | null>(null)
   const [busy, setBusy] = useState(false)
+  const [enquiries, setEnquiries] = useState<Enquiry[]>([])
+  const [enquiriesLoading, setEnquiriesLoading] = useState(true)
 
   // Not logged in → send to login.
   useEffect(() => {
@@ -19,6 +23,44 @@ export default function AccountPage() {
       router.replace("/login")
     }
   }, [loading, configured, user, router])
+
+  // Load this customer's enquiry history.
+  useEffect(() => {
+    if (!user || !configured) return
+    let active = true
+    ;(async () => {
+      setEnquiriesLoading(true)
+      try {
+        const q = query(
+          collection(getDb(), "enquiries"),
+          where("uid", "==", user.uid),
+        )
+        const snap = await getDocs(q)
+        const list = snap.docs.map(
+          (d) => ({ id: d.id, ...(d.data() as Omit<Enquiry, "id">) }),
+        )
+        // Sort newest first (client-side, so no Firestore index needed).
+        list.sort((a, b) => (b.createdAt?.seconds ?? 0) - (a.createdAt?.seconds ?? 0))
+        if (active) setEnquiries(list)
+      } catch (err) {
+        console.error("Could not load enquiries:", err)
+      } finally {
+        if (active) setEnquiriesLoading(false)
+      }
+    })()
+    return () => {
+      active = false
+    }
+  }, [user, configured])
+
+  function formatDate(ts: Enquiry["createdAt"]): string {
+    if (!ts) return "Just now"
+    return new Date(ts.seconds * 1000).toLocaleDateString(undefined, {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    })
+  }
 
   async function handleResend() {
     if (!user) return
@@ -152,22 +194,65 @@ export default function AccountPage() {
           </div>
         </div>
 
-        {/* Friendly placeholder for the future customer portal */}
+        {/* Enquiry history */}
         <div className="mt-8 rounded-2xl border border-white/10 bg-white/5 p-6">
           <h2 className="font-heading text-lg font-bold text-accent-foreground">
-            Your projects & enquiries
+            Your enquiries
           </h2>
-          <p className="mt-2 text-sm leading-relaxed text-accent-foreground/70">
-            This is where you'll soon be able to track your project status, view
-            quotes, and access shared documents. We're building it out — stay
-            tuned!
+
+          {enquiriesLoading ? (
+            <p className="mt-3 text-sm text-accent-foreground/60">Loading…</p>
+          ) : enquiries.length === 0 ? (
+            <div className="mt-3">
+              <p className="text-sm leading-relaxed text-accent-foreground/70">
+                You haven't sent any enquiries yet. When you submit the contact
+                form while logged in, it'll show up here.
+              </p>
+              <a
+                href="/#contact"
+                className="mt-4 inline-block rounded-full bg-gold px-5 py-2.5 text-sm font-semibold text-gold-foreground transition-colors hover:bg-gold/90"
+              >
+                Send your first enquiry
+              </a>
+            </div>
+          ) : (
+            <ul className="mt-4 space-y-3">
+              {enquiries.map((enq) => (
+                <li
+                  key={enq.id}
+                  className="rounded-xl border border-white/10 bg-accent/40 p-4"
+                >
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="text-xs font-semibold uppercase tracking-wider text-gold">
+                      Enquiry
+                    </span>
+                    <span className="text-xs text-accent-foreground/50">
+                      {formatDate(enq.createdAt)}
+                    </span>
+                  </div>
+                  <p className="mt-2 text-sm leading-relaxed text-accent-foreground/85">
+                    {enq.message}
+                  </p>
+                  {enq.phone && (
+                    <p className="mt-2 text-xs text-accent-foreground/50">
+                      Contact: {enq.phone}
+                    </p>
+                  )}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+
+        {/* Coming soon: project tracking & documents */}
+        <div className="mt-6 rounded-2xl border border-dashed border-white/15 bg-transparent p-6">
+          <h2 className="font-heading text-lg font-bold text-accent-foreground">
+            Project tracking & documents
+          </h2>
+          <p className="mt-2 text-sm leading-relaxed text-accent-foreground/60">
+            Soon you'll be able to track your project's progress and download
+            quotes & documents shared by our team. Coming next!
           </p>
-          <a
-            href="/#contact"
-            className="mt-4 inline-block rounded-full bg-gold px-5 py-2.5 text-sm font-semibold text-gold-foreground transition-colors hover:bg-gold/90"
-          >
-            Start a new enquiry
-          </a>
         </div>
       </div>
     </main>
