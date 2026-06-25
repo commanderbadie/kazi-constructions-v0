@@ -15,12 +15,9 @@ import {
   importContentJson,
 } from "@/lib/use-site-content"
 
-// NOTE: This passcode is a lightweight, client-side gate to keep the editor
-// out of casual reach. It is NOT real security — anyone determined can read it
-// in the page source. Real authentication needs a backend, which we can add
-// later when you're ready.
-const ADMIN_PASSCODE = "kazi2024"
-const AUTH_KEY = "kazi-admin-authed"
+// Access to this page is protected by real server-side auth (see middleware.ts
+// and /api/admin/login). By the time this component renders, the request has
+// already passed the session check, so there's no client-side gate here.
 
 type SectionId =
   | "company"
@@ -190,64 +187,10 @@ function AddButton({ label, onClick }: { label: string; onClick: () => void }) {
 
 /* ------------------------------- Passcode -------------------------------- */
 
-function PasscodeGate({ onUnlock }: { onUnlock: () => void }) {
-  const [value, setValue] = useState("")
-  const [error, setError] = useState(false)
-
-  function submit(e: React.FormEvent) {
-    e.preventDefault()
-    if (value === ADMIN_PASSCODE) {
-      window.sessionStorage.setItem(AUTH_KEY, "1")
-      onUnlock()
-    } else {
-      setError(true)
-    }
-  }
-
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-900 px-4">
-      <form
-        onSubmit={submit}
-        className="w-full max-w-sm rounded-2xl border border-slate-700 bg-slate-800 p-8 shadow-2xl"
-      >
-        <h1 className="text-center font-heading text-2xl font-extrabold text-white">
-          Kazi Admin
-        </h1>
-        <p className="mt-2 text-center text-sm text-slate-400">
-          Enter the passcode to manage site content.
-        </p>
-        <input
-          autoFocus
-          type="password"
-          value={value}
-          onChange={(e) => {
-            setValue(e.target.value)
-            setError(false)
-          }}
-          placeholder="Passcode"
-          className="mt-6 w-full rounded-lg border border-slate-600 bg-slate-900 px-4 py-3 text-center text-sm text-white outline-none transition focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20"
-        />
-        {error && (
-          <p className="mt-2 text-center text-sm text-red-400">
-            Incorrect passcode. Try again.
-          </p>
-        )}
-        <button
-          type="submit"
-          className="mt-4 w-full rounded-lg bg-amber-400 py-3 text-sm font-bold uppercase tracking-wider text-slate-900 transition hover:bg-amber-300"
-        >
-          Unlock
-        </button>
-      </form>
-    </div>
-  )
-}
-
 /* -------------------------------- Editor --------------------------------- */
 
 export default function AdminPage() {
   const [ready, setReady] = useState(false)
-  const [authed, setAuthed] = useState(false)
   const [draft, setDraft] = useState<SiteContent>(defaultContent)
   const [savedSnapshot, setSavedSnapshot] = useState<string>(
     JSON.stringify(defaultContent),
@@ -258,7 +201,6 @@ export default function AdminPage() {
   const [importText, setImportText] = useState("")
 
   useEffect(() => {
-    setAuthed(window.sessionStorage.getItem(AUTH_KEY) === "1")
     const stored = readStoredContent()
     setDraft(stored)
     setSavedSnapshot(JSON.stringify(stored))
@@ -328,9 +270,13 @@ export default function AdminPage() {
     }
   }
 
-  function logout() {
-    window.sessionStorage.removeItem(AUTH_KEY)
-    setAuthed(false)
+  async function logout() {
+    try {
+      await fetch("/api/admin/logout", { method: "POST" })
+    } catch {
+      // even if the request fails, send them to the login screen
+    }
+    window.location.assign("/admin/login")
   }
 
   // Helpers to update nested draft immutably.
@@ -347,10 +293,6 @@ export default function AdminPage() {
         Loading…
       </div>
     )
-  }
-
-  if (!authed) {
-    return <PasscodeGate onUnlock={() => setAuthed(true)} />
   }
 
   return (
@@ -422,7 +364,7 @@ export default function AdminPage() {
             onClick={logout}
             className="rounded-lg px-2 py-2 text-sm font-semibold text-slate-400 transition hover:text-slate-700"
           >
-            Lock
+            Sign out
           </button>
         </div>
       </header>
