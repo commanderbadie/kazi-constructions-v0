@@ -91,7 +91,7 @@ export const defaultContent: SiteContent = {
     name: "Kazi Constructions",
     tagline: "Architects · Engineers · Consultants",
     footerBlurb:
-      "Building landmarks of enduring excellence since 1998. Architecture, engineering and luxury construction under one accountable roof.",
+      "Building landmarks of enduring excellence since 2018. Architecture, engineering and luxury construction under one accountable roof.",
   },
   contact: {
     phoneDisplay: "+91 88019 58508",
@@ -105,8 +105,8 @@ export const defaultContent: SiteContent = {
     shortAddress: "4-25-2/3/3, Suleman Nagar, Rajendra Nagar, Hyderabad",
     mapAddress:
       "KAZI CONSTRUCTIONS, Suleman Nagar, Chintalmet, Hyderabad, Telangana 500052",
-    officeHoursWeekday: "Mon–Fri: 8:00am – 6:00pm",
-    officeHoursSaturday: "Sat: 9:00am – 1:00pm",
+    officeHoursWeekday: "Mon–Fri: 9:00am – 5:00pm",
+    officeHoursSaturday: "Sat: 10:00am – 1:00pm",
     instagramUrl: "https://instagram.com/kazi_constructions",
     linkedinUrl:
       "https://www.linkedin.com/in/kazi-waheeduddin-siddiqi-1a4569138",
@@ -118,10 +118,10 @@ export const defaultContent: SiteContent = {
     paragraph:
       "Kazi Constructions delivers residential, commercial, and industrial projects with precision engineering, transparent costing, and uncompromising craftsmanship across Hyderabad.",
     stats: [
-      { value: "20+", label: "Years Experience" },
-      { value: "450+", label: "Projects Delivered" },
+      { value: "10+", label: "Years Experience" },
+      { value: "25+", label: "Projects Delivered" },
       { value: "98%", label: "Client Satisfaction" },
-      { value: "120+", label: "Expert Team" },
+      { value: "1-on-1 Project Consultation", label: "Project Consultation" },
     ],
   },
   about: {
@@ -140,10 +140,10 @@ export const defaultContent: SiteContent = {
       "Dedicated project managers",
     ],
     counters: [
-      { end: 20, suffix: "+", label: "Years of Experience" },
-      { end: 450, suffix: "+", label: "Completed Projects" },
-      { end: 600, suffix: "+", label: "Happy Clients" },
-      { end: 18, suffix: "", label: "Ongoing Projects" },
+      { end: 10, suffix: "+", label: "Years of Experience" },
+      { end: 49, suffix: "+", label: "Completed Projects" },
+      { end: 141, suffix: "+", label: "Happy Clients" },
+      { end: 5, suffix: "", label: "Ongoing Projects" },
     ],
   },
   services: [
@@ -189,7 +189,7 @@ export const defaultContent: SiteContent = {
       quote:
         "Kazi delivered our headquarters ahead of schedule and beyond our expectations. Their engineering discipline is exceptional.",
       name: "Elena Vasquez",
-      role: "CEO, Meridian Group",
+      role: "Private Client",
       initials: "EV",
     },
     {
@@ -203,7 +203,7 @@ export const defaultContent: SiteContent = {
       quote:
         "A rare partner that combines luxury finish with serious civil engineering capability. We trust them completely.",
       name: "Dr. Amara Okoye",
-      role: "Director, City Infrastructure Authority",
+      role: "Private Client",
       initials: "AO",
     },
   ],
