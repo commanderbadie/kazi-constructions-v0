@@ -21,7 +21,7 @@ const interiorGallery = Array.from(
 )
 
 const circulationGallery = Array.from(
-  { length: 15 },
+  { length: 9 },
   (_, i) => `/gallery/circulation/circulation-${i + 1}.jpg`,
 )
 
