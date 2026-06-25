@@ -16,3 +16,22 @@ export type Enquiry = {
   message: string
   createdAt: { seconds: number; nanoseconds: number } | null
 }
+
+export type ProjectUpdate = { text: string; at: string }
+
+export const PROJECT_STATUSES = [
+  "Planning",
+  "In Progress",
+  "On Hold",
+  "Completed",
+] as const
+
+export type Project = {
+  id: string
+  customerEmail: string
+  title: string
+  status: string
+  progress: number
+  updates: ProjectUpdate[]
+  createdAt: { seconds: number; nanoseconds: number } | null
+}
