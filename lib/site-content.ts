@@ -121,7 +121,7 @@ export const defaultContent: SiteContent = {
       { value: "10+", label: "Years Experience" },
       { value: "25+", label: "Projects Delivered" },
       { value: "98%", label: "Client Satisfaction" },
-      { value: "1-on-1 Project Consultation", label: "Project Consultation" },
+      { value: "1-on-1", label: "Project Consultation" },
     ],
   },
   about: {
