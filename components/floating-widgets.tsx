@@ -2,37 +2,11 @@
 
 import { useState, useRef, useEffect } from "react"
 import { MessageCircle, X, Send, Bot } from "lucide-react"
-
-const WHATSAPP_NUMBER = "918801958508"
-const WHATSAPP_MESSAGE =
-  "Hello Kazi Constructions! I'd like to enquire about your construction services."
+import { useSiteContent } from "@/lib/use-site-content"
 
 type ChatMessage = { from: "bot" | "user"; text: string }
 
 type Faq = { label: string; answer: string }
-
-const faqs: Faq[] = [
-  {
-    label: "What services do you offer?",
-    answer:
-      "We handle residential & commercial construction, turnkey design-build, renovation & remodeling, industrial & warehouse builds, architectural design, project management, and civil/structural consultancy.",
-  },
-  {
-    label: "How do I get a quote?",
-    answer:
-      "Fill out the 'Get in touch' form in our Contact section with your project details, or message us on WhatsApp — we'll reply with a free, no-obligation quote.",
-  },
-  {
-    label: "How can I contact you?",
-    answer:
-      "Call us at +91 8801958508, email kaziwaheeduddinsiddiqi@gmail.com, or find us on Instagram @kazi_constructions. We're based in Rajendra Nagar, Hyderabad.",
-  },
-  {
-    label: "Where are you located?",
-    answer:
-      "4-25-2/3/3, Wadi-E-Mahmood, Suleman Nagar, Rajendra Nagar, PVNR Pillar No.242, Hyderabad - 500052.",
-  },
-]
 
 function WhatsAppIcon({ className }: { className?: string }) {
   return (
@@ -48,6 +22,7 @@ function WhatsAppIcon({ className }: { className?: string }) {
 }
 
 export function FloatingWidgets() {
+  const { contact, faqs } = useSiteContent()
   const [chatOpen, setChatOpen] = useState(false)
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
@@ -69,8 +44,8 @@ export function FloatingWidgets() {
     ])
   }
 
-  const whatsappHref = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-    WHATSAPP_MESSAGE,
+  const whatsappHref = `https://wa.me/${contact.whatsappNumber}?text=${encodeURIComponent(
+    contact.whatsappMessage,
   )}`
 
   return (

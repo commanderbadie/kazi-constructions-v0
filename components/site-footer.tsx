@@ -1,4 +1,7 @@
+"use client"
+
 import { BrandLogo } from "@/components/brand-logo"
+import { useSiteContent } from "@/lib/use-site-content"
 
 type FooterLink = { label: string; href: string }
 
@@ -74,6 +77,7 @@ function FooterColumn({ title, links }: { title: string; links: FooterLink[] }) 
 }
 
 export function SiteFooter() {
+  const { company, contact } = useSiteContent()
   return (
     <footer className="bg-accent text-accent-foreground">
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
@@ -82,12 +86,11 @@ export function SiteFooter() {
           <div className="lg:col-span-4">
             <BrandLogo inverted showTagline />
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-accent-foreground/70">
-              Building landmarks of enduring excellence since 1998. Architecture,
-              engineering and luxury construction under one accountable roof.
+              {company.footerBlurb}
             </p>
             <div className="mt-6 flex items-center gap-3">
               <a
-                href="https://instagram.com/kazi_constructions"
+                href={contact.instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Kazi Constructions on Instagram"
@@ -96,7 +99,7 @@ export function SiteFooter() {
                 <InstagramIcon className="h-4 w-4" />
               </a>
               <a
-                href="https://wa.me/918801958508"
+                href={`https://wa.me/${contact.whatsappNumber}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Chat with Kazi Constructions on WhatsApp"
@@ -105,7 +108,7 @@ export function SiteFooter() {
                 <WhatsAppIcon className="h-4 w-4" />
               </a>
               <a
-                href="https://www.linkedin.com/in/kazi-waheeduddin-siddiqi-1a4569138"
+                href={contact.linkedinUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Kazi Waheeduddin Siddiqi on LinkedIn"
@@ -132,22 +135,22 @@ export function SiteFooter() {
             <ul className="mt-5 space-y-3 text-sm text-accent-foreground/70">
               <li>
                 <a
-                  href="mailto:kaziwaheeduddinsiddiqi@gmail.com"
+                  href={`mailto:${contact.email}`}
                   className="transition-colors hover:text-gold"
                 >
-                  kaziwaheeduddinsiddiqi@gmail.com
+                  {contact.email}
                 </a>
               </li>
               <li>
                 <a
-                  href="tel:+918801958508"
+                  href={`tel:${contact.phoneRaw}`}
                   className="transition-colors hover:text-gold"
                 >
-                  +91 88019 58508
+                  {contact.phoneDisplay}
                 </a>
               </li>
               <li className="leading-relaxed">
-                4-25-2/3/3, Suleman Nagar, Rajendra Nagar, Hyderabad
+                {contact.shortAddress}
               </li>
             </ul>
           </div>
