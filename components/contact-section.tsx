@@ -2,7 +2,11 @@
 
 import type React from "react"
 import { useState } from "react"
+import { addDoc, collection, serverTimestamp } from "firebase/firestore"
 import { useSiteContent } from "@/lib/use-site-content"
+import { useAuth } from "@/components/auth-provider"
+import { isFirebaseConfigured } from "@/lib/firebase"
+import { getDb } from "@/lib/firestore"
 
 const inputClass =
   "w-full rounded-lg border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/40"
@@ -24,12 +28,36 @@ function WhatsAppIcon({ className }: { className?: string }) {
 
 export function ContactSection() {
   const { contact } = useSiteContent()
+  const { user } = useAuth()
   const officeAddress = contact.mapAddress
   const [submitted, setSubmitted] = useState(false)
+  const [saving, setSaving] = useState(false)
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    setSubmitted(true)
+    const form = e.currentTarget
+    const data = new FormData(form)
+    setSaving(true)
+    try {
+      // Save to the logged-in customer's enquiry history (if signed in).
+      if (user && isFirebaseConfigured()) {
+        await addDoc(collection(getDb(), "enquiries"), {
+          uid: user.uid,
+          name: String(data.get("name") || ""),
+          email: String(data.get("email") || ""),
+          phone: String(data.get("phone") || ""),
+          message: String(data.get("message") || ""),
+          createdAt: serverTimestamp(),
+        })
+      }
+    } catch (err) {
+      // Non-fatal: still thank the visitor even if saving failed.
+      console.error("Could not save enquiry:", err)
+    } finally {
+      setSaving(false)
+      setSubmitted(true)
+      form.reset()
+    }
   }
 
   return (
@@ -154,13 +182,29 @@ export function ContactSection() {
 
               <button
                 type="submit"
-                className="mt-6 w-full rounded-full bg-primary px-6 py-3.5 text-sm font-semibold uppercase tracking-wider text-primary-foreground shadow-md transition-colors hover:bg-primary/90"
+                disabled={saving}
+                className="mt-6 w-full rounded-full bg-primary px-6 py-3.5 text-sm font-semibold uppercase tracking-wider text-primary-foreground shadow-md transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
               >
-                Send Inquiry
+                {saving ? "Sending…" : "Send Inquiry"}
               </button>
               {submitted && (
                 <p className="mt-4 text-sm font-medium text-primary" role="status">
                   Thanks! We&apos;ve received your message and will be in touch soon.
+                  {user
+                    ? " You can view this in your account's enquiry history."
+                    : ""}
+                </p>
+              )}
+              {!user && (
+                <p className="mt-3 text-xs text-muted-foreground">
+                  <a href="/login" className="font-semibold text-primary hover:underline">
+                    Log in
+                  </a>{" "}
+                  or{" "}
+                  <a href="/signup" className="font-semibold text-primary hover:underline">
+                    create an account
+                  </a>{" "}
+                  to track your enquiries.
                 </p>
               )}
             </form>
