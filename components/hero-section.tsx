@@ -3,15 +3,11 @@
 import { useEffect, useState } from "react"
 import { ArrowRight, Phone } from "lucide-react"
 import { Button } from "@/components/ui/button"
-
-const stats = [
-  { value: "20+", label: "Years Experience" },
-  { value: "450+", label: "Projects Delivered" },
-  { value: "98%", label: "Client Satisfaction" },
-  { value: "120+", label: "Expert Team" },
-]
+import { useSiteContent } from "@/lib/use-site-content"
 
 export function HeroSection() {
+  const { hero } = useSiteContent()
+  const stats = hero.stats
   const [offset, setOffset] = useState(0)
 
   useEffect(() => {
@@ -74,22 +70,20 @@ export function HeroSection() {
             className="animate-fade-blur inline-flex w-fit items-center gap-2 rounded-full border border-gold/50 bg-gold/10 px-5 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-gold backdrop-blur-sm sm:text-sm"
             style={{ animationDelay: "0.1s" }}
           >
-            Architects · Engineers · Consultants
+            {hero.badge}
           </span>
           <h1
             className="animate-fade-blur font-heading text-5xl font-extrabold uppercase leading-[0.95] tracking-tight text-balance sm:text-6xl lg:text-7xl"
             style={{ animationDelay: "0.25s" }}
           >
-            <span className="block">Build Your</span>
-            <span className="block text-gold">Dream Home</span>
+            <span className="block">{hero.titleLine1}</span>
+            <span className="block text-gold">{hero.titleHighlight}</span>
           </h1>
           <p
             className="animate-fade-blur max-w-xl text-lg leading-relaxed text-accent-foreground/75"
             style={{ animationDelay: "0.45s" }}
           >
-            Kazi Constructions delivers residential, commercial, and industrial
-            projects with precision engineering, transparent costing, and
-            uncompromising craftsmanship across Hyderabad.
+            {hero.paragraph}
           </p>
           <div
             className="animate-fade-blur flex flex-col gap-3 sm:flex-row"

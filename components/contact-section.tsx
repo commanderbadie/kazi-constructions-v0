@@ -2,14 +2,12 @@
 
 import type React from "react"
 import { useState } from "react"
+import { useSiteContent } from "@/lib/use-site-content"
 
 const inputClass =
   "w-full rounded-lg border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/40"
 
 const labelClass = "mb-2 block text-xs font-bold uppercase tracking-wider text-foreground"
-
-const officeAddress =
-  "KAZI CONSTRUCTIONS, Suleman Nagar, Chintalmet, Hyderabad, Telangana 500052"
 
 function WhatsAppIcon({ className }: { className?: string }) {
   return (
@@ -25,6 +23,8 @@ function WhatsAppIcon({ className }: { className?: string }) {
 }
 
 export function ContactSection() {
+  const { contact } = useSiteContent()
+  const officeAddress = contact.mapAddress
   const [submitted, setSubmitted] = useState(false)
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -55,9 +55,9 @@ export function ContactSection() {
                   Office
                 </p>
                 <p className="mt-2 leading-relaxed text-foreground">
-                  4-25-2/3/3, Wadi-E-Mahmood, Suleman Nagar
+                  {contact.addressLine1}
                   <br />
-                  Rajendra Nagar, Attapure, Hyderabad &ndash; 500052
+                  {contact.addressLine2}
                 </p>
               </div>
               <div>
@@ -65,10 +65,10 @@ export function ContactSection() {
                   Email
                 </p>
                 <a
-                  href="mailto:kaziwaheeduddinsiddiqi@gmail.com"
+                  href={`mailto:${contact.email}`}
                   className="mt-2 block font-medium text-primary transition-colors hover:text-primary/80"
                 >
-                  kaziwaheeduddinsiddiqi@gmail.com
+                  {contact.email}
                 </a>
               </div>
               <div>
@@ -76,16 +76,16 @@ export function ContactSection() {
                   Phone
                 </p>
                 <a
-                  href="tel:+918801958508"
+                  href={`tel:${contact.phoneRaw}`}
                   className="mt-2 block font-medium text-primary transition-colors hover:text-primary/80"
                 >
-                  +91 88019 58508
+                  {contact.phoneDisplay}
                 </a>
               </div>
             </div>
 
             <a
-              href="https://wa.me/918801958508"
+              href={`https://wa.me/${contact.whatsappNumber}`}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-8 inline-flex items-center gap-2.5 rounded-full bg-[#25D366] px-6 py-3 text-sm font-semibold text-white shadow-md transition-colors hover:bg-[#1ebe57]"
@@ -201,9 +201,9 @@ export function ContactSection() {
                     Address
                   </p>
                   <p className="mt-2 leading-relaxed text-white/90">
-                    4-25-2/3/3, Wadi-E-Mahmood, Suleman Nagar
+                    {contact.addressLine1}
                     <br />
-                    Rajendra Nagar, Attapure, Hyderabad &ndash; 500052
+                    {contact.addressLine2}
                   </p>
                 </div>
                 <div>
@@ -211,10 +211,10 @@ export function ContactSection() {
                     Phone
                   </p>
                   <a
-                    href="tel:+918801958508"
+                    href={`tel:${contact.phoneRaw}`}
                     className="mt-2 block text-white/90 transition-colors hover:text-gold"
                   >
-                    +91 88019 58508
+                    {contact.phoneDisplay}
                   </a>
                 </div>
                 <div>
@@ -222,10 +222,10 @@ export function ContactSection() {
                     Email
                   </p>
                   <a
-                    href="mailto:kaziwaheeduddinsiddiqi@gmail.com"
+                    href={`mailto:${contact.email}`}
                     className="mt-2 block break-all text-white/90 transition-colors hover:text-gold"
                   >
-                    kaziwaheeduddinsiddiqi@gmail.com
+                    {contact.email}
                   </a>
                 </div>
                 <div>
@@ -233,9 +233,9 @@ export function ContactSection() {
                     Office Hours
                   </p>
                   <p className="mt-2 leading-relaxed text-white/90">
-                    Mon&ndash;Fri: 8:00am &ndash; 6:00pm
+                    {contact.officeHoursWeekday}
                     <br />
-                    Sat: 9:00am &ndash; 1:00pm
+                    {contact.officeHoursSaturday}
                   </p>
                 </div>
               </div>

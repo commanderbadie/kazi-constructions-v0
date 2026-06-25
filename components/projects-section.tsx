@@ -5,6 +5,8 @@ import { MapPin } from "lucide-react"
 import { Reveal } from "@/components/reveal"
 import { ProjectImage } from "@/components/project-image"
 import { cn } from "@/lib/utils"
+import { useSiteContent } from "@/lib/use-site-content"
+import { buildGallery } from "@/lib/site-content"
 
 type Project = {
   title?: string
@@ -15,59 +17,29 @@ type Project = {
   gallery?: string[]
 }
 
-const interiorGallery = Array.from(
-  { length: 11 },
-  (_, i) => `/gallery/interior/interior-${i + 1}.jpg`,
-)
-
-const circulationGallery = Array.from(
-  { length: 9 },
-  (_, i) => `/gallery/circulation/circulation-${i + 1}.jpg`,
-)
-
-const projects: Project[] = [
-  {
-    category: "Residential",
-    description:
-      "A close-up look at our residential work — on-site construction progress, interiors and finished living spaces.",
-    image: "/gallery/circulation/circulation-1.jpg",
-    gallery: circulationGallery,
-  },
-  {
-    category: "Commercial",
-    description:
-      "Commercial builds — office towers and workspaces with structural steel and energy-efficient facades.",
-    image: "/projects/commercial-tower.svg",
-  },
-  {
-    category: "Renovation",
-    description:
-      "Renovation & retrofit work — structural strengthening and full interior remodels that transform existing spaces.",
-    image: "/projects/renovation-loft.svg",
-  },
-  {
-    category: "Commercial",
-    description:
-      "Retail, dining and mixed-use developments delivered on schedule with full site coordination.",
-    image: "/projects/retail-plaza.svg",
-  },
-  {
-    category: "Interior",
-    description:
-      "Interior fit-outs — modular kitchens, custom joinery, dressing units and premium finishes.",
-    image: "/gallery/interior/interior-1.jpg",
-    gallery: interiorGallery,
-  },
-]
-
 export function ProjectsSection() {
+  const content = useSiteContent()
+  const projects: Project[] = useMemo(
+    () =>
+      content.projects.map((p) => {
+        const gallery = buildGallery(p.gallery)
+        return {
+          category: p.category,
+          description: p.description,
+          image: p.image,
+          gallery: gallery.length ? gallery : undefined,
+        }
+      }),
+    [content.projects],
+  )
+
   const [activeFilter, setActiveFilter] = useState("All")
   const [galleryProject, setGalleryProject] = useState<Project | null>(null)
   const [lightbox, setLightbox] = useState<number | null>(null)
 
   const filters = useMemo(
     () => ["All", ...Array.from(new Set(projects.map((p) => p.category)))],
-    [],
+    [projects],
   )
 
   const visibleProjects = useMemo(
@@ -75,7 +47,7 @@ export function ProjectsSection() {
       activeFilter === "All"
         ? projects
         : projects.filter((p) => p.category === activeFilter),
-    [activeFilter],
+    [activeFilter, projects],
   )
 
   const galleryImages = galleryProject?.gallery ?? []
@@ -172,7 +144,7 @@ export function ProjectsSection() {
                       hasGallery ? "cursor-pointer" : "cursor-default",
                     )}
                   >
-                    <ProjectImage src={project.image} alt={project.title} />
+                    <ProjectImage src={project.image} alt={project.title ?? project.category} />
                     <span className="absolute left-4 top-4 rounded-full bg-gold px-3 py-1 text-xs font-semibold uppercase tracking-wider text-gold-foreground">
                       {project.category}
                     </span>

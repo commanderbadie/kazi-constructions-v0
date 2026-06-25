@@ -1,38 +1,12 @@
+"use client"
+
 import { Star, Quote } from "lucide-react"
 import { Reveal } from "@/components/reveal"
-
-type Testimonial = {
-  quote: string
-  name: string
-  role: string
-  initials: string
-}
-
-const testimonials: Testimonial[] = [
-  {
-    quote:
-      "Kazi delivered our headquarters ahead of schedule and beyond our expectations. Their engineering discipline is exceptional.",
-    name: "Elena Vasquez",
-    role: "CEO, Meridian Group",
-    initials: "EV",
-  },
-  {
-    quote:
-      "From design to handover, every promise was kept. The craftsmanship in our estate is simply unmatched.",
-    name: "James Whitlock",
-    role: "Private Client",
-    initials: "JW",
-  },
-  {
-    quote:
-      "A rare partner that combines luxury finish with serious civil engineering capability. We trust them completely.",
-    name: "Dr. Amara Okoye",
-    role: "Director, City Infrastructure Authority",
-    initials: "AO",
-  },
-]
+import { useSiteContent } from "@/lib/use-site-content"
 
 export function TestimonialsSection() {
+  const { testimonials } = useSiteContent()
+
   return (
     <section id="testimonials" className="bg-muted py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
