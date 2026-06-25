@@ -9,6 +9,10 @@ const encoder = new TextEncoder()
 
 export const SESSION_COOKIE = "kazi_admin_session"
 
+// Holds the secret access key after it's supplied once via ?key=..., so the
+// owner doesn't need it in the URL on every navigation.
+export const ACCESS_COOKIE = "kazi_admin_access"
+
 // How long a login stays valid before requiring sign-in again.
 export const SESSION_TTL_MS = 1000 * 60 * 60 * 8 // 8 hours
 
