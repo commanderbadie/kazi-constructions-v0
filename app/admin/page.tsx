@@ -14,6 +14,7 @@ import {
   exportContentJson,
   importContentJson,
 } from "@/lib/use-site-content"
+import { AdminPanelProjects } from "@/components/admin-panel-projects"
 
 // Access to this page is protected by real server-side auth (see middleware.ts
 // and /api/admin/login). By the time this component renders, the request has
@@ -28,6 +29,7 @@ type SectionId =
   | "testimonials"
   | "projects"
   | "faqs"
+  | "customerProjects"
 
 const SECTIONS: { id: SectionId; label: string; hint: string }[] = [
   { id: "company", label: "Company", hint: "Name, tagline, footer blurb" },
@@ -38,6 +40,11 @@ const SECTIONS: { id: SectionId; label: string; hint: string }[] = [
   { id: "testimonials", label: "Testimonials", hint: "Client quotes" },
   { id: "projects", label: "Projects", hint: "Portfolio cards" },
   { id: "faqs", label: "FAQs", hint: "Chat assistant answers" },
+  {
+    id: "customerProjects",
+    label: "Customer Projects",
+    hint: "Track customer builds",
+  },
 ]
 
 const ICON_OPTIONS: ServiceIcon[] = [
@@ -1100,6 +1107,8 @@ export default function AdminPage() {
               </div>
             </Section>
           )}
+
+          {section === "customerProjects" && <AdminPanelProjects />}
         </main>
       </div>
 
