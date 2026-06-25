@@ -6,8 +6,11 @@ import { sendEmailVerification } from "firebase/auth"
 import { collection, getDocs, query, where } from "firebase/firestore"
 import { getFirebaseAuth } from "@/lib/firebase"
 import { getDb, type Enquiry } from "@/lib/firestore"
+import { isAdminUser } from "@/lib/admin"
 import { useAuth } from "@/components/auth-provider"
 import { BrandLogo } from "@/components/brand-logo"
+import { AccountProjects } from "@/components/account-projects"
+import { AdminProjects } from "@/components/admin-projects"
 
 export default function AccountPage() {
   const router = useRouter()
@@ -244,14 +247,20 @@ export default function AccountPage() {
           )}
         </div>
 
-        {/* Coming soon: project tracking & documents */}
+        {/* Project tracking (customer view) */}
+        {user.email && <AccountProjects email={user.email} />}
+
+        {/* Owner-only: manage all customer projects */}
+        {isAdminUser(user) && <AdminProjects />}
+
+        {/* Coming soon: documents */}
         <div className="mt-6 rounded-2xl border border-dashed border-white/15 bg-transparent p-6">
           <h2 className="font-heading text-lg font-bold text-accent-foreground">
-            Project tracking & documents
+            Documents & quotes
           </h2>
           <p className="mt-2 text-sm leading-relaxed text-accent-foreground/60">
-            Soon you'll be able to track your project's progress and download
-            quotes & documents shared by our team. Coming next!
+            Soon you'll be able to download quotes & documents shared by our
+            team here. Coming next!
           </p>
         </div>
       </div>
