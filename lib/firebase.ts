@@ -10,13 +10,27 @@
 import { initializeApp, getApps, getApp, type FirebaseApp } from "firebase/app"
 import { getAuth, GoogleAuthProvider, type Auth } from "firebase/auth"
 
+// Firebase web config. These values are PUBLIC by design (Google intends them
+// to ship in the browser) — real protection comes from Firebase Authorized
+// Domains + security rules, not from hiding these. Baked in directly so no env
+// setup is required, but each value can still be overridden via an env var.
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  apiKey:
+    process.env.NEXT_PUBLIC_FIREBASE_API_KEY ??
+    "AIzaSyBcGK0xPugdf2V4f4iExMvqcGkWTX3gWLs",
+  authDomain:
+    process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN ??
+    "kazi-constructions.firebaseapp.com",
+  projectId:
+    process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID ?? "kazi-constructions",
+  storageBucket:
+    process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET ??
+    "kazi-constructions.firebasestorage.app",
+  messagingSenderId:
+    process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID ?? "1081556605605",
+  appId:
+    process.env.NEXT_PUBLIC_FIREBASE_APP_ID ??
+    "1:1081556605605:web:0447a99d8b2f3ff457cb4c",
 }
 
 /** True when the required Firebase env vars are present. */
