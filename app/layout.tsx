@@ -1,6 +1,7 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Geist, Archivo } from 'next/font/google'
+import { AuthProvider } from '@/components/auth-provider'
 import { LeadPopup } from '@/components/lead-popup'
 import { Preloader } from '@/components/preloader'
 import './globals.css'
@@ -35,9 +36,11 @@ export default function RootLayout({
       className={`light ${geistSans.variable} ${archivo.variable} bg-background`}
     >
       <body className="font-sans antialiased">
-        <Preloader />
-        {children}
-        <LeadPopup />
+        <AuthProvider>
+          <Preloader />
+          {children}
+          <LeadPopup />
+        </AuthProvider>
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
