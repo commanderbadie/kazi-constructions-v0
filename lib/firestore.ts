@@ -35,3 +35,11 @@ export type Project = {
   updates: ProjectUpdate[]
   createdAt: { seconds: number; nanoseconds: number } | null
 }
+
+export type CustomerDoc = {
+  id: string
+  customerEmail: string
+  title: string
+  url: string
+  createdAt: { seconds: number; nanoseconds: number } | null
+}

@@ -31,6 +31,14 @@ service cloud.firestore {
       allow create, update, delete: if isAdmin();
     }
 
+    // Documents/quotes (shared as links): same access model as projects.
+    match /documents/{docId} {
+      allow read: if isAdmin()
+        || (request.auth != null
+            && resource.data.customerEmail == request.auth.token.email);
+      allow create, update, delete: if isAdmin();
+    }
+
     // Everything else is locked by default.
     match /{document=**} {
       allow read, write: if false;
