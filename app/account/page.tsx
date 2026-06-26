@@ -10,7 +10,9 @@ import { isAdminUser } from "@/lib/admin"
 import { useAuth } from "@/components/auth-provider"
 import { BrandLogo } from "@/components/brand-logo"
 import { AccountProjects } from "@/components/account-projects"
+import { AccountDocuments } from "@/components/account-documents"
 import { AdminProjects } from "@/components/admin-projects"
+import { AdminDocuments } from "@/components/admin-documents"
 
 export default function AccountPage() {
   const router = useRouter()
@@ -255,19 +257,14 @@ export default function AccountPage() {
         {/* Project tracking (customer view) */}
         {user.email && <AccountProjects email={user.email} />}
 
+        {/* Documents & quotes (customer view) */}
+        {user.email && <AccountDocuments email={user.email} />}
+
         {/* Owner-only: manage all customer projects */}
         {isAdminUser(user) && <AdminProjects />}
 
-        {/* Coming soon: documents */}
-        <div className="mt-6 rounded-2xl border border-dashed border-white/15 bg-transparent p-6">
-          <h2 className="font-heading text-lg font-bold text-accent-foreground">
-            Documents & quotes
-          </h2>
-          <p className="mt-2 text-sm leading-relaxed text-accent-foreground/60">
-            Soon you'll be able to download quotes & documents shared by our
-            team here. Coming next!
-          </p>
-        </div>
+        {/* Owner-only: share documents with customers */}
+        {isAdminUser(user) && <AdminDocuments />}
       </div>
     </main>
   )
