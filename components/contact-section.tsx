@@ -53,11 +53,27 @@ export function ContactSection() {
     } catch (err) {
       // Non-fatal: still thank the visitor even if saving failed.
       console.error("Could not save enquiry:", err)
-    } finally {
-      setSaving(false)
-      setSubmitted(true)
-      form.reset()
     }
+
+    // Email the owners about this enquiry (works for everyone, non-fatal).
+    try {
+      await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: data.get("name"),
+          email: data.get("email"),
+          phone: data.get("phone"),
+          message: data.get("message"),
+        }),
+      })
+    } catch {
+      // ignore
+    }
+
+    setSaving(false)
+    setSubmitted(true)
+    form.reset()
   }
 
   return (

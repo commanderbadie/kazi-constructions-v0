@@ -1,0 +1,50 @@
+import { NextResponse } from "next/server"
+import { SESSION_COOKIE, verifySessionToken } from "@/lib/auth"
+import { getAdminDb, isAdminSdkConfigured } from "@/lib/firebase-admin"
+
+export const runtime = "nodejs"
+
+function getCookie(req: Request, name: string): string | undefined {
+  const header = req.headers.get("cookie") || ""
+  const found = header
+    .split(";")
+    .map((c) => c.trim())
+    .find((c) => c.startsWith(`${name}=`))
+  return found ? decodeURIComponent(found.slice(name.length + 1)) : undefined
+}
+
+async function requireAdmin(req: Request): Promise<boolean> {
+  const secret = process.env.ADMIN_SESSION_SECRET
+  if (!secret) return false
+  return verifySessionToken(getCookie(req, SESSION_COOKIE), secret)
+}
+
+export async function GET(req: Request) {
+  if (!(await requireAdmin(req))) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+  }
+  if (!isAdminSdkConfigured()) {
+    return NextResponse.json({ error: "Not configured" }, { status: 503 })
+  }
+  try {
+    const snap = await getAdminDb().collection("messages").get()
+    const messages = snap.docs.map((d) => {
+      const data = d.data()
+      return {
+        id: d.id,
+        name: data.name ?? "",
+        email: data.email ?? "",
+        message: data.message ?? "",
+        read: data.read ?? false,
+        createdAt: data.createdAt
+          ? { seconds: data.createdAt.seconds, nanoseconds: data.createdAt.nanoseconds }
+          : null,
+      }
+    })
+    messages.sort((a, b) => (b.createdAt?.seconds ?? 0) - (a.createdAt?.seconds ?? 0))
+    return NextResponse.json({ messages })
+  } catch (err) {
+    console.error("List messages failed:", err)
+    return NextResponse.json({ error: "Failed to load messages" }, { status: 500 })
+  }
+}

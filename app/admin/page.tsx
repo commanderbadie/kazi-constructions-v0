@@ -17,6 +17,7 @@ import {
 import { AdminPanelProjects } from "@/components/admin-panel-projects"
 import { AdminPanelDocuments } from "@/components/admin-panel-documents"
 import { AdminPanelLeads } from "@/components/admin-panel-leads"
+import { AdminPanelMessages } from "@/components/admin-panel-messages"
 
 // Access to this page is protected by real server-side auth (see middleware.ts
 // and /api/admin/login). By the time this component renders, the request has
@@ -34,6 +35,7 @@ type SectionId =
   | "customerProjects"
   | "customerDocuments"
   | "leads"
+  | "messages"
 
 const SECTIONS: { id: SectionId; label: string; hint: string }[] = [
   { id: "company", label: "Company", hint: "Name, tagline, footer blurb" },
@@ -55,6 +57,7 @@ const SECTIONS: { id: SectionId; label: string; hint: string }[] = [
     hint: "Share quotes & files",
   },
   { id: "leads", label: "Leads", hint: "Popup submissions" },
+  { id: "messages", label: "Messages", hint: "Customer support inbox" },
 ]
 
 const ICON_OPTIONS: ServiceIcon[] = [
@@ -1123,6 +1126,8 @@ export default function AdminPage() {
           {section === "customerDocuments" && <AdminPanelDocuments />}
 
           {section === "leads" && <AdminPanelLeads />}
+
+          {section === "messages" && <AdminPanelMessages />}
         </main>
       </div>
 

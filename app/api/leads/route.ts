@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 import { FieldValue } from "firebase-admin/firestore"
 import { getAdminDb, isAdminSdkConfigured } from "@/lib/firebase-admin"
+import { notifyOwners } from "@/lib/email"
 
 export const runtime = "nodejs"
 
@@ -74,6 +75,20 @@ export async function POST(req: Request) {
   } catch (err) {
     console.error("Save lead failed:", err)
     // Still return ok so the visitor sees the thank-you.
+  }
+
+  // Email the owners about the new lead (non-fatal).
+  try {
+    await notifyOwners({
+      subject: "New lead from the website popup",
+      rows: [
+        { label: "Name", value: name },
+        { label: "Phone", value: phone },
+        { label: "Location", value: location || "—" },
+      ],
+    })
+  } catch (err) {
+    console.error("Notify owners (lead) failed:", err)
   }
 
   return NextResponse.json({ ok: true })
