@@ -105,6 +105,73 @@ export default function AccountPage() {
   const displayName = user.displayName || user.email?.split("@")[0] || "there"
   const needsVerification = !user.emailVerified
 
+  // Gate the whole account until the email is verified — verify first, then in.
+  if (needsVerification) {
+    return (
+      <main className="min-h-screen bg-accent">
+        <header className="border-b border-white/10">
+          <div className="mx-auto flex max-w-4xl items-center justify-between px-4 py-4 sm:px-6">
+            <a href="/" aria-label="Kazi Constructions home">
+              <BrandLogo inverted />
+            </a>
+            <button
+              type="button"
+              onClick={handleLogout}
+              className="rounded-full border border-white/25 px-4 py-2 text-sm font-semibold text-accent-foreground/80 transition-colors hover:border-gold hover:text-gold"
+            >
+              Log out
+            </button>
+          </div>
+        </header>
+
+        <div className="mx-auto max-w-2xl px-4 py-14 sm:px-6">
+          <p className="text-sm font-semibold uppercase tracking-wider text-gold">
+            One last step
+          </p>
+          <h1 className="mt-2 font-heading text-3xl font-extrabold text-accent-foreground">
+            Verify your email to continue
+          </h1>
+          <div className="mt-6 rounded-2xl border border-gold/30 bg-gold/10 p-6">
+            <p className="text-sm leading-relaxed text-accent-foreground/80">
+              We sent a verification link to{" "}
+              <span className="font-semibold text-gold">{user.email}</span>. Please
+              click it, then come back and tap{" "}
+              <span className="font-semibold">"I've verified"</span>. Your account
+              stays locked until your email is confirmed.
+            </p>
+            <p className="mt-3 rounded-lg bg-white/5 px-3 py-2 text-sm text-accent-foreground/70">
+              📩 <span className="font-semibold text-accent-foreground/90">Can't find it?</span>{" "}
+              Check your <span className="font-semibold">spam / junk</span> folder.
+            </p>
+            <div className="mt-4 flex flex-wrap gap-3">
+              <button
+                type="button"
+                onClick={handleResend}
+                disabled={busy}
+                className="rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-60"
+              >
+                Resend email
+              </button>
+              <button
+                type="button"
+                onClick={handleRefresh}
+                disabled={busy}
+                className="rounded-lg border border-white/25 px-4 py-2.5 text-sm font-semibold text-accent-foreground/80 transition-colors hover:border-gold hover:text-gold disabled:opacity-60"
+              >
+                I've verified — refresh
+              </button>
+            </div>
+            {notice && (
+              <p className="mt-4 rounded-lg bg-primary/15 px-4 py-2.5 text-sm text-accent-foreground">
+                {notice}
+              </p>
+            )}
+          </div>
+        </div>
+      </main>
+    )
+  }
+
   return (
     <main className="min-h-screen bg-accent">
       {/* Top bar */}
@@ -130,44 +197,6 @@ export default function AccountPage() {
         <h1 className="mt-2 font-heading text-3xl font-extrabold text-accent-foreground sm:text-4xl">
           Welcome, {displayName} 👋
         </h1>
-
-        {/* Email verification gate */}
-        {needsVerification && (
-          <div className="mt-8 rounded-2xl border border-gold/30 bg-gold/10 p-6">
-            <h2 className="font-heading text-lg font-bold text-accent-foreground">
-              Please verify your email
-            </h2>
-            <p className="mt-2 text-sm leading-relaxed text-accent-foreground/80">
-              We sent a verification link to{" "}
-              <span className="font-semibold text-gold">{user.email}</span>. Click
-              it to unlock your full account. Once done, hit{" "}
-              <span className="font-semibold">"I've verified"</span> below.
-            </p>
-            <p className="mt-2 rounded-lg bg-white/5 px-3 py-2 text-sm text-accent-foreground/70">
-              📩 <span className="font-semibold text-accent-foreground/90">Can't find the email?</span>{" "}
-              Please check your <span className="font-semibold">spam / junk</span>{" "}
-              folder — it sometimes lands there. You can also tap "Resend email" below.
-            </p>
-            <div className="mt-4 flex flex-wrap gap-3">
-              <button
-                type="button"
-                onClick={handleResend}
-                disabled={busy}
-                className="rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-60"
-              >
-                Resend email
-              </button>
-              <button
-                type="button"
-                onClick={handleRefresh}
-                disabled={busy}
-                className="rounded-lg border border-white/25 px-4 py-2.5 text-sm font-semibold text-accent-foreground/80 transition-colors hover:border-gold hover:text-gold disabled:opacity-60"
-              >
-                I've verified — refresh
-              </button>
-            </div>
-          </div>
-        )}
 
         {notice && (
           <p className="mt-4 rounded-lg bg-primary/15 px-4 py-2.5 text-sm text-accent-foreground">

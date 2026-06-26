@@ -9,6 +9,7 @@ service cloud.firestore {
     // own uid, and read only their own. No edits/deletes from the client.
     match /enquiries/{enquiryId} {
       allow create: if request.auth != null
+        && request.auth.token.email_verified == true
         && request.resource.data.uid == request.auth.uid;
       allow read: if request.auth != null
         && resource.data.uid == request.auth.uid;
