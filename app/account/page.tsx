@@ -8,6 +8,7 @@ import { getFirebaseAuth } from "@/lib/firebase"
 import { getDb, type Enquiry } from "@/lib/firestore"
 import { isAdminUser } from "@/lib/admin"
 import { useAuth } from "@/components/auth-provider"
+import { useSiteContent } from "@/lib/use-site-content"
 import { BrandLogo } from "@/components/brand-logo"
 import { AccountProjects } from "@/components/account-projects"
 import { AccountDocuments } from "@/components/account-documents"
@@ -17,8 +18,10 @@ import { AdminDocuments } from "@/components/admin-documents"
 export default function AccountPage() {
   const router = useRouter()
   const { user, loading, configured, signOut, refresh } = useAuth()
+  const { contact } = useSiteContent()
   const [notice, setNotice] = useState<string | null>(null)
   const [busy, setBusy] = useState(false)
+  const [deleting, setDeleting] = useState(false)
   const [enquiries, setEnquiries] = useState<Enquiry[]>([])
   const [enquiriesLoading, setEnquiriesLoading] = useState(true)
 
@@ -91,6 +94,35 @@ export default function AccountPage() {
   async function handleLogout() {
     await signOut()
     router.replace("/")
+  }
+
+  async function handleDeleteAccount() {
+    if (
+      !window.confirm(
+        "Permanently delete your account? This removes your login and enquiry history and cannot be undone.",
+      )
+    )
+      return
+    setDeleting(true)
+    setNotice(null)
+    try {
+      const token = await getFirebaseAuth().currentUser?.getIdToken()
+      const res = await fetch("/api/account/delete", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token ?? ""}` },
+      })
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}))
+        throw new Error(data.error || "Failed")
+      }
+      await signOut()
+      window.location.assign("/")
+    } catch {
+      setNotice(
+        "Couldn't delete your account just now. Please try again in a moment.",
+      )
+      setDeleting(false)
+    }
   }
 
   // Loading / redirecting state.
@@ -294,6 +326,57 @@ export default function AccountPage() {
 
         {/* Owner-only: share documents with customers */}
         {isAdminUser(user) && <AdminDocuments />}
+
+        {/* Help & Support */}
+        <div className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-6">
+          <h2 className="font-heading text-lg font-bold text-accent-foreground">
+            Need help?
+          </h2>
+          <p className="mt-2 text-sm leading-relaxed text-accent-foreground/70">
+            Our team is here to help with anything about your project or account.
+          </p>
+          <div className="mt-4 flex flex-wrap gap-3">
+            <a
+              href={`https://wa.me/${contact.whatsappNumber}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full bg-[#25D366] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#1ebe57]"
+            >
+              Chat on WhatsApp
+            </a>
+            <a
+              href={`mailto:${contact.email}`}
+              className="rounded-full border border-white/25 px-5 py-2.5 text-sm font-semibold text-accent-foreground/85 transition-colors hover:border-gold hover:text-gold"
+            >
+              Email us
+            </a>
+            <a
+              href={`tel:${contact.phoneRaw}`}
+              className="rounded-full border border-white/25 px-5 py-2.5 text-sm font-semibold text-accent-foreground/85 transition-colors hover:border-gold hover:text-gold"
+            >
+              Call {contact.phoneDisplay}
+            </a>
+          </div>
+        </div>
+
+        {/* Danger zone: delete account */}
+        <div className="mt-6 rounded-2xl border border-red-500/30 bg-red-500/5 p-6">
+          <h2 className="font-heading text-lg font-bold text-red-300">
+            Delete account
+          </h2>
+          <p className="mt-2 text-sm leading-relaxed text-accent-foreground/70">
+            Permanently delete your account and enquiry history. This can't be
+            undone. (Records our team keeps about completed work aren't affected.)
+          </p>
+          <button
+            type="button"
+            onClick={handleDeleteAccount}
+            disabled={deleting}
+            className="mt-4 rounded-lg border border-red-500/40 px-4 py-2.5 text-sm font-semibold text-red-300 transition-colors hover:bg-red-500/10 disabled:opacity-60"
+          >
+            {deleting ? "Deleting…" : "Delete my account"}
+          </button>
+        </div>
       </div>
     </main>
   )
