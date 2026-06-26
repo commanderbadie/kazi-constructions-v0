@@ -24,6 +24,9 @@ export default function AccountPage() {
   const [deleting, setDeleting] = useState(false)
   const [enquiries, setEnquiries] = useState<Enquiry[]>([])
   const [enquiriesLoading, setEnquiriesLoading] = useState(true)
+  const [supportMsg, setSupportMsg] = useState("")
+  const [sendingMsg, setSendingMsg] = useState(false)
+  const [msgSent, setMsgSent] = useState(false)
 
   // Not logged in → send to login.
   useEffect(() => {
@@ -94,6 +97,37 @@ export default function AccountPage() {
   async function handleLogout() {
     await signOut()
     router.replace("/")
+  }
+
+  async function handleSendMessage(e: React.FormEvent) {
+    e.preventDefault()
+    if (!supportMsg.trim()) return
+    setSendingMsg(true)
+    setNotice(null)
+    try {
+      const token = await getFirebaseAuth().currentUser?.getIdToken()
+      const res = await fetch("/api/support", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token ?? ""}`,
+        },
+        body: JSON.stringify({
+          name: getFirebaseAuth().currentUser?.displayName || "",
+          message: supportMsg,
+        }),
+      })
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}))
+        throw new Error(data.error || "Failed")
+      }
+      setSupportMsg("")
+      setMsgSent(true)
+    } catch {
+      setNotice("Couldn't send your message. Please try again.")
+    } finally {
+      setSendingMsg(false)
+    }
   }
 
   async function handleDeleteAccount() {
@@ -333,7 +367,8 @@ export default function AccountPage() {
             Need help?
           </h2>
           <p className="mt-2 text-sm leading-relaxed text-accent-foreground/70">
-            Our team is here to help with anything about your project or account.
+            Send us a message and our team will get back to you. You can also
+            reach us directly:
           </p>
           <div className="mt-4 flex flex-wrap gap-3">
             <a
@@ -345,18 +380,47 @@ export default function AccountPage() {
               Chat on WhatsApp
             </a>
             <a
-              href={`mailto:${contact.email}`}
-              className="rounded-full border border-white/25 px-5 py-2.5 text-sm font-semibold text-accent-foreground/85 transition-colors hover:border-gold hover:text-gold"
-            >
-              Email us
-            </a>
-            <a
               href={`tel:${contact.phoneRaw}`}
               className="rounded-full border border-white/25 px-5 py-2.5 text-sm font-semibold text-accent-foreground/85 transition-colors hover:border-gold hover:text-gold"
             >
               Call {contact.phoneDisplay}
             </a>
           </div>
+
+          {msgSent ? (
+            <div className="mt-5 rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-4">
+              <p className="text-sm font-medium text-emerald-300">
+                ✓ Message sent! Our team will get back to you soon.
+              </p>
+              <button
+                type="button"
+                onClick={() => setMsgSent(false)}
+                className="mt-2 text-xs font-semibold text-accent-foreground/70 hover:text-gold"
+              >
+                Send another message
+              </button>
+            </div>
+          ) : (
+            <form onSubmit={handleSendMessage} className="mt-5">
+              <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-accent-foreground/50">
+                Send us a message
+              </label>
+              <textarea
+                value={supportMsg}
+                onChange={(e) => setSupportMsg(e.target.value)}
+                rows={3}
+                placeholder="How can we help?"
+                className="w-full rounded-lg border border-white/15 bg-accent/40 px-3 py-2 text-sm text-accent-foreground placeholder:text-accent-foreground/40 outline-none focus:border-gold/60"
+              />
+              <button
+                type="submit"
+                disabled={sendingMsg || !supportMsg.trim()}
+                className="mt-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {sendingMsg ? "Sending…" : "Send message"}
+              </button>
+            </form>
+          )}
         </div>
 
         {/* Danger zone: delete account */}
