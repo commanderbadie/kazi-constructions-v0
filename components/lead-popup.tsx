@@ -89,9 +89,25 @@ export function LeadPopup() {
 
   if (!open) return null
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
+    const data = new FormData(e.currentTarget)
+    // Show the thank-you immediately; saving happens in the background.
     setSubmitted(true)
+    try {
+      await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: data.get("name"),
+          phone: data.get("phone"),
+          location: data.get("location"),
+          website: data.get("website"), // honeypot
+        }),
+      })
+    } catch {
+      // Non-fatal — the visitor already saw the confirmation.
+    }
   }
 
   return (
@@ -153,6 +169,15 @@ export function LeadPopup() {
             </p>
 
             <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+              {/* Honeypot — hidden from real users, catches bots */}
+              <input
+                type="text"
+                name="website"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                className="hidden"
+              />
               <input
                 type="text"
                 name="name"

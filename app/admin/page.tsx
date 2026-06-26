@@ -16,6 +16,7 @@ import {
 } from "@/lib/use-site-content"
 import { AdminPanelProjects } from "@/components/admin-panel-projects"
 import { AdminPanelDocuments } from "@/components/admin-panel-documents"
+import { AdminPanelLeads } from "@/components/admin-panel-leads"
 
 // Access to this page is protected by real server-side auth (see middleware.ts
 // and /api/admin/login). By the time this component renders, the request has
@@ -32,6 +33,7 @@ type SectionId =
   | "faqs"
   | "customerProjects"
   | "customerDocuments"
+  | "leads"
 
 const SECTIONS: { id: SectionId; label: string; hint: string }[] = [
   { id: "company", label: "Company", hint: "Name, tagline, footer blurb" },
@@ -52,6 +54,7 @@ const SECTIONS: { id: SectionId; label: string; hint: string }[] = [
     label: "Customer Documents",
     hint: "Share quotes & files",
   },
+  { id: "leads", label: "Leads", hint: "Popup submissions" },
 ]
 
 const ICON_OPTIONS: ServiceIcon[] = [
@@ -1118,6 +1121,8 @@ export default function AdminPage() {
           {section === "customerProjects" && <AdminPanelProjects />}
 
           {section === "customerDocuments" && <AdminPanelDocuments />}
+
+          {section === "leads" && <AdminPanelLeads />}
         </main>
       </div>
 
