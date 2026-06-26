@@ -15,11 +15,14 @@ service cloud.firestore {
       allow update, delete: if false;
     }
 
-    // The owner/admin is identified by their verified email.
+    // The owner/admin is identified by a verified email in the allow-list.
     function isAdmin() {
       return request.auth != null
         && request.auth.token.email_verified == true
-        && request.auth.token.email == "badieuddinkazi@gmail.com";
+        && request.auth.token.email in [
+          "badieuddinkazi@gmail.com",
+          "kaziwaheeduddinsiddiqi@gmail.com"
+        ];
     }
 
     // Projects: the owner can create/update/delete any project. A customer can
