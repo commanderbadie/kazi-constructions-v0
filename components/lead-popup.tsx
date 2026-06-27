@@ -1,7 +1,9 @@
 "use client"
 
 import type React from "react"
-import { useEffect, useState } from "react"
+import { useEffect, useState, type ReactNode } from "react"
+import { useSiteContent } from "@/lib/use-site-content"
+import type { PopupBadgeIcon } from "@/lib/site-content"
 
 const STORAGE_KEY = "kazi-lead-popup-seen"
 const DELAY_MS = 20000
@@ -17,45 +19,51 @@ function IndiaFlag() {
   )
 }
 
-const trustBadges = [
-  {
-    value: "Licensed",
-    label: "GHMC Certified",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="h-9 w-9">
-        <path d="M12 2l8 3v6c0 5-3.4 8.5-8 11-4.6-2.5-8-6-8-11V5l8-3z" />
-        <path d="M8.5 12l2.3 2.3L15.5 9.5" />
-      </svg>
-    ),
-  },
-  {
-    value: "10+ Years",
-    label: "Experience",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="h-9 w-9">
-        <circle cx="12" cy="8" r="6" />
-        <path d="M12 5.4l1 2 2.2.3-1.6 1.5.4 2.1-2-1-2 1 .4-2.1L8.8 7.7l2.2-.3z" />
-        <path d="M8.5 13.3L7 22l5-2.6L17 22l-1.5-8.7" />
-      </svg>
-    ),
-  },
-  {
-    value: "140+",
-    label: "Happy Clients",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="h-9 w-9">
-        <circle cx="12" cy="12" r="9" />
-        <path d="M8.3 14.2s1.4 1.9 3.7 1.9 3.7-1.9 3.7-1.9" />
-        <path d="M9 9.5h.01M15 9.5h.01" />
-      </svg>
-    ),
-  },
-]
+const BADGE_ICONS: Record<PopupBadgeIcon, ReactNode> = {
+  shield: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="h-9 w-9">
+      <path d="M12 2l8 3v6c0 5-3.4 8.5-8 11-4.6-2.5-8-6-8-11V5l8-3z" />
+      <path d="M8.5 12l2.3 2.3L15.5 9.5" />
+    </svg>
+  ),
+  medal: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="h-9 w-9">
+      <circle cx="12" cy="8" r="6" />
+      <path d="M12 5.4l1 2 2.2.3-1.6 1.5.4 2.1-2-1-2 1 .4-2.1L8.8 7.7l2.2-.3z" />
+      <path d="M8.5 13.3L7 22l5-2.6L17 22l-1.5-8.7" />
+    </svg>
+  ),
+  smile: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="h-9 w-9">
+      <circle cx="12" cy="12" r="9" />
+      <path d="M8.3 14.2s1.4 1.9 3.7 1.9 3.7-1.9 3.7-1.9" />
+      <path d="M9 9.5h.01M15 9.5h.01" />
+    </svg>
+  ),
+  star: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="h-9 w-9">
+      <path d="M12 3l2.5 5.1 5.6.8-4 3.9 1 5.6L12 18.9 7 21.4l1-5.6-4-3.9 5.6-.8z" />
+    </svg>
+  ),
+  clock: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="h-9 w-9">
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 7v5l3 2" />
+    </svg>
+  ),
+  check: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="h-9 w-9">
+      <circle cx="12" cy="12" r="9" />
+      <path d="M8 12.5l2.5 2.5L16 9" />
+    </svg>
+  ),
+}
 
 const inputClass =
   "w-full rounded-lg border border-border bg-muted/40 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/30"
 
 export function LeadPopup() {
+  const { popup } = useSiteContent()
   const [open, setOpen] = useState(false)
   const [submitted, setSubmitted] = useState(false)
 
@@ -161,11 +169,10 @@ export function LeadPopup() {
               id="lead-popup-title"
               className="pr-6 text-center font-heading text-xl font-extrabold leading-snug text-accent sm:text-2xl"
             >
-              Don&apos;t leave yet! Resolve your queries with our construction
-              expert
+              {popup.title}
             </h2>
             <p className="mt-3 text-center text-sm font-medium text-primary/80">
-              Trusted Builders for End-to-End Home Construction
+              {popup.subtitle}
             </p>
 
             <form onSubmit={handleSubmit} className="mt-6 space-y-4">
@@ -226,9 +233,9 @@ export function LeadPopup() {
             </p>
 
             <div className="mt-6 grid grid-cols-3 gap-3 border-t border-border pt-6 text-center">
-              {trustBadges.map((badge) => (
-                <div key={badge.label} className="flex flex-col items-center">
-                  <span className="text-gold">{badge.icon}</span>
+              {popup.badges.map((badge, i) => (
+                <div key={i} className="flex flex-col items-center">
+                  <span className="text-gold">{BADGE_ICONS[badge.icon] ?? BADGE_ICONS.check}</span>
                   <span className="mt-2 font-heading text-lg font-extrabold text-accent">
                     {badge.value}
                   </span>

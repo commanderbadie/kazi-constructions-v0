@@ -6,6 +6,7 @@ import {
   type SiteContent,
   type ServiceIcon,
   type ProjectGallery,
+  type PopupBadgeIcon,
 } from "@/lib/site-content"
 import {
   readStoredContent,
@@ -33,6 +34,7 @@ type SectionId =
   | "testimonials"
   | "projects"
   | "faqs"
+  | "popup"
   | "customerProjects"
   | "customerDocuments"
   | "leads"
@@ -48,6 +50,7 @@ const SECTIONS: { id: SectionId; label: string; hint: string }[] = [
   { id: "testimonials", label: "Testimonials", hint: "Client quotes" },
   { id: "projects", label: "Projects", hint: "Portfolio cards" },
   { id: "faqs", label: "FAQs", hint: "Chat assistant answers" },
+  { id: "popup", label: "Popup", hint: "Exit popup & trust badges" },
   {
     id: "customerProjects",
     label: "Customer Projects",
@@ -73,6 +76,15 @@ const ICON_OPTIONS: ServiceIcon[] = [
 ]
 
 const GALLERY_OPTIONS: ProjectGallery[] = ["none", "interior", "circulation"]
+
+const POPUP_ICON_OPTIONS: PopupBadgeIcon[] = [
+  "shield",
+  "medal",
+  "smile",
+  "star",
+  "clock",
+  "check",
+]
 
 /* ----------------------------- UI primitives ----------------------------- */
 
@@ -1120,6 +1132,96 @@ export default function AdminPage() {
                     ])
                   }
                 />
+              </div>
+            </Section>
+          )}
+
+          {section === "popup" && (
+            <Section title="Exit Popup">
+              <Field
+                label="Title"
+                value={draft.popup.title}
+                onChange={(v) => patch("popup", { ...draft.popup, title: v })}
+              />
+              <TextArea
+                label="Subtitle"
+                value={draft.popup.subtitle}
+                onChange={(v) =>
+                  patch("popup", { ...draft.popup, subtitle: v })
+                }
+              />
+              <div className="pt-2">
+                <p className="mb-2 text-xs font-bold uppercase tracking-wider text-slate-400">
+                  Trust badges
+                </p>
+                <div className="space-y-3">
+                  {draft.popup.badges.map((b, i) => (
+                    <Card
+                      key={i}
+                      title={`Badge ${i + 1}`}
+                      onRemove={() =>
+                        patch("popup", {
+                          ...draft.popup,
+                          badges: draft.popup.badges.filter((_, j) => j !== i),
+                        })
+                      }
+                    >
+                      <div className="grid gap-3 sm:grid-cols-3">
+                        <SelectField
+                          label="Icon"
+                          value={b.icon}
+                          options={POPUP_ICON_OPTIONS}
+                          onChange={(v) =>
+                            patch("popup", {
+                              ...draft.popup,
+                              badges: draft.popup.badges.map((x, j) =>
+                                j === i
+                                  ? { ...x, icon: v as PopupBadgeIcon }
+                                  : x,
+                              ),
+                            })
+                          }
+                        />
+                        <Field
+                          label="Value"
+                          value={b.value}
+                          onChange={(v) =>
+                            patch("popup", {
+                              ...draft.popup,
+                              badges: draft.popup.badges.map((x, j) =>
+                                j === i ? { ...x, value: v } : x,
+                              ),
+                            })
+                          }
+                        />
+                        <Field
+                          label="Label"
+                          value={b.label}
+                          onChange={(v) =>
+                            patch("popup", {
+                              ...draft.popup,
+                              badges: draft.popup.badges.map((x, j) =>
+                                j === i ? { ...x, label: v } : x,
+                              ),
+                            })
+                          }
+                        />
+                      </div>
+                    </Card>
+                  ))}
+                  <AddButton
+                    label="Add badge"
+                    onClick={() =>
+                      patch("popup", {
+                        ...draft.popup,
+                        badges: [
+                          ...draft.popup.badges,
+                          { icon: "check", value: "New", label: "Badge" },
+                        ],
+                      })
+                    }
+                  />
+                </div>
               </div>
             </Section>
           )}

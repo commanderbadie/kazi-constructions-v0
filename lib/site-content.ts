@@ -41,6 +41,15 @@ export type Project = {
 
 export type Faq = { label: string; answer: string }
 
+export type PopupBadgeIcon =
+  | "shield"
+  | "medal"
+  | "smile"
+  | "star"
+  | "clock"
+  | "check"
+export type PopupBadge = { icon: PopupBadgeIcon; value: string; label: string }
+
 export type SiteContent = {
   company: {
     name: string
@@ -82,6 +91,11 @@ export type SiteContent = {
   testimonials: Testimonial[]
   projects: Project[]
   faqs: Faq[]
+  popup: {
+    title: string
+    subtitle: string
+    badges: PopupBadge[]
+  }
 }
 
 export const STORAGE_KEY = "kazi-site-content-v1"
@@ -266,6 +280,16 @@ export const defaultContent: SiteContent = {
         "4-25-2/3/3, Wadi-E-Mahmood, Suleman Nagar, Rajendra Nagar, PVNR Pillar No.242, Hyderabad - 500052.",
     },
   ],
+  popup: {
+    title:
+      "Don't leave yet! Resolve your queries with our construction expert",
+    subtitle: "Trusted Builders for End-to-End Home Construction",
+    badges: [
+      { icon: "shield", value: "Licensed", label: "GHMC Certified" },
+      { icon: "medal", value: "10+ Years", label: "Experience" },
+      { icon: "smile", value: "140+", label: "Happy Clients" },
+    ],
+  },
 }
 
 // Image options the admin can choose from for project covers. These are files
