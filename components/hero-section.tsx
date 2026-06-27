@@ -33,10 +33,10 @@ export function HeroSection() {
       id="home"
       className="relative overflow-hidden bg-accent text-accent-foreground"
     >
-      {/* Subtle parallax background layer */}
+      {/* Brighter blueprint grid layer (parallax) */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-0 opacity-[0.07]"
+        className="pointer-events-none absolute inset-0 -z-0 opacity-[0.28]"
         style={{
           backgroundImage: "url(/blueprint-grid.svg)",
           backgroundSize: "cover",
@@ -45,22 +45,29 @@ export function HeroSection() {
         }}
       />
 
+      {/* Faint offset building elevation sketch behind the content */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-0 hidden opacity-[0.16] md:block"
+        style={{
+          backgroundImage: "url(/building-outline.svg)",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "right -60px bottom -30px",
+          backgroundSize: "auto 118%",
+          transform: `translate3d(0, ${offset * 0.08}px, 0)`,
+        }}
+      />
+
       <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-12 px-4 pb-20 pt-28 sm:px-6 lg:grid-cols-2 lg:gap-14 lg:px-8 lg:pb-28 lg:pt-36">
         <div
           className="animate-scale-in relative order-1"
           style={{ animationDelay: "0.3s" }}
         >
-          <div
-            className="overflow-hidden rounded-2xl border-2 border-gold shadow-2xl"
-            style={{
-              boxShadow:
-                "0 0 0 1px var(--gold), 0 0 24px 2px color-mix(in oklch, var(--gold) 55%, transparent), 0 0 48px 6px color-mix(in oklch, var(--gold) 30%, transparent)",
-            }}
-          >
+          <div className="kazi-gold-trace">
             <img
-              src="/kazi-logo-hero.png"
+              src="/hero-3d.png"
               alt="Kazi Constructions — Architects, Engineers, Consultants"
-              className="block w-full scale-[1.14]"
+              className="block w-full"
             />
           </div>
         </div>

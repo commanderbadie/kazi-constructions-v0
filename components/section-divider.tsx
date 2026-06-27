@@ -10,7 +10,7 @@ type SectionDividerProps = {
 export function SectionDivider({ onDark }: SectionDividerProps) {
   return (
     <div
-      className={onDark ? "bg-accent/90 backdrop-blur-md" : "bg-transparent"}
+      className={onDark ? "bg-accent" : "bg-background"}
       role="presentation"
       aria-hidden="true"
     >

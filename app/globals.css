@@ -370,3 +370,56 @@
     animation-duration: 2.2s;
   }
 }
+
+
+
+/* Hero logo: fully transparent frame with a single gold beam slowly tracing
+   the perimeter — premium, continuous loop. No card fill or shadow. */
+.kazi-gold-trace {
+  position: relative;
+  padding: 3px;
+  border-radius: 20px;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.kazi-gold-trace::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 175%;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  z-index: -1;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0turn 0.58turn,
+    color-mix(in oklch, var(--gold) 30%, transparent) 0.72turn,
+    var(--gold) 0.83turn,
+    color-mix(in oklch, var(--gold) 85%, white) 0.88turn,
+    var(--gold) 0.93turn,
+    transparent 0.99turn 1turn
+  );
+  filter: blur(1px)
+    drop-shadow(0 0 7px color-mix(in oklch, var(--gold) 70%, transparent));
+  animation: kazi-gold-trace-spin 8s linear infinite;
+}
+
+.kazi-gold-trace > * {
+  position: relative;
+  z-index: 1;
+  border-radius: 17px;
+}
+
+@keyframes kazi-gold-trace-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kazi-gold-trace::before {
+    animation: none;
+  }
+}

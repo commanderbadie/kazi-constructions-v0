@@ -1,10 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-label="Architectural blueprint grid">
   <rect width="1600" height="900" fill="#0c2238"/>
-  <g stroke="#2f6da8" stroke-width="1" opacity="0.35">
+  <!-- Fine minor grid -->
+  <g stroke="#3f86c8" stroke-width="1" opacity="0.45">
     <path d="M0 50 H1600 M0 100 H1600 M0 150 H1600 M0 200 H1600 M0 250 H1600 M0 300 H1600 M0 350 H1600 M0 400 H1600 M0 450 H1600 M0 500 H1600 M0 550 H1600 M0 600 H1600 M0 650 H1600 M0 700 H1600 M0 750 H1600 M0 800 H1600 M0 850 H1600"/>
     <path d="M50 0 V900 M100 0 V900 M150 0 V900 M200 0 V900 M250 0 V900 M300 0 V900 M350 0 V900 M400 0 V900 M450 0 V900 M500 0 V900 M550 0 V900 M600 0 V900 M650 0 V900 M700 0 V900 M750 0 V900 M800 0 V900 M850 0 V900 M900 0 V900 M950 0 V900 M1000 0 V900 M1050 0 V900 M1100 0 V900 M1150 0 V900 M1200 0 V900 M1250 0 V900 M1300 0 V900 M1350 0 V900 M1400 0 V900 M1450 0 V900 M1500 0 V900 M1550 0 V900"/>
   </g>
-  <g fill="none" stroke="#4f9fe0" stroke-width="2.5" opacity="0.55">
+  <!-- Major grid every 250px, brighter and thicker -->
+  <g stroke="#62a8e6" stroke-width="2" opacity="0.6">
+    <path d="M0 250 H1600 M0 500 H1600 M0 750 H1600"/>
+    <path d="M250 0 V900 M500 0 V900 M750 0 V900 M1000 0 V900 M1250 0 V900 M1500 0 V900"/>
+  </g>
+  <!-- Bolder architectural objects -->
+  <g fill="none" stroke="#7cc0f5" stroke-width="3" opacity="0.85">
     <rect x="200" y="400" width="280" height="320"/>
     <rect x="240" y="440" width="90" height="120"/>
     <rect x="360" y="440" width="80" height="80"/>
