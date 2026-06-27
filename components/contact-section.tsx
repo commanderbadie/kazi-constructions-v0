@@ -9,7 +9,7 @@ import { isFirebaseConfigured } from "@/lib/firebase"
 import { getDb } from "@/lib/firestore"
 
 const inputClass =
-  "w-full rounded-lg border border-border bg-white/80 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/40"
+  "w-full rounded-lg border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/40"
 
 const labelClass = "mb-2 block text-xs font-bold uppercase tracking-wider text-foreground"
 
@@ -77,7 +77,7 @@ export function ContactSection() {
   }
 
   return (
-    <section id="contact" className="py-20 lg:py-28">
+    <section id="contact" className="bg-muted py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
           <div>
@@ -142,7 +142,7 @@ export function ContactSection() {
           <div>
             <form
               onSubmit={handleSubmit}
-              className="rounded-2xl border border-white/50 bg-white/70 p-6 shadow-sm backdrop-blur-md sm:p-8"
+              className="rounded-2xl border border-border bg-card p-6 shadow-sm sm:p-8"
             >
               <div className="space-y-5">
                 <div>
@@ -239,7 +239,7 @@ export function ContactSection() {
           </div>
 
           <div className="mt-10 grid gap-6 lg:grid-cols-3">
-            <div className="overflow-hidden rounded-2xl border border-white/50 bg-white/70 shadow-md backdrop-blur-md lg:col-span-2">
+            <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-md lg:col-span-2">
               <iframe
                 title="Kazi Constructions office location on Google Maps"
                 src={`https://maps.google.com/maps?q=${encodeURIComponent(
@@ -254,7 +254,7 @@ export function ContactSection() {
               />
             </div>
 
-            <div className="flex flex-col rounded-2xl bg-navy/90 p-8 text-white shadow-md backdrop-blur-md">
+            <div className="flex flex-col rounded-2xl bg-navy p-8 text-white">
               <div className="space-y-6">
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-[0.18em] text-gold">

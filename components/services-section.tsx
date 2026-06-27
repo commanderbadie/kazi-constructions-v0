@@ -26,7 +26,7 @@ export function ServicesSection() {
   const { services } = useSiteContent()
 
   return (
-    <section id="services" className="py-20 lg:py-28">
+    <section id="services" className="bg-muted py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Reveal className="mx-auto max-w-2xl text-center">
           <span className="text-sm font-semibold uppercase tracking-wider text-primary">
@@ -46,7 +46,7 @@ export function ServicesSection() {
             const Icon = iconMap[service.icon] ?? Home
             return (
               <Reveal key={service.title} delay={index * 100}>
-                <article className="group h-full rounded-xl border border-white/50 bg-white/70 p-7 shadow-sm backdrop-blur-md transition-all duration-300 ease-out hover:-translate-y-2 hover:scale-[1.02] hover:border-primary hover:shadow-xl hover:shadow-primary/10">
+                <article className="group h-full rounded-xl border border-border bg-card p-7 shadow-sm transition-all duration-300 ease-out hover:-translate-y-2 hover:scale-[1.02] hover:border-primary hover:shadow-xl hover:shadow-primary/10">
                   <span className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary transition-colors duration-300 group-hover:bg-primary group-hover:text-primary-foreground">
                     <Icon className="h-6 w-6" aria-hidden="true" />
                   </span>

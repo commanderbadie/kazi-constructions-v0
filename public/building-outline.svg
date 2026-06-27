@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" fill="none" role="img" aria-label="Building elevation sketch">
+  <g stroke="#bcd9f5" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+    <!-- Main tower -->
+    <rect x="690" y="150" width="300" height="660"/>
+    <!-- Roof parapet -->
+    <path d="M690 150 H990 M705 150 V120 H975 V150"/>
+    <!-- Floor lines -->
+    <path d="M690 220 H990 M690 290 H990 M690 360 H990 M690 430 H990 M690 500 H990 M690 570 H990 M690 640 H990 M690 710 H990"/>
+    <!-- Window columns -->
+    <path d="M760 150 V810 M840 150 V810 M920 150 V810"/>
+    <!-- Ground line -->
+    <path d="M560 810 H1140" stroke-width="3"/>
+    <!-- Adjacent lower block -->
+    <rect x="990" y="430" width="150" height="380"/>
+    <path d="M990 500 H1140 M990 570 H1140 M990 640 H1140 M990 710 H1140 M1065 430 V810"/>
+    <!-- Entrance -->
+    <rect x="800" y="745" width="80" height="65"/>
+    <!-- Construction crane -->
+    <path d="M610 810 V210"/>
+    <path d="M590 810 H630"/>
+    <path d="M610 210 H470 M610 210 H720"/>
+    <path d="M610 240 L500 213 M610 240 L690 222"/>
+    <path d="M520 210 V245"/>
+    <path d="M520 245 H540 V268 H520 Z"/>
+    <!-- Dimension marker -->
+    <path d="M660 150 V810" stroke-dasharray="6 10" stroke-width="1.6"/>
+    <path d="M652 150 H668 M652 810 H668" stroke-width="1.6"/>
+  </g>
+</svg>
