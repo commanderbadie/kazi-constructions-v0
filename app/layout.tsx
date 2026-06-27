@@ -36,6 +36,19 @@ export default function RootLayout({
       className={`light ${geistSans.variable} ${archivo.variable} bg-background`}
     >
       <body className="font-sans antialiased">
+        {/* Fixed, non-repeating marble slab locked to the viewport. Content
+            scrolls over this; the marble stays still for a one-slab effect.
+            The hero section sits on its own opaque navy background above it. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none fixed inset-0 -z-10 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: "url(/marble-bg.jpg)" }}
+        />
+        {/* Soft light veil so text and frosted cards stay readable over the marble. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none fixed inset-0 -z-10 bg-white/35"
+        />
         <AuthProvider>
           <Preloader />
           {children}

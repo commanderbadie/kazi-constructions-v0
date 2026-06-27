@@ -35,7 +35,7 @@ const steps: Step[] = [
 
 export function ProcessSection() {
   return (
-    <section id="process" className="bg-navy py-20 text-white lg:py-28">
+    <section id="process" className="bg-navy/90 py-20 text-white backdrop-blur-md lg:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Reveal>
           <span className="inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.2em] text-gold">

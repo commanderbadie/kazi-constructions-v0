@@ -12,7 +12,7 @@ import { FloatingWidgets } from "@/components/floating-widgets"
 
 export default function Page() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       <SiteNavbar />
       <main>
         <HeroSection />
