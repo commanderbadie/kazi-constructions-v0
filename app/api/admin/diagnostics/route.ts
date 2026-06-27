@@ -55,8 +55,10 @@ export async function GET(req: Request) {
     }
   }
 
-  // Try sending a test email to the owners (only if configured).
-  if (out.gmailConfigured) {
+  // Only send a test email when explicitly requested (?emailTest=1), so simply
+  // viewing the diagnostics doesn't spam the owner inboxes.
+  const wantsEmailTest = new URL(req.url).searchParams.get("emailTest") === "1"
+  if (out.gmailConfigured && wantsEmailTest) {
     try {
       const { notifyOwners } = await import("@/lib/email")
       await notifyOwners({
