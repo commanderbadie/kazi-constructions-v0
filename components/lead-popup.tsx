@@ -19,34 +19,34 @@ function IndiaFlag() {
 
 const trustBadges = [
   {
-    value: "10,000+",
-    label: "Homes Built",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="h-9 w-9">
-        <path d="M12 2l1.6 3.3 3.6.5-2.6 2.5.6 3.6L12 10.7 8.8 12.4l.6-3.6L6.8 6.3l3.6-.5L12 2z" />
-        <path d="M5 21v-3a3 3 0 0 1 3-3h8a3 3 0 0 1 3 3v3" />
-        <circle cx="12" cy="16.5" r="0.4" />
-      </svg>
-    ),
-  },
-  {
-    value: "100%",
-    label: "Money Safety",
+    value: "Licensed",
+    label: "GHMC Certified",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="h-9 w-9">
         <path d="M12 2l8 3v6c0 5-3.4 8.5-8 11-4.6-2.5-8-6-8-11V5l8-3z" />
-        <path d="M9 11.5c0-1 1-1.7 3-1.7M9 13.5c0 1 1 1.7 3 1.7m0-5.4c1.2 0 2.2.4 2.6 1M12 8v8.5" />
+        <path d="M8.5 12l2.3 2.3L15.5 9.5" />
       </svg>
     ),
   },
   {
-    value: "470+",
-    label: "Quality Checks",
+    value: "10+ Years",
+    label: "Experience",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="h-9 w-9">
-        <circle cx="12" cy="10" r="6" />
-        <path d="M9.5 10l1.7 1.7L14.5 8.5" />
-        <path d="M8.5 15.5L7 22l5-2.5L17 22l-1.5-6.5" />
+        <circle cx="12" cy="8" r="6" />
+        <path d="M12 5.4l1 2 2.2.3-1.6 1.5.4 2.1-2-1-2 1 .4-2.1L8.8 7.7l2.2-.3z" />
+        <path d="M8.5 13.3L7 22l5-2.6L17 22l-1.5-8.7" />
+      </svg>
+    ),
+  },
+  {
+    value: "140+",
+    label: "Happy Clients",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="h-9 w-9">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M8.3 14.2s1.4 1.9 3.7 1.9 3.7-1.9 3.7-1.9" />
+        <path d="M9 9.5h.01M15 9.5h.01" />
       </svg>
     ),
   },
