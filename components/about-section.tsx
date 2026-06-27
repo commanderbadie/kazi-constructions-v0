@@ -12,7 +12,7 @@ export function AboutSection() {
   const badge = counters[0]
 
   return (
-    <section id="about" className="bg-background py-20 lg:py-28">
+    <section id="about" className="py-20 lg:py-28">
       <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8">
         <Reveal className="relative">
           <img
@@ -41,14 +41,14 @@ export function AboutSection() {
           </p>
 
           <div className="mt-8 grid gap-6 sm:grid-cols-2">
-            <div className="rounded-xl border border-border bg-card p-6">
+            <div className="rounded-xl border border-white/50 bg-white/70 p-6 backdrop-blur-md">
               <Target className="h-8 w-8 text-primary" />
               <h3 className="mt-4 font-heading text-lg font-bold">Our Mission</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                 {about.mission}
               </p>
             </div>
-            <div className="rounded-xl border border-border bg-card p-6">
+            <div className="rounded-xl border border-white/50 bg-white/70 p-6 backdrop-blur-md">
               <Eye className="h-8 w-8 text-primary" />
               <h3 className="mt-4 font-heading text-lg font-bold">Our Vision</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
@@ -71,11 +71,11 @@ export function AboutSection() {
       {/* Animated counters */}
       <div className="mx-auto mt-16 max-w-7xl px-4 sm:px-6 lg:mt-24 lg:px-8">
         <Reveal>
-          <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-border bg-border lg:grid-cols-4">
+          <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/50 bg-white/30 backdrop-blur-md lg:grid-cols-4">
             {counters.map((counter) => (
               <div
                 key={counter.label}
-                className="flex flex-col items-center justify-center bg-card px-4 py-10 text-center"
+                className="flex flex-col items-center justify-center bg-white/60 px-4 py-10 text-center"
               >
                 <dt className="font-heading text-4xl font-extrabold text-primary sm:text-5xl">
                   <CountUp end={counter.end} suffix={counter.suffix} />

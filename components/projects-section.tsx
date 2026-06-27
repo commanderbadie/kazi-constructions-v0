@@ -86,7 +86,7 @@ export function ProjectsSection() {
   }
 
   return (
-    <section id="projects" className="bg-background py-20 lg:py-28">
+    <section id="projects" className="py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Reveal className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div className="max-w-2xl">
@@ -129,7 +129,7 @@ export function ProjectsSection() {
               return (
                 <article
                   key={project.image}
-                  className="group h-full overflow-hidden rounded-xl border border-border bg-card shadow-sm transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/10"
+                  className="group h-full overflow-hidden rounded-xl border border-white/50 bg-white/70 shadow-sm backdrop-blur-md transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/10"
                 >
                   <button
                     type="button"

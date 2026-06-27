@@ -8,7 +8,7 @@ export function TestimonialsSection() {
   const { testimonials } = useSiteContent()
 
   return (
-    <section id="testimonials" className="bg-muted py-20 lg:py-28">
+    <section id="testimonials" className="py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Reveal>
           <div className="mx-auto max-w-2xl text-center">
@@ -28,7 +28,7 @@ export function TestimonialsSection() {
         <div className="mt-14 grid gap-6 md:grid-cols-3 lg:gap-8">
           {testimonials.map((item, index) => (
             <Reveal key={item.name} delay={index * 100}>
-              <figure className="relative h-full rounded-2xl border border-border bg-card p-8 shadow-sm">
+              <figure className="relative h-full rounded-2xl border border-white/50 bg-white/70 p-8 shadow-sm backdrop-blur-md">
                 <Quote
                   className="absolute right-6 top-6 h-9 w-9 text-gold/25"
                   aria-hidden="true"

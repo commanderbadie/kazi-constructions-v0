@@ -79,7 +79,7 @@ function FooterColumn({ title, links }: { title: string; links: FooterLink[] }) 
 export function SiteFooter() {
   const { company, contact } = useSiteContent()
   return (
-    <footer className="bg-accent text-accent-foreground">
+    <footer className="bg-accent/90 text-accent-foreground backdrop-blur-md">
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-12 lg:gap-8">
           {/* Brand */}
