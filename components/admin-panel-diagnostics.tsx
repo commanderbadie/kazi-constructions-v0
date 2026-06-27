@@ -21,12 +21,14 @@ export function AdminPanelDiagnostics() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  async function run() {
+  async function run(emailTest = false) {
     setLoading(true)
     setError(null)
-    setData(null)
+    if (!emailTest) setData(null)
     try {
-      const res = await fetch("/api/admin/diagnostics")
+      const res = await fetch(
+        `/api/admin/diagnostics${emailTest ? "?emailTest=1" : ""}`,
+      )
       const json = await res.json().catch(() => ({}))
       if (!res.ok) throw new Error(json.error || "Failed")
       setData(json)
@@ -38,7 +40,7 @@ export function AdminPanelDiagnostics() {
   }
 
   useEffect(() => {
-    run()
+    run(false)
   }, [])
 
   return (
@@ -50,14 +52,24 @@ export function AdminPanelDiagnostics() {
         Checks that the backend (database + email) is wired up correctly.
       </p>
 
-      <button
-        type="button"
-        onClick={run}
-        disabled={loading}
-        className="mb-4 rounded-lg bg-slate-900 px-4 py-2 text-sm font-bold text-white hover:bg-slate-700 disabled:opacity-60"
-      >
-        {loading ? "Running…" : "Run checks again"}
-      </button>
+      <div className="mb-4 flex flex-wrap gap-3">
+        <button
+          type="button"
+          onClick={() => run(false)}
+          disabled={loading}
+          className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-bold text-white hover:bg-slate-700 disabled:opacity-60"
+        >
+          {loading ? "Running…" : "Run checks again"}
+        </button>
+        <button
+          type="button"
+          onClick={() => run(true)}
+          disabled={loading}
+          className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50 disabled:opacity-60"
+        >
+          Send a test email
+        </button>
+      </div>
 
       {error && (
         <p className="mb-4 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>
@@ -85,7 +97,7 @@ export function AdminPanelDiagnostics() {
             label="Email (Gmail) configured"
             detail={data.gmailConfigured ? undefined : "GMAIL_USER / GMAIL_APP_PASSWORD missing"}
           />
-          {data.gmailConfigured ? (
+          {typeof data.emailSend !== "undefined" ? (
             <Row
               ok={typeof data.emailSend === "string" && data.emailSend.startsWith("ok")}
               label="Email sending works (test email sent)"
