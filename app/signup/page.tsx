@@ -4,7 +4,6 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import {
   createUserWithEmailAndPassword,
-  sendEmailVerification,
   signInWithPopup,
   updateProfile,
 } from "firebase/auth"
@@ -14,6 +13,7 @@ import {
   isFirebaseConfigured,
   friendlyAuthError,
 } from "@/lib/firebase"
+import { sendVerification } from "@/lib/verify-email"
 import { useAuth } from "@/components/auth-provider"
 import {
   AuthShell,
@@ -58,7 +58,7 @@ export default function SignUpPage() {
       if (name.trim()) {
         await updateProfile(cred.user, { displayName: name.trim() })
       }
-      await sendEmailVerification(cred.user)
+      await sendVerification(cred.user)
       router.replace("/account")
     } catch (err) {
       const code = (err as { code?: string }).code

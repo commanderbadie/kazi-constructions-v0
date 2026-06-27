@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import { sendEmailVerification } from "firebase/auth"
 import { collection, getDocs, query, where } from "firebase/firestore"
 import { getFirebaseAuth } from "@/lib/firebase"
+import { sendVerification } from "@/lib/verify-email"
 import { getDb, type Enquiry } from "@/lib/firestore"
 import { isAdminUser } from "@/lib/admin"
 import { useAuth } from "@/components/auth-provider"
@@ -78,7 +78,7 @@ export default function AccountPage() {
     setBusy(true)
     setNotice(null)
     try {
-      await sendEmailVerification(getFirebaseAuth().currentUser ?? user)
+      await sendVerification(getFirebaseAuth().currentUser ?? user)
       setNotice("Verification email sent — check your inbox (and spam folder).")
     } catch {
       setNotice("Couldn't send right now. Please wait a minute and try again.")
