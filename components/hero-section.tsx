@@ -67,8 +67,9 @@ export function HeroSection() {
             <img
               src="/hero-3d.png"
               alt="Kazi Constructions — Architects, Engineers, Consultants"
-              className="block w-full"
+              className="kazi-hero-texture"
             />
+            <span aria-hidden="true" className="kazi-comet" />
           </div>
         </div>
 

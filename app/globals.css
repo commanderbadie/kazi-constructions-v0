@@ -373,53 +373,110 @@
 
 
 
-/* Hero logo: fully transparent frame with a single gold beam slowly tracing
-   the perimeter — premium, continuous loop. No card fill or shadow. */
+/* Hero logo: a dark stone/concrete texture that softly dissolves into the
+   navy hero on every edge (no card, border, radius or shadow), with a single
+   gold "comet" of light continuously orbiting its perimeter. */
 .kazi-gold-trace {
   position: relative;
-  padding: 3px;
-  border-radius: 20px;
   isolation: isolate;
-  overflow: hidden;
+  border-radius: 30px;
 }
 
-.kazi-gold-trace::before {
-  content: "";
+/* The texture itself: feather all four edges + corners so it melts into the
+   hero background with no hard cutoff — it floats rather than sits in a box. */
+.kazi-hero-texture {
+  display: block;
+  width: 100%;
+  border-radius: inherit;
+  -webkit-mask-image:
+    radial-gradient(125% 125% at 50% 50%, #000 50%, transparent 88%),
+    linear-gradient(to right, transparent 0%, #000 14%, #000 86%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%);
+  mask-image:
+    radial-gradient(125% 125% at 50% 50%, #000 50%, transparent 88%),
+    linear-gradient(to right, transparent 0%, #000 14%, #000 86%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
+
+/* Smoothly animatable angle for the orbiting comet */
+@property --kazi-comet-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+/* The comet: a thin gold ring traced along the perimeter. A conic gradient
+   gives a bright, near-white head with a long fading tail (the motion-blur
+   trail), and stacked drop-shadows create the radiant neon-on-glass bloom. */
+.kazi-comet {
   position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 175%;
-  aspect-ratio: 1;
-  translate: -50% -50%;
-  z-index: -1;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  padding: 2px; /* ring thickness */
+  pointer-events: none;
   background: conic-gradient(
-    from 0deg,
-    transparent 0turn 0.58turn,
-    color-mix(in oklch, var(--gold) 30%, transparent) 0.72turn,
-    var(--gold) 0.83turn,
-    color-mix(in oklch, var(--gold) 85%, white) 0.88turn,
-    var(--gold) 0.93turn,
-    transparent 0.99turn 1turn
+    from var(--kazi-comet-angle),
+    transparent 0deg,
+    transparent 188deg,
+    color-mix(in oklch, var(--gold) 18%, transparent) 250deg,
+    color-mix(in oklch, var(--gold) 55%, transparent) 318deg,
+    var(--gold) 344deg,
+    color-mix(in oklch, var(--gold) 92%, white) 355deg,
+    color-mix(in oklch, var(--gold) 70%, white) 360deg
   );
-  filter: blur(1px)
-    drop-shadow(0 0 7px color-mix(in oklch, var(--gold) 70%, transparent));
-  animation: kazi-gold-trace-spin 8s linear infinite;
+  /* Show only the perimeter ring (border area), not the filled interior */
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  filter: blur(0.6px)
+    drop-shadow(0 0 5px color-mix(in oklch, var(--gold) 75%, transparent))
+    drop-shadow(0 0 12px color-mix(in oklch, var(--gold) 40%, transparent));
+  animation:
+    kazi-comet-orbit 7s linear infinite,
+    kazi-comet-pulse 7s ease-in-out infinite;
 }
 
-.kazi-gold-trace > * {
-  position: relative;
-  z-index: 1;
-  border-radius: 17px;
-}
-
-@keyframes kazi-gold-trace-spin {
+@keyframes kazi-comet-orbit {
   to {
-    transform: rotate(360deg);
+    --kazi-comet-angle: 360deg;
+  }
+}
+
+/* Subtle bloom pulse 4× per loop — peaks as the comet rounds each corner */
+@keyframes kazi-comet-pulse {
+  0%,
+  25%,
+  50%,
+  75%,
+  100% {
+    filter: blur(0.6px)
+      drop-shadow(0 0 5px color-mix(in oklch, var(--gold) 75%, transparent))
+      drop-shadow(0 0 12px color-mix(in oklch, var(--gold) 38%, transparent));
+  }
+  12.5%,
+  37.5%,
+  62.5%,
+  87.5% {
+    filter: blur(0.85px)
+      drop-shadow(0 0 9px color-mix(in oklch, var(--gold) 92%, transparent))
+      drop-shadow(0 0 22px color-mix(in oklch, var(--gold) 55%, transparent));
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .kazi-gold-trace::before {
+  .kazi-comet {
     animation: none;
+    background: color-mix(in oklch, var(--gold) 42%, transparent);
+    filter: drop-shadow(
+      0 0 8px color-mix(in oklch, var(--gold) 45%, transparent)
+    );
   }
 }
