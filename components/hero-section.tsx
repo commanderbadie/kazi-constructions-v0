@@ -63,13 +63,12 @@ export function HeroSection() {
           className="animate-scale-in relative order-1"
           style={{ animationDelay: "0.3s" }}
         >
-          <div className="kazi-gold-trace">
+          <div className="relative">
             <img
-              src="/hero-3d.png"
+              src="/kazi-logo-transparent.png"
               alt="Kazi Constructions — Architects, Engineers, Consultants"
-              className="kazi-hero-texture"
+              className="block w-full"
             />
-            <span aria-hidden="true" className="kazi-comet" />
           </div>
         </div>
 
