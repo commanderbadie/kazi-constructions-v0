@@ -415,69 +415,66 @@
   width: 100%;
   border-radius: inherit;
   -webkit-mask-image:
-    linear-gradient(to right, transparent 0%, #000 10%, #000 90%, transparent 100%),
-    linear-gradient(to bottom, transparent 0%, #000 9%, #000 91%, transparent 100%);
+    linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 5%, #000 95%, transparent 100%);
   mask-image:
-    linear-gradient(to right, transparent 0%, #000 10%, #000 90%, transparent 100%),
-    linear-gradient(to bottom, transparent 0%, #000 9%, #000 91%, transparent 100%);
+    linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 5%, #000 95%, transparent 100%);
   -webkit-mask-composite: source-in;
   mask-composite: intersect;
   filter:
-    drop-shadow(0 0 12px color-mix(in oklch, var(--gold) 20%, transparent))
-    drop-shadow(0 0 32px color-mix(in oklch, var(--gold) 11%, transparent));
+    drop-shadow(0 0 14px color-mix(in oklch, var(--gold) 34%, transparent))
+    drop-shadow(0 0 40px color-mix(in oklch, var(--gold) 20%, transparent));
 }
 
-/* The travelling gold particle. It follows the rounded-rectangle outline via
-   offset-path and rotates to stay tangent to its motion, so its blurred,
-   fading tail always trails behind the bright head — a cinematic motion blur.
-   It fades in at the start point, races around, then dissipates near the end
-   (toward the wordmark) before looping again. */
-.kazi-trail {
+/* A glowing gold rim around the logo's outline. The whole border carries a
+   soft constant gold glow, and a brighter highlight glides slowly around it so
+   the outline shimmers — luminous, not a hard frame. */
+@property --kazi-border-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.kazi-border {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
   z-index: 2;
-  width: 94px;
-  height: 6px;
-  border-radius: 50%;
+  border-radius: inherit;
+  padding: 2.5px; /* rim thickness */
   pointer-events: none;
-  background: linear-gradient(
-    to right,
-    transparent 0%,
-    color-mix(in oklch, var(--gold) 10%, transparent) 48%,
-    color-mix(in oklch, var(--gold) 42%, transparent) 78%,
-    color-mix(in oklch, var(--gold) 82%, transparent) 93%,
-    color-mix(in oklch, var(--gold) 100%, white 14%) 100%
+  background: conic-gradient(
+    from var(--kazi-border-angle),
+    color-mix(in oklch, var(--gold) 24%, transparent) 0deg,
+    color-mix(in oklch, var(--gold) 24%, transparent) 230deg,
+    color-mix(in oklch, var(--gold) 62%, transparent) 312deg,
+    color-mix(in oklch, var(--gold) 100%, white 16%) 344deg,
+    color-mix(in oklch, var(--gold) 62%, transparent) 360deg
   );
-  filter: blur(2px)
-    drop-shadow(0 0 6px color-mix(in oklch, var(--gold) 80%, transparent))
-    drop-shadow(0 0 15px color-mix(in oklch, var(--gold) 45%, transparent));
-  offset-path: inset(0 round 24px);
-  offset-rotate: auto;
-  offset-anchor: 100% 50%;
-  animation: kazi-trail-run 13s linear infinite;
+  /* Show only the rim (border band), keep the interior clear */
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  filter: blur(0.8px)
+    drop-shadow(0 0 6px color-mix(in oklch, var(--gold) 65%, transparent))
+    drop-shadow(0 0 16px color-mix(in oklch, var(--gold) 38%, transparent));
+  animation: kazi-border-glow 7s linear infinite;
 }
 
-@keyframes kazi-trail-run {
-  0% {
-    offset-distance: 0%;
-    opacity: 0;
-  }
-  9% {
-    opacity: 1;
-  }
-  80% {
-    opacity: 1;
-  }
-  100% {
-    offset-distance: 100%;
-    opacity: 0;
+@keyframes kazi-border-glow {
+  to {
+    --kazi-border-angle: 360deg;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .kazi-trail {
+  .kazi-border {
     animation: none;
-    opacity: 0;
+    background: color-mix(in oklch, var(--gold) 40%, transparent);
   }
 }
