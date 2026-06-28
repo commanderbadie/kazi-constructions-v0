@@ -415,11 +415,11 @@
   width: 100%;
   border-radius: inherit;
   -webkit-mask-image:
-    linear-gradient(to right, transparent 0%, #000 10%, #000 90%, transparent 100%),
-    linear-gradient(to bottom, transparent 0%, #000 9%, #000 91%, transparent 100%);
+    linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 5%, #000 95%, transparent 100%);
   mask-image:
-    linear-gradient(to right, transparent 0%, #000 10%, #000 90%, transparent 100%),
-    linear-gradient(to bottom, transparent 0%, #000 9%, #000 91%, transparent 100%);
+    linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 5%, #000 95%, transparent 100%);
   -webkit-mask-composite: source-in;
   mask-composite: intersect;
   filter:
@@ -427,54 +427,54 @@
     drop-shadow(0 0 40px color-mix(in oklch, var(--gold) 20%, transparent));
 }
 
-/* A clean diagonal "shine" of gold light that glides across the logo, pauses,
-   then repeats — a polished luxury sweep rather than a roaming particle. It is
-   masked to the logo's soft shape and uses screen blending so it reads as light
-   passing over the surface. */
-.kazi-shine {
+/* A glowing gold rim around the logo's outline. The whole border carries a
+   soft constant gold glow, and a brighter highlight glides slowly around it so
+   the outline shimmers — luminous, not a hard frame. */
+@property --kazi-border-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.kazi-border {
   position: absolute;
   inset: 0;
   z-index: 2;
-  pointer-events: none;
   border-radius: inherit;
-  background: linear-gradient(
-    105deg,
-    transparent 40%,
-    color-mix(in oklch, var(--gold) 28%, transparent) 47%,
-    color-mix(in oklch, var(--gold) 96%, white 12%) 50%,
-    color-mix(in oklch, var(--gold) 28%, transparent) 53%,
-    transparent 60%
+  padding: 2.5px; /* rim thickness */
+  pointer-events: none;
+  background: conic-gradient(
+    from var(--kazi-border-angle),
+    color-mix(in oklch, var(--gold) 24%, transparent) 0deg,
+    color-mix(in oklch, var(--gold) 24%, transparent) 230deg,
+    color-mix(in oklch, var(--gold) 62%, transparent) 312deg,
+    color-mix(in oklch, var(--gold) 100%, white 16%) 344deg,
+    color-mix(in oklch, var(--gold) 62%, transparent) 360deg
   );
-  background-size: 220% 100%;
-  background-repeat: no-repeat;
-  background-position: 160% 0;
-  -webkit-mask-image:
-    linear-gradient(to right, transparent 0%, #000 10%, #000 90%, transparent 100%),
-    linear-gradient(to bottom, transparent 0%, #000 9%, #000 91%, transparent 100%);
-  mask-image:
-    linear-gradient(to right, transparent 0%, #000 10%, #000 90%, transparent 100%),
-    linear-gradient(to bottom, transparent 0%, #000 9%, #000 91%, transparent 100%);
-  -webkit-mask-composite: source-in;
-  mask-composite: intersect;
-  mix-blend-mode: screen;
-  filter: blur(1px)
-    drop-shadow(0 0 9px color-mix(in oklch, var(--gold) 55%, transparent));
-  animation: kazi-shine-sweep 7s ease-in-out infinite;
+  /* Show only the rim (border band), keep the interior clear */
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  filter: blur(0.8px)
+    drop-shadow(0 0 6px color-mix(in oklch, var(--gold) 65%, transparent))
+    drop-shadow(0 0 16px color-mix(in oklch, var(--gold) 38%, transparent));
+  animation: kazi-border-glow 7s linear infinite;
 }
 
-@keyframes kazi-shine-sweep {
-  0% {
-    background-position: 160% 0;
-  }
-  55%,
-  100% {
-    background-position: -60% 0;
+@keyframes kazi-border-glow {
+  to {
+    --kazi-border-angle: 360deg;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .kazi-shine {
+  .kazi-border {
     animation: none;
-    background-position: -60% 0;
+    background: color-mix(in oklch, var(--gold) 40%, transparent);
   }
 }
