@@ -2,6 +2,7 @@
 
 import type React from "react"
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { addDoc, collection, serverTimestamp } from "firebase/firestore"
 import { useSiteContent } from "@/lib/use-site-content"
 import { useAuth } from "@/components/auth-provider"
@@ -29,8 +30,8 @@ function WhatsAppIcon({ className }: { className?: string }) {
 export function ContactSection() {
   const { contact } = useSiteContent()
   const { user } = useAuth()
+  const router = useRouter()
   const officeAddress = contact.mapAddress
-  const [submitted, setSubmitted] = useState(false)
   const [saving, setSaving] = useState(false)
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -72,8 +73,15 @@ export function ContactSection() {
     }
 
     setSaving(false)
-    setSubmitted(true)
+
+    const name = String(data.get("name") || "").trim()
+    const phone = String(data.get("phone") || "").trim()
     form.reset()
+
+    const qs = new URLSearchParams()
+    if (name) qs.set("name", name)
+    if (phone) qs.set("phone", phone)
+    router.push(`/thank-you?${qs.toString()}`)
   }
 
   return (
@@ -203,14 +211,6 @@ export function ContactSection() {
               >
                 {saving ? "Sending…" : "Send Inquiry"}
               </button>
-              {submitted && (
-                <p className="mt-4 text-sm font-medium text-primary" role="status">
-                  Thanks! We&apos;ve received your message and will be in touch soon.
-                  {user
-                    ? " You can view this in your account's enquiry history."
-                    : ""}
-                </p>
-              )}
               {!user && (
                 <p className="mt-3 text-xs text-muted-foreground">
                   <a href="/login" className="font-semibold text-primary hover:underline">

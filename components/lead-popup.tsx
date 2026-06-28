@@ -2,6 +2,7 @@
 
 import type React from "react"
 import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
 
 const STORAGE_KEY = "kazi-lead-popup-seen"
 const DELAY_MS = 20000
@@ -56,8 +57,8 @@ const inputClass =
   "w-full rounded-lg border border-border bg-muted/40 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/30"
 
 export function LeadPopup() {
+  const router = useRouter()
   const [open, setOpen] = useState(false)
-  const [submitted, setSubmitted] = useState(false)
 
   useEffect(() => {
     if (typeof window === "undefined") return
@@ -92,22 +93,35 @@ export function LeadPopup() {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     const data = new FormData(e.currentTarget)
-    // Show the thank-you immediately; saving happens in the background.
-    setSubmitted(true)
+    const name = String(data.get("name") || "").trim()
+    const phone = String(data.get("phone") || "").trim()
+    const location = String(data.get("location") || "").trim()
+
+    // Save in the background. keepalive lets the request finish even though we
+    // navigate away to the thank-you page immediately after.
     try {
-      await fetch("/api/leads", {
+      void fetch("/api/leads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        keepalive: true,
         body: JSON.stringify({
-          name: data.get("name"),
-          phone: data.get("phone"),
-          location: data.get("location"),
+          name,
+          phone,
+          location,
           website: data.get("website"), // honeypot
         }),
       })
     } catch {
-      // Non-fatal — the visitor already saw the confirmation.
+      // Non-fatal — the visitor still lands on the thank-you page.
     }
+
+    const qs = new URLSearchParams()
+    if (name) qs.set("name", name)
+    if (phone) qs.set("phone", `+91 ${phone}`)
+    if (location) qs.set("city", location)
+
+    document.body.style.overflow = ""
+    router.push(`/thank-you?${qs.toString()}`)
   }
 
   return (
@@ -133,30 +147,7 @@ export function LeadPopup() {
           </svg>
         </button>
 
-        {submitted ? (
-          <div className="py-10 text-center">
-            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-7 w-7">
-                <path d="M20 6L9 17l-5-5" />
-              </svg>
-            </div>
-            <h2 className="mt-5 font-heading text-2xl font-extrabold text-accent">
-              Thank you!
-            </h2>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-              Our construction expert will reach out to you shortly to discuss
-              your project.
-            </p>
-            <button
-              type="button"
-              onClick={() => setOpen(false)}
-              className="mt-6 rounded-full bg-primary px-6 py-3 text-sm font-semibold uppercase tracking-wider text-primary-foreground transition-colors hover:bg-primary/90"
-            >
-              Close
-            </button>
-          </div>
-        ) : (
-          <>
+        <>
             <h2
               id="lead-popup-title"
               className="pr-6 text-center font-heading text-xl font-extrabold leading-snug text-accent sm:text-2xl"
@@ -238,8 +229,7 @@ export function LeadPopup() {
                 </div>
               ))}
             </div>
-          </>
-        )}
+        </>
       </div>
     </div>
   )
