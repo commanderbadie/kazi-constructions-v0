@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Check, X } from "lucide-react"
+import { Check, X, ChevronDown } from "lucide-react"
 import { useSiteContent } from "@/lib/use-site-content"
 import type { PackageCellValue, PackageCategory } from "@/lib/site-content"
 
@@ -34,6 +34,13 @@ export function PackagesTable() {
   const [homeTypeIdx, setHomeTypeIdx] = useState(0)
   const [city, setCity] = useState(cities[0] ?? "")
   const [highlight, setHighlight] = useState(true)
+  const [openCats, setOpenCats] = useState<Record<string, boolean>>(() =>
+    Object.fromEntries(categories.map((c) => [c.name, true])),
+  )
+
+  function toggleCat(name: string) {
+    setOpenCats((prev) => ({ ...prev, [name]: !(prev[name] ?? true) }))
+  }
 
   const activeType = homeTypes[homeTypeIdx] ?? homeTypes[0]
 
@@ -150,6 +157,8 @@ export function PackagesTable() {
                 category={category}
                 tierCount={tiers.length}
                 highlight={highlight}
+                open={openCats[category.name] ?? true}
+                onToggle={() => toggleCat(category.name)}
               />
             ))}
           </tbody>
@@ -168,50 +177,67 @@ function CategoryRows({
   category,
   tierCount,
   highlight,
+  open,
+  onToggle,
 }: {
   category: PackageCategory
   tierCount: number
   highlight: boolean
+  open: boolean
+  onToggle: () => void
 }) {
   return (
     <>
       <tr>
-        <td
-          colSpan={tierCount + 1}
-          className="border-b border-border bg-accent/[0.04] px-4 py-3 font-heading text-sm font-extrabold uppercase tracking-wider text-foreground"
-        >
-          {category.name}
+        <td colSpan={tierCount + 1} className="border-b border-border bg-accent/[0.04] p-0">
+          <button
+            type="button"
+            onClick={onToggle}
+            aria-expanded={open}
+            className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left transition-colors hover:bg-accent/[0.07]"
+          >
+            <span className="font-heading text-sm font-extrabold uppercase tracking-wider text-foreground">
+              {category.name}
+            </span>
+            <ChevronDown
+              className={`h-5 w-5 shrink-0 text-muted-foreground transition-transform duration-300 ${
+                open ? "rotate-180" : ""
+              }`}
+              aria-hidden="true"
+            />
+          </button>
         </td>
       </tr>
 
-      {category.rows.map((row) => {
-        const differs = highlight && rowDiffers(row.values)
-        return (
-          <tr
-            key={row.label}
-            className="border-b border-border/70 last:border-b-0"
-          >
-            <td className="p-4 align-top">
-              <div className="font-semibold text-foreground">{row.label}</div>
-              {row.spec && (
-                <div className="mt-0.5 text-xs leading-relaxed text-muted-foreground">
-                  {row.spec}
-                </div>
-              )}
-            </td>
-            {Array.from({ length: tierCount }).map((_, i) => (
-              <td
-                key={i}
-                className={`p-4 align-middle ${differs ? "bg-gold/[0.07]" : ""}`}
-              >
-                <Cell value={row.values[i] ?? false} />
+      {open &&
+        category.rows.map((row) => {
+          const differs = highlight && rowDiffers(row.values)
+          return (
+            <tr
+              key={row.label}
+              className="border-b border-border/70 last:border-b-0"
+            >
+              <td className="p-4 align-top">
+                <div className="font-semibold text-foreground">{row.label}</div>
+                {row.spec && (
+                  <div className="mt-0.5 text-xs leading-relaxed text-muted-foreground">
+                    {row.spec}
+                  </div>
+                )}
               </td>
-            ))}
-          </tr>
-        )
-      })}
+              {Array.from({ length: tierCount }).map((_, i) => (
+                <td
+                  key={i}
+                  className={`p-4 align-middle ${differs ? "bg-gold/[0.07]" : ""}`}
+                >
+                  <Cell value={row.values[i] ?? false} />
+                </td>
+              ))}
+            </tr>
+          )
+        })}
 
-      {category.note && (
+      {open && category.note && (
         <tr>
           <td
             colSpan={tierCount + 1}
