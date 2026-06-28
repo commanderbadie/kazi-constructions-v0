@@ -373,110 +373,111 @@
 
 
 
-/* Hero logo: a dark stone/concrete texture that softly dissolves into the
-   navy hero on every edge (no card, border, radius or shadow), with a single
-   gold "comet" of light continuously orbiting its perimeter. */
-.kazi-gold-trace {
+/* Hero logo: the image stays fully solid and crisp in the centre; only its
+   edges softly blur and melt into the navy hero. A gentle golden bloom hugs
+   the borders, and a thin gold light particle traces the outline — motion
+   blurred, looping, and cinematic. */
+.kazi-logo-fx {
   position: relative;
   isolation: isolate;
-  border-radius: 30px;
+  border-radius: 24px;
 }
 
-/* The texture itself: feather all four edges + corners so it melts into the
-   hero background with no hard cutoff — it floats rather than sits in a box. */
-.kazi-hero-texture {
-  display: block;
-  width: 100%;
+/* Blurred duplicate sitting just behind and slightly larger: turns the
+   dissolving edge into a soft, out-of-focus melt rather than a hard cut. */
+.kazi-logo-fx::before {
+  content: "";
+  position: absolute;
+  inset: -3%;
+  z-index: 0;
   border-radius: inherit;
+  background-image: url(/hero-3d.png);
+  background-size: 100% 100%;
+  background-position: center;
+  filter: blur(18px);
   -webkit-mask-image:
-    radial-gradient(125% 125% at 50% 50%, #000 50%, transparent 88%),
-    linear-gradient(to right, transparent 0%, #000 14%, #000 86%, transparent 100%),
-    linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%);
+    linear-gradient(to right, transparent 0%, #000 12%, #000 88%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 11%, #000 89%, transparent 100%);
   mask-image:
-    radial-gradient(125% 125% at 50% 50%, #000 50%, transparent 88%),
-    linear-gradient(to right, transparent 0%, #000 14%, #000 86%, transparent 100%),
-    linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%);
+    linear-gradient(to right, transparent 0%, #000 12%, #000 88%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 11%, #000 89%, transparent 100%);
   -webkit-mask-composite: source-in;
   mask-composite: intersect;
 }
 
-/* Smoothly animatable angle for the orbiting comet */
-@property --kazi-comet-angle {
-  syntax: "<angle>";
-  initial-value: 0deg;
-  inherits: false;
-}
-
-/* The comet: a thin gold ring traced along the perimeter. A conic gradient
-   gives a bright, near-white head with a long fading tail (the motion-blur
-   trail), and stacked drop-shadows create the radiant neon-on-glass bloom. */
-.kazi-comet {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
+/* The solid image: fully opaque and sharp through the centre (original colours
+   and clarity preserved); only the outer band feathers out so it melts into
+   the blurred copy. A soft gold drop-shadow gives the luxurious edge bloom. */
+.kazi-logo-img {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
   border-radius: inherit;
-  padding: 2px; /* ring thickness */
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0%, #000 10%, #000 90%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 9%, #000 91%, transparent 100%);
+  mask-image:
+    linear-gradient(to right, transparent 0%, #000 10%, #000 90%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 9%, #000 91%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+  filter:
+    drop-shadow(0 0 12px color-mix(in oklch, var(--gold) 20%, transparent))
+    drop-shadow(0 0 32px color-mix(in oklch, var(--gold) 11%, transparent));
+}
+
+/* The travelling gold particle. It follows the rounded-rectangle outline via
+   offset-path and rotates to stay tangent to its motion, so its blurred,
+   fading tail always trails behind the bright head — a cinematic motion blur.
+   It fades in at the start point, races around, then dissipates near the end
+   (toward the wordmark) before looping again. */
+.kazi-trail {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: 94px;
+  height: 6px;
+  border-radius: 50%;
   pointer-events: none;
-  background: conic-gradient(
-    from var(--kazi-comet-angle),
-    transparent 0deg,
-    transparent 188deg,
-    color-mix(in oklch, var(--gold) 18%, transparent) 250deg,
-    color-mix(in oklch, var(--gold) 55%, transparent) 318deg,
-    var(--gold) 344deg,
-    color-mix(in oklch, var(--gold) 92%, white) 355deg,
-    color-mix(in oklch, var(--gold) 70%, white) 360deg
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    color-mix(in oklch, var(--gold) 10%, transparent) 48%,
+    color-mix(in oklch, var(--gold) 42%, transparent) 78%,
+    color-mix(in oklch, var(--gold) 82%, transparent) 93%,
+    color-mix(in oklch, var(--gold) 100%, white 14%) 100%
   );
-  /* Show only the perimeter ring (border area), not the filled interior */
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  mask-composite: exclude;
-  filter: blur(0.6px)
-    drop-shadow(0 0 5px color-mix(in oklch, var(--gold) 75%, transparent))
-    drop-shadow(0 0 12px color-mix(in oklch, var(--gold) 40%, transparent));
-  animation:
-    kazi-comet-orbit 7s linear infinite,
-    kazi-comet-pulse 7s ease-in-out infinite;
+  filter: blur(2px)
+    drop-shadow(0 0 6px color-mix(in oklch, var(--gold) 80%, transparent))
+    drop-shadow(0 0 15px color-mix(in oklch, var(--gold) 45%, transparent));
+  offset-path: inset(0 round 24px);
+  offset-rotate: auto;
+  offset-anchor: 100% 50%;
+  animation: kazi-trail-run 13s linear infinite;
 }
 
-@keyframes kazi-comet-orbit {
-  to {
-    --kazi-comet-angle: 360deg;
+@keyframes kazi-trail-run {
+  0% {
+    offset-distance: 0%;
+    opacity: 0;
   }
-}
-
-/* Subtle bloom pulse 4× per loop — peaks as the comet rounds each corner */
-@keyframes kazi-comet-pulse {
-  0%,
-  25%,
-  50%,
-  75%,
+  9% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
   100% {
-    filter: blur(0.6px)
-      drop-shadow(0 0 5px color-mix(in oklch, var(--gold) 75%, transparent))
-      drop-shadow(0 0 12px color-mix(in oklch, var(--gold) 38%, transparent));
-  }
-  12.5%,
-  37.5%,
-  62.5%,
-  87.5% {
-    filter: blur(0.85px)
-      drop-shadow(0 0 9px color-mix(in oklch, var(--gold) 92%, transparent))
-      drop-shadow(0 0 22px color-mix(in oklch, var(--gold) 55%, transparent));
+    offset-distance: 100%;
+    opacity: 0;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .kazi-comet {
+  .kazi-trail {
     animation: none;
-    background: color-mix(in oklch, var(--gold) 42%, transparent);
-    filter: drop-shadow(
-      0 0 8px color-mix(in oklch, var(--gold) 45%, transparent)
-    );
+    opacity: 0;
   }
 }
