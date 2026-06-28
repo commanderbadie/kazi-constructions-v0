@@ -455,7 +455,7 @@
   offset-path: inset(0 round 24px);
   offset-rotate: auto;
   offset-anchor: 100% 50%;
-  animation: kazi-trail-run 6.5s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  animation: kazi-trail-run 13s linear infinite;
 }
 
 @keyframes kazi-trail-run {
