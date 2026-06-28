@@ -202,6 +202,13 @@ function SuccessCard() {
 
       <div className="mx-auto mt-9 flex max-w-sm flex-col gap-3">
         <a
+          href="/packages"
+          className="group inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-md transition-colors hover:bg-primary/90"
+        >
+          View Our Packages
+          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+        </a>
+        <a
           href="/#services"
           className="group inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-background px-6 py-3.5 text-sm font-semibold text-primary transition-colors hover:border-primary/50 hover:bg-muted"
         >
