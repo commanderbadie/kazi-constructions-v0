@@ -11,6 +11,7 @@ const navLinks = [
   { label: "About", href: "#about" },
   { label: "Services", href: "#services" },
   { label: "Projects", href: "#projects" },
+  { label: "Packages", href: "/packages" },
   { label: "Contact", href: "#contact" },
 ]
 
@@ -49,6 +50,7 @@ export function SiteNavbar() {
   // Track which section is in view to drive the sliding underline.
   useEffect(() => {
     const sections = navLinks
+      .filter((l) => l.href.startsWith("#"))
       .map((l) => document.querySelector(l.href))
       .filter((el): el is Element => Boolean(el))
 
