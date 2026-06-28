@@ -464,7 +464,7 @@
     drop-shadow(0 0 8px color-mix(in oklch, var(--gold) 85%, transparent))
     drop-shadow(0 0 20px color-mix(in oklch, var(--gold) 60%, transparent))
     drop-shadow(0 0 40px color-mix(in oklch, var(--gold) 34%, transparent));
-  animation: kazi-border-glow 7s linear infinite;
+  animation: kazi-border-glow 13s linear infinite;
 }
 
 @keyframes kazi-border-glow {
