@@ -1,23 +1,15 @@
 "use client"
 
 import { useState } from "react"
-import { Check } from "lucide-react"
-import {
-  CATEGORIES,
-  CITIES,
-  HOME_TYPES,
-  PRICING,
-  TIERS,
-  type CellValue,
-  type HomeType,
-} from "@/lib/packages-data"
+import { Check, X } from "lucide-react"
+import { useSiteContent } from "@/lib/use-site-content"
+import type { PackageCellValue, PackageCategory } from "@/lib/site-content"
 
-function rowDiffers(values: Record<string, CellValue>) {
-  const seen = new Set(Object.values(values).map((v) => String(v)))
-  return seen.size > 1
+function rowDiffers(values: PackageCellValue[]) {
+  return new Set(values.map((v) => String(v))).size > 1
 }
 
-function Cell({ value }: { value: CellValue }) {
+function Cell({ value }: { value: PackageCellValue }) {
   if (value === true) {
     return (
       <span className="inline-flex" aria-label="Included">
@@ -26,76 +18,89 @@ function Cell({ value }: { value: CellValue }) {
     )
   }
   if (value === false) {
-    return <span className="text-muted-foreground/50">—</span>
+    return (
+      <span className="inline-flex" aria-label="Not included">
+        <X className="h-5 w-5 text-rose-400" />
+      </span>
+    )
   }
   return <span className="text-sm text-foreground">{value}</span>
 }
 
 export function PackagesTable() {
-  const [homeType, setHomeType] = useState<HomeType>("Homes")
-  const [city, setCity] = useState<string>(CITIES[0])
+  const { packages } = useSiteContent()
+  const { tiers, homeTypes, cities, categories } = packages
+
+  const [homeTypeIdx, setHomeTypeIdx] = useState(0)
+  const [city, setCity] = useState(cities[0] ?? "")
   const [highlight, setHighlight] = useState(true)
 
-  const pricing = PRICING[homeType]
+  const activeType = homeTypes[homeTypeIdx] ?? homeTypes[0]
 
   return (
     <div>
       {/* Controls: city + home type */}
       <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:gap-8">
-        <label className="flex items-center gap-2">
-          <span className="sr-only">Select city</span>
-          <select
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-            className="rounded-lg border border-border bg-background px-4 py-2 text-sm font-semibold text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/30"
-          >
-            {CITIES.map((c) => (
-              <option key={c} value={c}>
-                {c}
-              </option>
-            ))}
-          </select>
-        </label>
+        {cities.length > 0 && (
+          <label className="flex items-center gap-2">
+            <span className="sr-only">Select city</span>
+            <select
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+              className="rounded-lg border border-border bg-background px-4 py-2 text-sm font-semibold text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/30"
+            >
+              {cities.map((c) => (
+                <option key={c} value={c}>
+                  {c}
+                </option>
+              ))}
+            </select>
+          </label>
+        )}
 
-        <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
-          <span className="text-sm font-bold text-foreground">Type:</span>
-          {HOME_TYPES.map((type) => {
-            const active = homeType === type
-            return (
-              <button
-                key={type}
-                type="button"
-                onClick={() => setHomeType(type)}
-                className="flex items-center gap-2 text-left"
-                aria-pressed={active}
-              >
-                <span
-                  className={`flex h-4 w-4 items-center justify-center rounded-full border-2 transition-colors ${
-                    active ? "border-primary" : "border-muted-foreground/40"
-                  }`}
+        {homeTypes.length > 0 && (
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+            <span className="text-sm font-bold text-foreground">Type:</span>
+            {homeTypes.map((type, i) => {
+              const active = i === homeTypeIdx
+              return (
+                <button
+                  key={type.name + i}
+                  type="button"
+                  onClick={() => setHomeTypeIdx(i)}
+                  className="flex items-center gap-2 text-left"
+                  aria-pressed={active}
                 >
-                  {active && (
-                    <span className="h-2 w-2 rounded-full bg-primary" />
-                  )}
-                </span>
-                <span className="text-sm">
                   <span
-                    className={
-                      active
-                        ? "font-semibold text-foreground"
-                        : "font-medium text-muted-foreground"
-                    }
+                    className={`flex h-4 w-4 items-center justify-center rounded-full border-2 transition-colors ${
+                      active ? "border-primary" : "border-muted-foreground/40"
+                    }`}
                   >
-                    {type}
-                  </span>{" "}
-                  <span className="text-[11px] uppercase tracking-wide text-muted-foreground">
-                    starts at {PRICING[type].startsAt} per sqft
+                    {active && (
+                      <span className="h-2 w-2 rounded-full bg-primary" />
+                    )}
                   </span>
-                </span>
-              </button>
-            )
-          })}
-        </div>
+                  <span className="text-sm">
+                    <span
+                      className={
+                        active
+                          ? "font-semibold text-foreground"
+                          : "font-medium text-muted-foreground"
+                      }
+                    >
+                      {type.name}
+                    </span>{" "}
+                    {type.startsAt && (
+                      <span className="text-[11px] uppercase tracking-wide text-muted-foreground">
+                        starts at {type.startsAt} per sqft
+                      </span>
+                    )}
+                  </span>
+                </button>
+              )
+            })}
+          </div>
+        )}
       </div>
 
       {/* Comparison table */}
@@ -125,13 +130,13 @@ export function PackagesTable() {
                   </span>
                 </label>
               </th>
-              {TIERS.map((tier) => (
-                <th key={tier} className="p-4 align-top">
+              {tiers.map((tier, i) => (
+                <th key={tier + i} className="p-4 align-top">
                   <div className="font-heading text-lg font-extrabold text-foreground">
                     {tier}
                   </div>
                   <div className="mt-0.5 text-sm font-medium text-primary">
-                    {pricing.perSqft[tier]} per sqft
+                    {activeType?.perSqft[i] ?? ""} per sqft
                   </div>
                 </th>
               ))}
@@ -139,10 +144,11 @@ export function PackagesTable() {
           </thead>
 
           <tbody>
-            {CATEGORIES.map((category) => (
+            {categories.map((category) => (
               <CategoryRows
                 key={category.name}
                 category={category}
+                tierCount={tiers.length}
                 highlight={highlight}
               />
             ))}
@@ -151,8 +157,8 @@ export function PackagesTable() {
       </div>
 
       <p className="mt-4 text-xs text-muted-foreground">
-        Sample specifications shown for {city}. Final materials and pricing are
-        confirmed during your consultation.
+        {city ? `Sample specifications shown for ${city}. ` : ""}Final materials
+        and pricing are confirmed during your consultation.
       </p>
     </div>
   )
@@ -160,16 +166,18 @@ export function PackagesTable() {
 
 function CategoryRows({
   category,
+  tierCount,
   highlight,
 }: {
-  category: { name: string; rows: typeof CATEGORIES[number]["rows"]; note?: string }
+  category: PackageCategory
+  tierCount: number
   highlight: boolean
 }) {
   return (
     <>
       <tr>
         <td
-          colSpan={TIERS.length + 1}
+          colSpan={tierCount + 1}
           className="border-b border-border bg-accent/[0.04] px-4 py-3 font-heading text-sm font-extrabold uppercase tracking-wider text-foreground"
         >
           {category.name}
@@ -191,14 +199,12 @@ function CategoryRows({
                 </div>
               )}
             </td>
-            {TIERS.map((tier) => (
+            {Array.from({ length: tierCount }).map((_, i) => (
               <td
-                key={tier}
-                className={`p-4 align-middle ${
-                  differs ? "bg-gold/[0.07]" : ""
-                }`}
+                key={i}
+                className={`p-4 align-middle ${differs ? "bg-gold/[0.07]" : ""}`}
               >
-                <Cell value={row.values[tier]} />
+                <Cell value={row.values[i] ?? false} />
               </td>
             ))}
           </tr>
@@ -208,7 +214,7 @@ function CategoryRows({
       {category.note && (
         <tr>
           <td
-            colSpan={TIERS.length + 1}
+            colSpan={tierCount + 1}
             className="px-4 py-3 text-xs italic text-muted-foreground"
           >
             {category.note}

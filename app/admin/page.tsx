@@ -19,6 +19,7 @@ import { AdminPanelDocuments } from "@/components/admin-panel-documents"
 import { AdminPanelLeads } from "@/components/admin-panel-leads"
 import { AdminPanelMessages } from "@/components/admin-panel-messages"
 import { AdminPanelDiagnostics } from "@/components/admin-panel-diagnostics"
+import { AdminPanelPackages } from "@/components/admin-panel-packages"
 
 // Access to this page is protected by real server-side auth (see middleware.ts
 // and /api/admin/login). By the time this component renders, the request has
@@ -33,6 +34,7 @@ type SectionId =
   | "testimonials"
   | "projects"
   | "faqs"
+  | "packages"
   | "customerProjects"
   | "customerDocuments"
   | "leads"
@@ -48,6 +50,7 @@ const SECTIONS: { id: SectionId; label: string; hint: string }[] = [
   { id: "testimonials", label: "Testimonials", hint: "Client quotes" },
   { id: "projects", label: "Projects", hint: "Portfolio cards" },
   { id: "faqs", label: "FAQs", hint: "Chat assistant answers" },
+  { id: "packages", label: "Packages", hint: "Tiers, pricing & specs" },
   {
     id: "customerProjects",
     label: "Customer Projects",
@@ -1124,9 +1127,14 @@ export default function AdminPage() {
             </Section>
           )}
 
-          {section === "customerProjects" && <AdminPanelProjects />}
+          {section === "packages" && (
+            <AdminPanelPackages
+              value={draft.packages}
+              onChange={(p) => patch("packages", p)}
+            />
+          )}
 
-          {section === "customerDocuments" && <AdminPanelDocuments />}
+          {section === "customerProjects" && <AdminPanelProjects />}          {section === "customerDocuments" && <AdminPanelDocuments />}
 
           {section === "leads" && <AdminPanelLeads />}
 
