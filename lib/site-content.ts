@@ -299,18 +299,33 @@ export const defaultContent: SiteContent = {
     },
   ],
   packages: {
-    cities: ["Hyderabad", "Bengaluru", "Chennai", "Pune"],
-    tiers: ["Basic", "Classic", "Premium", "Royale"],
+    cities: ["Hyderabad"],
+    tiers: [
+      "Basic ( Excl GST )",
+      "Classic ( Excl GST )",
+      "Premium ( Excl GST )",
+      "Royale ( Excl GST )",
+    ],
     homeTypes: [
       {
         name: "Homes",
-        startsAt: "₹2030",
-        perSqft: ["₹2030", "₹2200", "₹2600", "₹2830"],
+        startsAt: "₹1799 ( Excl GST )",
+        perSqft: [
+          "₹1799 ( Excl GST )",
+          "₹1899 ( Excl GST )",
+          "₹2199 ( Excl GST )",
+          "₹2599 ( Excl GST )",
+        ],
       },
       {
         name: "Luxury Homes",
-        startsAt: "₹4280",
-        perSqft: ["₹4280", "₹4600", "₹5200", "₹5800"],
+        startsAt: "₹4280 ( Excl GST )",
+        perSqft: [
+          "₹4280 ( Excl GST )",
+          "₹4600 ( Excl GST )",
+          "₹5200 ( Excl GST )",
+          "₹5800 ( Excl GST )",
+        ],
       },
     ],
     categories: [
@@ -322,20 +337,20 @@ export const defaultContent: SiteContent = {
             label: "Steel",
             spec: "Fe 550 / Fe 550D",
             values: [
-              "ISI-certified",
-              "ISI-certified",
-              "Primary-producer grade",
-              "Primary-producer grade",
+              "Shree - ISI-certified",
+              "SHREE / JSW - ISI-certified",
+              "TATA / JSW",
+              "JSW NEOSTEEL/ SAIL",
             ],
           },
           {
             label: "Cement",
             spec: "43 grade in surface, 53 grade in core",
             values: [
-              "Standard grade",
-              "Standard grade",
-              "Premium grade",
-              "Premium grade",
+              "ZUARI / DALMIA / BHARATHI",
+              "ACC / ULTRATECH",
+              "ACC / ULTRATECH",
+              "ACC / ULTRATECH / RAMCO SUPERCRETE",
             ],
           },
           {
@@ -351,12 +366,283 @@ export const defaultContent: SiteContent = {
           {
             label: "RCC Mix",
             spec: "M20 or M25",
-            values: [true, true, "Premium grade", "Premium grade"],
+            values: [true, true, "ACC / ULTRATECH", "ACC / ULTRATECH"],
           },
           {
             label: "Ceiling height",
             spec: "Floor-to-floor height 10ft",
             values: [true, true, true, true],
+          },
+        ],
+      },
+      {
+        name: "KITCHEN",
+        note: "All fittings can be customised at cost",
+        rows: [
+          {
+            label: "Ceramic Wall Dado",
+            values: [
+              "Upto ₹40 per sqft",
+              "Upto ₹60 per sqft",
+              "Upto ₹80 per sqft",
+              "Upto ₹90 per sqft",
+            ],
+          },
+          {
+            label: "Sink",
+            values: [
+              "Upto ₹3000 (Single bowl SS)",
+              "Upto ₹6000 (Single bowl SS)",
+              "Upto ₹8000 (Futura, Carysil)",
+              "Upto ₹8000 (Futura, Carysil)",
+            ],
+          },
+          {
+            label: "Sink Faucet",
+            values: ["Upto ₹1300", "Upto ₹2000", "Upto ₹3500", "Upto ₹3500"],
+          },
+          {
+            label: "Sink Accessories",
+            values: [
+              "ISI Marked",
+              "Parryware / Hindware / Jaquar",
+              "Parryware / Hindware / Jaquar",
+              "Parryware / Hindware / Jaquar",
+            ],
+          },
+        ],
+      },
+      {
+        name: "BATHROOM",
+        note: "All fittings can be customised at cost",
+        rows: [
+          {
+            label: "Ceramic Wall Dado",
+            values: [
+              "Upto ₹40 per sqft",
+              "Upto ₹60 per sqft",
+              "Upto ₹80 per sqft",
+              "Upto ₹90 per sqft",
+            ],
+          },
+          {
+            label: "Sanitary & CP fittings",
+            values: [
+              "Upto ₹30,000 per 1000 sqft (Hindware)",
+              "Upto ₹50,000 per 1000 sqft (Parryware)",
+              "Upto ₹70,000 per 1000 sqft (Jaquar / equivalent)",
+              "Upto ₹80,000 per 1000 sqft (Kohler / equivalent)",
+            ],
+          },
+          {
+            label: "CPVC Pipe",
+            values: [
+              "Prince / Astral",
+              "Ashirwad / Astral",
+              "Apollo / Supreme / Equivalent",
+              "Apollo / Supreme / Equivalent",
+            ],
+          },
+          {
+            label: "Bathroom doors",
+            spec: "Waterproof flush doors or WPC",
+            values: [true, true, true, true],
+          },
+          {
+            label: "Bathroom Accessories",
+            values: [
+              false,
+              false,
+              "Mirror, Soap dish, Towel rail - worth of ₹7,000 per 1000 sqft",
+              "Mirror, Soap dish, Towel rail - worth of ₹9,000 per 1000 sqft",
+            ],
+          },
+          {
+            label: "Provision for Solar water heater",
+            values: [false, false, true, true],
+          },
+        ],
+      },
+      {
+        name: "DOORS & WINDOWS",
+        rows: [
+          {
+            label: "Main Door",
+            values: [
+              "Flush doors with veneer & frame with salwood upto ₹20,000 including accessories",
+              "Teak door & Teak frame upto ₹30,000 including accessories",
+              "Teak door & Teak frame upto ₹40,000 including accessories",
+              "Teak door & Teak frame upto ₹50,000 including accessories",
+            ],
+          },
+          {
+            label: "Internal Doors",
+            values: [
+              "Membrane / Flush door with laminates upto ₹9,000",
+              "Membrane / Flush door with laminates upto ₹9,000",
+              "Membrane / Flush door with laminates upto ₹12,000",
+              "Membrane / Flush door with laminates upto ₹13,000",
+            ],
+          },
+          {
+            label: "Windows",
+            spec: "3 Track with 1 Mesh",
+            values: [
+              "Aluminium windows ₹400 per sqft of Jindal Profiles",
+              "UPVC windows ₹575 per sqft of Atlas / Green fourtune / Greentech",
+              "UPVC windows ₹750 per sqft of NCL Veka / Prominance / V-tech",
+              "UPVC windows ₹1400 per sqft of NCL Veka / Wintech / Karthik UPVC / Simta Astrix",
+            ],
+          },
+          {
+            label: "Window grills",
+            spec: "Basic design MS Grill ₹180 per sqft",
+            values: [true, true, true, true],
+          },
+        ],
+      },
+      {
+        name: "PAINTING",
+        rows: [
+          {
+            label:
+              "Interior Painting (Asian Paints) JK Putty + Primer + Emulsion Paint",
+            values: [
+              "Tractor Emulsion",
+              "Tractor Shyne Emulsion",
+              "Apcolite Premium Emulsion",
+              "Royale Luxury Emulsion",
+            ],
+          },
+          {
+            label: "Exterior Painting (Asian Paints) Primer + Exterior Emulsion",
+            values: [
+              "Ace Exterior Emulsion",
+              "Apex Exterior Emulsion",
+              "Apex Exterior Emulsion",
+              "Apex Ultima Exterior Emulsion",
+            ],
+          },
+        ],
+      },
+      {
+        name: "FLOORING",
+        note: "Laying charges will vary for marble, tiles and granite",
+        rows: [
+          {
+            label: "Living & Dining Flooring",
+            values: [
+              "Tiles / Granite upto ₹50 per sqft",
+              "Tiles / Granite upto ₹100 per sqft",
+              "Tiles / Granite / Marble upto ₹140 per sqft",
+              "Tiles / Granite / Marble upto ₹160 per sqft",
+            ],
+          },
+          {
+            label: "Rooms and Kitchen Flooring",
+            values: [
+              "Tiles / Granite upto ₹50 per sqft",
+              "Tiles / Granite upto ₹80 per sqft",
+              "Tiles / Granite upto ₹120 per sqft",
+              "Tiles / Granite upto ₹140 per sqft",
+            ],
+          },
+          {
+            label: "Balcony and Open Area",
+            spec: "Anti Skid",
+            values: [
+              "Tiles upto ₹40 per sqft",
+              "Tiles upto ₹60 per sqft",
+              "Tiles upto ₹80 per sqft",
+              "Tiles upto ₹90 per sqft",
+            ],
+          },
+          {
+            label: "Staircase",
+            spec: "Sadarahalli Granite",
+            values: [
+              "Upto ₹70 per sqft",
+              "Upto ₹80 per sqft",
+              "Upto ₹110 per sqft",
+              "Upto ₹140 per sqft",
+            ],
+          },
+          {
+            label: "Parking",
+            values: [
+              "Tiles upto ₹40 per sqft",
+              "Tiles upto ₹50 per sqft",
+              "Tiles upto ₹70 per sqft",
+              "Tiles upto ₹70 per sqft",
+            ],
+          },
+        ],
+      },
+      {
+        name: "WIRING",
+        rows: [
+          {
+            label: "Fireproof Wiring",
+            values: [
+              "Finolex / Anchor / Havells",
+              "Finolex / Anchor / Havells",
+              "Finolex / Anchor / Havells",
+              "Finolex / Anchor / Havells",
+            ],
+          },
+          {
+            label: "Switch",
+            values: [
+              "Great white / Anchor",
+              "Roma / Havells Fabio",
+              "Legrand mylinc / Havells Coral / Roma",
+              "Schneider unica pure / legrand myrius / Jaquar",
+            ],
+          },
+          {
+            label: "Provision for UPS Wiring",
+            values: [false, true, true, true],
+          },
+          {
+            label: "EV Charging point at Ground Floor",
+            values: [false, false, false, true],
+          },
+        ],
+      },
+      {
+        name: "OTHERS",
+        rows: [
+          {
+            label: "Overhead tank",
+            spec: "Double layered tank of Apollo / equivalent make",
+            values: [
+              "1000 Ltrs. of Duratank make",
+              "1500 Ltrs. of Duratank make",
+              "2000 Ltrs. of Sintex / Apollo",
+              "2000 Ltrs. of Sintex / Apollo",
+            ],
+          },
+          {
+            label: "Underground sump",
+            values: ["4000 Ltrs.", "6000 Ltrs.", "7000 Ltrs.", "8000 Ltrs."],
+          },
+          {
+            label: "Staircase railing",
+            values: [
+              "MS Railing",
+              "MS Railing",
+              "SS 304 grade Railing",
+              "SS 304 grade Railing with glass",
+            ],
+          },
+          {
+            label: "Copper Gas Connection",
+            values: [
+              false,
+              false,
+              false,
+              "1 no. per dwelling unit of 1500 sqft of package area",
+            ],
           },
         ],
       },
