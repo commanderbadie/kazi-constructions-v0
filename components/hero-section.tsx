@@ -69,7 +69,7 @@ export function HeroSection() {
               alt="Kazi Constructions — Architects, Engineers, Consultants"
               className="kazi-logo-img block w-full"
             />
-            <span aria-hidden="true" className="kazi-trail" />
+            <span aria-hidden="true" className="kazi-shine" />
           </div>
         </div>
 
