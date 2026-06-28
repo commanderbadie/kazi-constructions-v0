@@ -441,15 +441,15 @@
   inset: 0;
   z-index: 2;
   border-radius: inherit;
-  padding: 2.5px; /* rim thickness */
+  padding: 3px; /* rim thickness */
   pointer-events: none;
   background: conic-gradient(
     from var(--kazi-border-angle),
-    color-mix(in oklch, var(--gold) 24%, transparent) 0deg,
-    color-mix(in oklch, var(--gold) 24%, transparent) 230deg,
-    color-mix(in oklch, var(--gold) 62%, transparent) 312deg,
-    color-mix(in oklch, var(--gold) 100%, white 16%) 344deg,
-    color-mix(in oklch, var(--gold) 62%, transparent) 360deg
+    color-mix(in oklch, var(--gold) 34%, transparent) 0deg,
+    color-mix(in oklch, var(--gold) 34%, transparent) 220deg,
+    color-mix(in oklch, var(--gold) 78%, transparent) 310deg,
+    color-mix(in oklch, var(--gold) 100%, white 18%) 344deg,
+    color-mix(in oklch, var(--gold) 78%, transparent) 360deg
   );
   /* Show only the rim (border band), keep the interior clear */
   -webkit-mask:
@@ -460,9 +460,10 @@
     linear-gradient(#000 0 0) content-box,
     linear-gradient(#000 0 0);
   mask-composite: exclude;
-  filter: blur(0.8px)
-    drop-shadow(0 0 6px color-mix(in oklch, var(--gold) 65%, transparent))
-    drop-shadow(0 0 16px color-mix(in oklch, var(--gold) 38%, transparent));
+  filter: blur(1.6px)
+    drop-shadow(0 0 8px color-mix(in oklch, var(--gold) 85%, transparent))
+    drop-shadow(0 0 20px color-mix(in oklch, var(--gold) 60%, transparent))
+    drop-shadow(0 0 40px color-mix(in oklch, var(--gold) 34%, transparent));
   animation: kazi-border-glow 7s linear infinite;
 }
 
