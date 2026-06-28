@@ -65,9 +65,9 @@ export function HeroSection() {
         >
           <div className="relative">
             <img
-              src="/kazi-logo-transparent.png"
+              src="/hero-3d.png"
               alt="Kazi Constructions — Architects, Engineers, Consultants"
-              className="block w-full"
+              className="block w-full opacity-50"
             />
           </div>
         </div>
