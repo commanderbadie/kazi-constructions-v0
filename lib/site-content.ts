@@ -360,6 +360,263 @@ export const defaultContent: SiteContent = {
           },
         ],
       },
+      {
+        name: "Kitchen",
+        note: "All fittings can be customised at cost.",
+        rows: [
+          {
+            label: "Ceramic Wall Dado",
+            spec: "Glazed ceramic",
+            values: [
+              "Standard grade",
+              "Enhanced grade",
+              "Premium grade",
+              "Premium grade",
+            ],
+          },
+          {
+            label: "Sink",
+            spec: "Stainless steel",
+            values: [
+              "Single-bowl SS",
+              "Single-bowl SS",
+              "Premium SS",
+              "Premium SS",
+            ],
+          },
+          {
+            label: "Sink Faucet",
+            spec: "CP faucet",
+            values: ["Standard", "Enhanced", "Premium", "Premium"],
+          },
+          {
+            label: "Sink Accessories",
+            spec: "ISI-marked fittings",
+            values: [
+              "ISI-marked",
+              "Branded",
+              "Premium branded",
+              "Premium branded",
+            ],
+          },
+        ],
+      },
+      {
+        name: "Bathroom",
+        note: "All fittings can be customised at cost.",
+        rows: [
+          {
+            label: "Ceramic Wall Dado",
+            spec: "Glazed ceramic",
+            values: [
+              "Standard grade",
+              "Enhanced grade",
+              "Premium grade",
+              "Premium grade",
+            ],
+          },
+          {
+            label: "Sanitary & CP fittings",
+            spec: "Wall / floor mounted",
+            values: [
+              "Standard grade",
+              "Enhanced grade",
+              "Premium grade",
+              "Premium grade",
+            ],
+          },
+          {
+            label: "CPVC Pipe",
+            spec: "ISI-certified",
+            values: [true, true, true, true],
+          },
+          {
+            label: "Bathroom doors",
+            spec: "Waterproof flush door or WPC",
+            values: [true, true, true, true],
+          },
+          {
+            label: "Bathroom Accessories",
+            spec: "Mirror, soap dish, towel rail",
+            values: [false, false, true, true],
+          },
+          {
+            label: "Provision for Solar water heater",
+            values: [false, false, true, true],
+          },
+        ],
+      },
+      {
+        name: "Doors & Windows",
+        rows: [
+          {
+            label: "Main Door",
+            spec: "Engineered / teak door with frame & accessories",
+            values: [
+              "Standard grade",
+              "Enhanced grade",
+              "Premium grade",
+              "Premium grade",
+            ],
+          },
+          {
+            label: "Internal Doors",
+            spec: "Flush doors with laminate finish",
+            values: [
+              "Standard grade",
+              "Standard grade",
+              "Premium grade",
+              "Premium grade",
+            ],
+          },
+          {
+            label: "Puja Room Door",
+            spec: "Teak shutter & frame (where applicable)",
+            values: [false, false, true, true],
+          },
+          {
+            label: "Windows",
+            spec: "3-track with mesh",
+            values: ["Aluminium", "UPVC", "UPVC", "Premium UPVC"],
+          },
+          {
+            label: "Window grills",
+            spec: "MS grill, basic design",
+            values: [true, true, true, true],
+          },
+        ],
+      },
+      {
+        name: "Painting",
+        rows: [
+          {
+            label: "Interior Painting",
+            spec: "Putty + primer + emulsion",
+            values: [
+              "Standard emulsion",
+              "Enhanced emulsion",
+              "Premium emulsion",
+              "Luxury emulsion",
+            ],
+          },
+          {
+            label: "Exterior Painting",
+            spec: "Primer + exterior emulsion",
+            values: ["Standard", "Enhanced", "Premium", "Premium"],
+          },
+        ],
+      },
+      {
+        name: "Flooring",
+        note: "Laying charges vary for marble, tiles and granite.",
+        rows: [
+          {
+            label: "Living & Dining Flooring",
+            spec: "Tiles / Granite",
+            values: [
+              "Standard grade",
+              "Enhanced grade",
+              "Premium grade",
+              "Premium grade",
+            ],
+          },
+          {
+            label: "Rooms & Kitchen Flooring",
+            spec: "Tiles / Granite",
+            values: [
+              "Standard grade",
+              "Enhanced grade",
+              "Premium grade",
+              "Premium grade",
+            ],
+          },
+          {
+            label: "Balcony & Open Area",
+            spec: "Anti-skid tiles",
+            values: [true, true, true, true],
+          },
+          {
+            label: "Staircase",
+            spec: "Granite",
+            values: [
+              "Standard grade",
+              "Standard grade",
+              "Premium grade",
+              "Premium grade",
+            ],
+          },
+          {
+            label: "Parking",
+            spec: "Anti-skid tiles",
+            values: [true, true, true, true],
+          },
+        ],
+      },
+      {
+        name: "Wiring",
+        rows: [
+          {
+            label: "Fireproof Wiring",
+            spec: "ISI-certified",
+            values: [true, true, true, true],
+          },
+          {
+            label: "Switches",
+            spec: "Modular switches",
+            values: [
+              "Standard grade",
+              "Enhanced grade",
+              "Premium grade",
+              "Premium grade",
+            ],
+          },
+          {
+            label: "Sockets",
+            spec: "Modular sockets",
+            values: [
+              "Standard grade",
+              "Enhanced grade",
+              "Premium grade",
+              "Premium grade",
+            ],
+          },
+          {
+            label: "Provision for UPS Wiring",
+            values: [false, true, true, true],
+          },
+          {
+            label: "EV Charging point (Ground Floor)",
+            values: [false, false, false, true],
+          },
+        ],
+      },
+      {
+        name: "Others",
+        rows: [
+          {
+            label: "Overhead tank",
+            spec: "Double-layered",
+            values: ["1000 L", "1500 L", "2000 L", "2000 L"],
+          },
+          {
+            label: "Underground sump",
+            values: ["4000 L", "6000 L", "7000 L", "8000 L"],
+          },
+          {
+            label: "Staircase railing",
+            values: [
+              "MS railing",
+              "MS railing",
+              "SS 304 railing",
+              "SS 304 with glass",
+            ],
+          },
+          {
+            label: "Copper Gas Connection",
+            values: [false, false, false, true],
+          },
+        ],
+      },
     ],
   },
 }
