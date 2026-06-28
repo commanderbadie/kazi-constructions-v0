@@ -1,6 +1,6 @@
 import { Suspense } from "react"
 import type { Metadata } from "next"
-import { ThankYouNavbar } from "@/components/thank-you-navbar"
+import { PageNavbar } from "@/components/page-navbar"
 import { ThankYouContent } from "@/components/thank-you-content"
 
 export const metadata: Metadata = {
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function ThankYouPage() {
   return (
     <div className="min-h-screen bg-accent text-accent-foreground">
-      <ThankYouNavbar />
+      <PageNavbar />
       <main>
         <Suspense
           fallback={

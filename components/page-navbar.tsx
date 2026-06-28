@@ -11,10 +11,11 @@ const navLinks = [
   { label: "About", href: "/#about" },
   { label: "Services", href: "/#services" },
   { label: "Projects", href: "/#projects" },
+  { label: "Packages", href: "/packages" },
   { label: "Contact", href: "/#contact" },
 ]
 
-export function ThankYouNavbar() {
+export function PageNavbar() {
   const { contact } = useSiteContent()
   const [open, setOpen] = useState(false)
 
@@ -25,10 +26,7 @@ export function ThankYouNavbar() {
           <BrandLogo className="gap-3" inverted showTagline />
         </a>
 
-        <nav
-          className="hidden items-center gap-9 lg:flex"
-          aria-label="Primary"
-        >
+        <nav className="hidden items-center gap-9 lg:flex" aria-label="Primary">
           {navLinks.map((link) => (
             <a
               key={link.href}

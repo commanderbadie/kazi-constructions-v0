@@ -41,6 +41,37 @@ export type Project = {
 
 export type Faq = { label: string; answer: string }
 
+// --- Packages comparison (the /packages page) --------------------------------
+// A cell is `true` (included ✓), `false` (not included ✗) or custom text.
+export type PackageCellValue = string | boolean
+
+export type PackageRow = {
+  label: string
+  spec?: string
+  // Aligned by index to `packages.tiers`.
+  values: PackageCellValue[]
+}
+
+export type PackageCategory = {
+  name: string
+  note?: string
+  rows: PackageRow[]
+}
+
+export type PackageHomeType = {
+  name: string
+  startsAt: string
+  // Aligned by index to `packages.tiers`.
+  perSqft: string[]
+}
+
+export type PackagesContent = {
+  cities: string[]
+  tiers: string[]
+  homeTypes: PackageHomeType[]
+  categories: PackageCategory[]
+}
+
 export type SiteContent = {
   company: {
     name: string
@@ -82,6 +113,7 @@ export type SiteContent = {
   testimonials: Testimonial[]
   projects: Project[]
   faqs: Faq[]
+  packages: PackagesContent
 }
 
 export const STORAGE_KEY = "kazi-site-content-v1"
@@ -266,6 +298,70 @@ export const defaultContent: SiteContent = {
         "4-25-2/3/3, Wadi-E-Mahmood, Suleman Nagar, Rajendra Nagar, PVNR Pillar No.242, Hyderabad - 500052.",
     },
   ],
+  packages: {
+    cities: ["Hyderabad", "Bengaluru", "Chennai", "Pune"],
+    tiers: ["Basic", "Classic", "Premium", "Royale"],
+    homeTypes: [
+      {
+        name: "Homes",
+        startsAt: "₹2030",
+        perSqft: ["₹2030", "₹2200", "₹2600", "₹2830"],
+      },
+      {
+        name: "Luxury Homes",
+        startsAt: "₹4280",
+        perSqft: ["₹4280", "₹4600", "₹5200", "₹5800"],
+      },
+    ],
+    categories: [
+      {
+        name: "Structure",
+        note: "*RCC design mix as advised by the structural engineer.",
+        rows: [
+          {
+            label: "Steel",
+            spec: "Fe 550 / Fe 550D",
+            values: [
+              "ISI-certified",
+              "ISI-certified",
+              "Primary-producer grade",
+              "Primary-producer grade",
+            ],
+          },
+          {
+            label: "Cement",
+            spec: "43 grade in surface, 53 grade in core",
+            values: [
+              "Standard grade",
+              "Standard grade",
+              "Premium grade",
+              "Premium grade",
+            ],
+          },
+          {
+            label: "Aggregates",
+            spec: "20mm & 40mm",
+            values: [true, true, true, true],
+          },
+          {
+            label: "Block work",
+            spec: '9" (outer), 4.5" (inner) – Standard Red Brick',
+            values: [true, true, true, true],
+          },
+          {
+            label: "RCC Mix",
+            spec: "M20 or M25",
+            values: [true, true, "Premium grade", "Premium grade"],
+          },
+          {
+            label: "Ceiling height",
+            spec: "Floor-to-floor height 10ft",
+            values: [true, true, true, true],
+          },
+        ],
+      },
+    ],
+  },
 }
 
 // Image options the admin can choose from for project covers. These are files
