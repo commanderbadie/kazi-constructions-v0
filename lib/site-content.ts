@@ -160,7 +160,7 @@ export const defaultContent: SiteContent = {
     label: "About Kazi Constructions",
     heading: "Our Commitment",
     body:
-      "At Kazi Constructions, we believe in quality, transparency, and trust. Every project we undertake is a reflection of our engineering excellence and architectural creativity — built to last and designed to inspire. Led by Kazi Waheeduddin Siddiqi, B.Tech (Civil), M.Tech (Civil), GHMC Licensed Engineer and Autodesk Certified Draftsman.",
+      "At Kazi Constructions, we are committed to delivering quality construction with integrity, precision, and complete transparency. Since 2017, we have been providing trusted construction contracting and engineering consultancy services across Hyderabad, ensuring every project is executed to the highest professional standards.\n\nFounded and led by Kazi Waheeduddin Siddiqi, M.Tech (Civil), B.Tech (Civil), GHMC Licensed Engineer, and Autodesk Certified Draftsman, our company combines technical expertise with practical experience. As a construction expert, contractor, and consultant, he personally oversees every project, ensuring quality workmanship, structural safety, regulatory compliance, and timely execution.",
     mission:
       "To craft durable, sustainable structures that empower communities and elevate the way people live and work.",
     vision:
