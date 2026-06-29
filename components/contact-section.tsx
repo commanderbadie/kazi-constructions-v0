@@ -33,12 +33,60 @@ export function ContactSection() {
   const router = useRouter()
   const officeAddress = contact.mapAddress
   const [saving, setSaving] = useState(false)
+  const [cooldown, setCooldown] = useState(false)
+  const [warning, setWarning] = useState("")
+  const [phoneError, setPhoneError] = useState("")
+
+  // Check 15-min cooldown on mount
+  useState(() => {
+    if (typeof window === "undefined") return
+    const submittedAt = localStorage.getItem("kazi-contact-submitted-at")
+    if (submittedAt && Date.now() - Number(submittedAt) < 15 * 60 * 1000) {
+      setCooldown(true)
+      const minsLeft = Math.ceil(
+        (15 * 60 * 1000 - (Date.now() - Number(submittedAt))) / 60000
+      )
+      setWarning(`You've already submitted. Please try again in ${minsLeft} minute${minsLeft > 1 ? "s" : ""}.`)
+    }
+  })
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
+    setWarning("")
+    setPhoneError("")
+
+    if (cooldown) {
+      const submittedAt = localStorage.getItem("kazi-contact-submitted-at")
+      const minsLeft = submittedAt
+        ? Math.ceil((15 * 60 * 1000 - (Date.now() - Number(submittedAt))) / 60000)
+        : 15
+      setWarning(`You've already submitted. Please try again in ${minsLeft} minute${minsLeft > 1 ? "s" : ""}.`)
+      return
+    }
+
     const form = e.currentTarget
     const data = new FormData(form)
+
+    // Validate name: 2-50 characters
+    const nameVal = String(data.get("name") || "").trim()
+    if (nameVal.length < 2 || nameVal.length > 50) {
+      setWarning("Name must be between 2 and 50 characters.")
+      return
+    }
+
+    // Validate phone: exactly 10 digits starting with 6, 7, 8, or 9
+    const phoneRaw = String(data.get("phone") || "").trim().replace(/\s/g, "").replace(/^\+91/, "")
+    if (phoneRaw && !/^[6-9]\d{9}$/.test(phoneRaw)) {
+      setPhoneError("Please enter a valid 10-digit mobile number")
+      return
+    }
+
     setSaving(true)
+
+    // Mark submission time and phone for 15-min cooldown
+    localStorage.setItem("kazi-contact-submitted-at", String(Date.now()))
+    if (phoneRaw) localStorage.setItem("kazi-contact-submitted-phone", phoneRaw)
+    setCooldown(true)
     try {
       // Save to the logged-in customer's enquiry history (if signed in).
       if (user && isFirebaseConfigured()) {
@@ -152,6 +200,11 @@ export function ContactSection() {
               onSubmit={handleSubmit}
               className="rounded-2xl border border-border bg-card p-6 shadow-sm sm:p-8"
             >
+              {warning && (
+                <p className="mb-5 rounded-lg bg-amber-50 px-4 py-3 text-center text-sm font-medium text-amber-700">
+                  {warning}
+                </p>
+              )}
               <div className="space-y-5">
                 <div>
                   <label htmlFor="name" className={labelClass}>
@@ -161,7 +214,9 @@ export function ContactSection() {
                     id="name"
                     name="name"
                     required
-                    placeholder="Jane Doe"
+                    minLength={2}
+                    maxLength={50}
+                    placeholder="Full Name"
                     className={inputClass}
                   />
                 </div>
@@ -185,9 +240,15 @@ export function ContactSection() {
                   <input
                     id="phone"
                     name="phone"
-                    placeholder="+1 (555) 000-0000"
+                    type="tel"
+                    maxLength={10}
+                    placeholder="10-digit mobile number"
+                    onChange={() => setPhoneError("")}
                     className={inputClass}
                   />
+                  {phoneError && (
+                    <p className="mt-1.5 text-xs font-medium text-red-600">{phoneError}</p>
+                  )}
                 </div>
                 <div>
                   <label htmlFor="message" className={labelClass}>
@@ -206,10 +267,14 @@ export function ContactSection() {
 
               <button
                 type="submit"
-                disabled={saving}
+                disabled={saving || cooldown}
                 className="mt-6 w-full rounded-full bg-primary px-6 py-3.5 text-sm font-semibold uppercase tracking-wider text-primary-foreground shadow-md transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
               >
-                {saving ? "Sending…" : "Send Inquiry"}
+                {cooldown
+                  ? "Already submitted — try again later"
+                  : saving
+                    ? "Sending…"
+                    : "Send Inquiry"}
               </button>
               {!user && (
                 <p className="mt-3 text-xs text-muted-foreground">

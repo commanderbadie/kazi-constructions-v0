@@ -64,6 +64,25 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: true })
   }
 
+  // Rate limit: 1 lead per phone number per 15 minutes
+  try {
+    const fifteenMinsAgo = new Date(Date.now() - 15 * 60 * 1000)
+    const existing = await getAdminDb()
+      .collection("leads")
+      .where("phone", "==", phone)
+      .where("createdAt", ">=", fifteenMinsAgo)
+      .limit(1)
+      .get()
+
+    if (!existing.empty) {
+      // Already submitted within 15 minutes — silently succeed
+      return NextResponse.json({ ok: true })
+    }
+  } catch (err) {
+    // If the check fails, still allow the lead through (don't block the visitor)
+    console.error("Lead duplicate check failed:", err)
+  }
+
   try {
     await getAdminDb().collection("leads").add({
       name,

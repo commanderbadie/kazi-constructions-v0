@@ -5,7 +5,9 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 
 const STORAGE_KEY = "kazi-lead-popup-seen"
+const SUBMITTED_KEY = "kazi-lead-submitted-at"
 const DELAY_MS = 20000
+const COOLDOWN_MS = 15 * 60 * 1000 // 15 minutes
 
 function IndiaFlag() {
   return (
@@ -59,10 +61,16 @@ const inputClass =
 export function LeadPopup() {
   const router = useRouter()
   const [open, setOpen] = useState(false)
+  const [warning, setWarning] = useState("")
+  const [phoneError, setPhoneError] = useState("")
 
   useEffect(() => {
     if (typeof window === "undefined") return
     if (sessionStorage.getItem(STORAGE_KEY)) return
+
+    // Don't show popup if submitted within the cooldown period
+    const submittedAt = localStorage.getItem(SUBMITTED_KEY)
+    if (submittedAt && Date.now() - Number(submittedAt) < COOLDOWN_MS) return
 
     const timer = setTimeout(() => {
       setOpen(true)
@@ -92,13 +100,47 @@ export function LeadPopup() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
+    setWarning("")
+    setPhoneError("")
+
     const data = new FormData(e.currentTarget)
     const name = String(data.get("name") || "").trim()
-    const phone = String(data.get("phone") || "").trim()
+    const phone = String(data.get("phone") || "").trim().replace(/\s/g, "")
     const location = String(data.get("location") || "").trim()
 
-    // Save in the background. keepalive lets the request finish even though we
-    // navigate away to the thank-you page immediately after.
+    // Validate name: 2-50 characters
+    if (name.length < 2 || name.length > 50) {
+      setWarning("Name must be between 2 and 50 characters.")
+      return
+    }
+
+    // Validate phone: exactly 10 digits starting with 6, 7, 8, or 9
+    if (!/^[6-9]\d{9}$/.test(phone)) {
+      setPhoneError("Please enter a valid 10-digit mobile number")
+      return
+    }
+
+    // Check 15-minute cooldown (by timestamp AND phone number)
+    const submittedAt = localStorage.getItem(SUBMITTED_KEY)
+    const submittedPhone = localStorage.getItem("kazi-lead-submitted-phone")
+    if (submittedAt && Date.now() - Number(submittedAt) < COOLDOWN_MS) {
+      const minsLeft = Math.ceil(
+        (COOLDOWN_MS - (Date.now() - Number(submittedAt))) / 60000
+      )
+      setWarning(`You've already submitted. Please try again in ${minsLeft} minute${minsLeft > 1 ? "s" : ""}.`)
+      return
+    }
+    // Also block if same phone was used recently (even if timestamp somehow cleared)
+    if (submittedPhone === phone && submittedAt && Date.now() - Number(submittedAt) < COOLDOWN_MS) {
+      setWarning("This phone number was already submitted. Please try again later.")
+      return
+    }
+
+    // Mark submission time and phone
+    localStorage.setItem(SUBMITTED_KEY, String(Date.now()))
+    localStorage.setItem("kazi-lead-submitted-phone", phone)
+
+    // Save in the background
     try {
       void fetch("/api/leads", {
         method: "POST",
@@ -112,15 +154,18 @@ export function LeadPopup() {
         }),
       })
     } catch {
-      // Non-fatal — the visitor still lands on the thank-you page.
+      // Non-fatal
     }
 
+    // Close popup immediately
+    setOpen(false)
+    document.body.style.overflow = ""
+
+    // Navigate to thank-you
     const qs = new URLSearchParams()
     if (name) qs.set("name", name)
     if (phone) qs.set("phone", `+91 ${phone}`)
     if (location) qs.set("city", location)
-
-    document.body.style.overflow = ""
     router.push(`/thank-you?${qs.toString()}`)
   }
 
@@ -147,89 +192,103 @@ export function LeadPopup() {
           </svg>
         </button>
 
-        <>
-            <h2
-              id="lead-popup-title"
-              className="pr-6 text-center font-heading text-xl font-extrabold leading-snug text-accent sm:text-2xl"
-            >
-              Don&apos;t leave yet! Resolve your queries with our construction
-              expert
-            </h2>
-            <p className="mt-3 text-center text-sm font-medium text-primary/80">
-              Trusted Builders for End-to-End Home Construction
-            </p>
+        <h2
+          id="lead-popup-title"
+          className="pr-6 text-center font-heading text-xl font-extrabold leading-snug text-accent sm:text-2xl"
+        >
+          Don&apos;t leave yet! Resolve your queries with our construction
+          expert
+        </h2>
+        <p className="mt-3 text-center text-sm font-medium text-primary/80">
+          Trusted Builders for End-to-End Home Construction
+        </p>
 
-            <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-              {/* Honeypot — hidden from real users, catches bots */}
+        {warning && (
+          <p className="mt-4 rounded-lg bg-amber-50 px-4 py-3 text-center text-sm font-medium text-amber-700">
+            {warning}
+          </p>
+        )}
+
+        <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+          {/* Honeypot — hidden from real users, catches bots */}
+          <input
+            type="text"
+            name="website"
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+            className="hidden"
+          />
+          <input
+            type="text"
+            name="name"
+            required
+            minLength={2}
+            maxLength={50}
+            placeholder="Full Name*"
+            aria-label="Full Name"
+            className={inputClass}
+          />
+          <div>
+            <div className="flex">
+              <span className="flex shrink-0 items-center gap-1.5 rounded-l-lg border border-r-0 border-border bg-muted/60 px-3 text-sm font-medium text-foreground">
+                <IndiaFlag />
+                +91
+              </span>
               <input
-                type="text"
-                name="website"
-                tabIndex={-1}
-                autoComplete="off"
-                aria-hidden="true"
-                className="hidden"
-              />
-              <input
-                type="text"
-                name="name"
+                type="tel"
+                name="phone"
                 required
-                placeholder="Full Name*"
-                aria-label="Full Name"
-                className={inputClass}
+                maxLength={10}
+                pattern="\d{10}"
+                placeholder="10-digit Mobile Number*"
+                aria-label="Mobile Number"
+                onChange={() => setPhoneError("")}
+                className={`${inputClass} rounded-l-none`}
               />
-              <div className="flex">
-                <span className="flex shrink-0 items-center gap-1.5 rounded-l-lg border border-r-0 border-border bg-muted/60 px-3 text-sm font-medium text-foreground">
-                  <IndiaFlag />
-                  +91
-                </span>
-                <input
-                  type="tel"
-                  name="phone"
-                  required
-                  placeholder="Mobile Number*"
-                  aria-label="Mobile Number"
-                  className={`${inputClass} rounded-l-none`}
-                />
-              </div>
-              <input
-                type="text"
-                name="location"
-                required
-                placeholder="Location of your plot*"
-                aria-label="Location of your plot"
-                className={inputClass}
-              />
-              <button
-                type="submit"
-                className="w-full rounded-lg bg-primary px-6 py-3.5 text-base font-bold uppercase tracking-wide text-primary-foreground shadow-md transition-colors hover:bg-primary/90"
-              >
-                Start Your Construction
-              </button>
-            </form>
-
-            <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
-              <span className="text-gold">*</span>By submitting, you agree to
-              our{" "}
-              <a href="#" className="font-medium text-primary hover:underline">
-                Privacy Policy,
-              </a>{" "}
-              allowing us to use your information as outlined
-            </p>
-
-            <div className="mt-6 grid grid-cols-3 gap-3 border-t border-border pt-6 text-center">
-              {trustBadges.map((badge) => (
-                <div key={badge.label} className="flex flex-col items-center">
-                  <span className="text-gold">{badge.icon}</span>
-                  <span className="mt-2 font-heading text-lg font-extrabold text-accent">
-                    {badge.value}
-                  </span>
-                  <span className="text-xs font-medium text-primary/70">
-                    {badge.label}
-                  </span>
-                </div>
-              ))}
             </div>
-        </>
+            {phoneError && (
+              <p className="mt-1.5 text-xs font-medium text-red-600">{phoneError}</p>
+            )}
+          </div>
+          <input
+            type="text"
+            name="location"
+            required
+            placeholder="Location of your plot*"
+            aria-label="Location of your plot"
+            className={inputClass}
+          />
+          <button
+            type="submit"
+            className="w-full rounded-lg bg-primary px-6 py-3.5 text-base font-bold uppercase tracking-wide text-primary-foreground shadow-md transition-colors hover:bg-primary/90"
+          >
+            Start Your Construction
+          </button>
+        </form>
+
+        <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
+          <span className="text-gold">*</span>By submitting, you agree to
+          our{" "}
+          <a href="#" className="font-medium text-primary hover:underline">
+            Privacy Policy,
+          </a>{" "}
+          allowing us to use your information as outlined
+        </p>
+
+        <div className="mt-6 grid grid-cols-3 gap-3 border-t border-border pt-6 text-center">
+          {trustBadges.map((badge) => (
+            <div key={badge.label} className="flex flex-col items-center">
+              <span className="text-gold">{badge.icon}</span>
+              <span className="mt-2 font-heading text-lg font-extrabold text-accent">
+                {badge.value}
+              </span>
+              <span className="text-xs font-medium text-primary/70">
+                {badge.label}
+              </span>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   )
