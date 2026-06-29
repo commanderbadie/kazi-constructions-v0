@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import Image from "next/image"
 import { ArrowRight } from "lucide-react"
 import { Reveal } from "@/components/reveal"
 import { useSiteContent } from "@/lib/use-site-content"
@@ -124,12 +123,11 @@ export function HowItWorks() {
         {/* Illustration */}
         <Reveal className="mt-10 flex justify-center sm:mt-14">
           <div className="relative h-[240px] w-full max-w-[400px] sm:h-[300px] sm:max-w-[460px]">
-            <Image
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
               src={steps[activeStep].image}
               alt={steps[activeStep].title}
-              fill
-              className="object-contain transition-opacity duration-300"
-              priority
+              className="h-full w-full object-contain transition-opacity duration-300"
             />
           </div>
         </Reveal>
