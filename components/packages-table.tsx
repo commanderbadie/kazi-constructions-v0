@@ -22,6 +22,10 @@ import {
   SquareStack,
   ShowerHead,
   Wrench,
+  CookingPot,
+  Bath,
+  Cable,
+  MoreHorizontal,
   type LucideIcon,
 } from "lucide-react"
 import { useSiteContent } from "@/lib/use-site-content"
@@ -37,6 +41,25 @@ function splitPrice(price: string): { amount: string; qualifier: string } {
   const match = price.match(/^(.+?)\s*(\([^)]*\))$/)
   if (match) return { amount: match[1].trim(), qualifier: match[2].trim() }
   return { amount: price, qualifier: "" }
+}
+
+// Icon mapping for category headers
+const CATEGORY_ICONS: [RegExp, LucideIcon][] = [
+  [/structure/i, Layers],
+  [/kitchen/i, CookingPot],
+  [/bathroom/i, Bath],
+  [/door|window/i, DoorOpen],
+  [/paint/i, Paintbrush],
+  [/floor/i, Grid3x3],
+  [/wir|electric/i, Cable],
+  [/other/i, MoreHorizontal],
+]
+
+function iconForCategory(name: string): LucideIcon {
+  for (const [re, Icon] of CATEGORY_ICONS) {
+    if (re.test(name)) return Icon
+  }
+  return Hammer
 }
 
 function rowDiffers(values: PackageCellValue[]) {
@@ -101,7 +124,7 @@ export function PackagesTable() {
   const [city, setCity] = useState(cities[0] ?? "")
   const [highlight, setHighlight] = useState(true)
   const [openCats, setOpenCats] = useState<Record<string, boolean>>(() =>
-    Object.fromEntries(categories.map((c) => [c.name, true])),
+    Object.fromEntries(categories.map((c) => [c.name, false])),
   )
 
   function toggleCat(name: string) {
@@ -273,7 +296,11 @@ function CategoryRows({
             aria-expanded={open}
             className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left transition-colors hover:bg-accent/[0.07]"
           >
-            <span className="font-heading text-sm font-extrabold uppercase tracking-wider text-foreground">
+            <span className="flex items-center gap-2.5 font-heading text-sm font-extrabold uppercase tracking-wider text-foreground">
+              {(() => {
+                const CatIcon = iconForCategory(category.name)
+                return <CatIcon className="h-4 w-4 text-gold" aria-hidden="true" />
+              })()}
               {category.name}
             </span>
             <ChevronDown
