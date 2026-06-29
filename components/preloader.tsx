@@ -33,11 +33,11 @@ export function Preloader() {
         hidden ? "pointer-events-none opacity-0" : "opacity-100",
       )}
     >
-      <div className="kazi-preloader-logo flex h-40 w-40 items-center justify-center rounded-[32px] bg-white/95 shadow-2xl shadow-black/40 ring-2 ring-gold/50 kazi-glow-box">
+      <div className="kazi-preloader-logo flex h-52 w-52 items-center justify-center rounded-[36px] bg-white/95 shadow-2xl shadow-black/40 ring-2 ring-gold/50 kazi-glow-box">
         <img
           src="/kazi-logo-tick.png"
           alt="Kazi Constructions"
-          className="h-[100px] w-[100px] object-contain"
+          className="h-[140px] w-[140px] object-contain"
         />
       </div>
       <div className="kazi-loader-track" role="presentation">
