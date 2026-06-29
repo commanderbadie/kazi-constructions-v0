@@ -101,7 +101,7 @@ export function PackagesTable() {
   const [city, setCity] = useState(cities[0] ?? "")
   const [highlight, setHighlight] = useState(true)
   const [openCats, setOpenCats] = useState<Record<string, boolean>>(() =>
-    Object.fromEntries(categories.map((c) => [c.name, true])),
+    Object.fromEntries(categories.map((c) => [c.name, false])),
   )
 
   function toggleCat(name: string) {
