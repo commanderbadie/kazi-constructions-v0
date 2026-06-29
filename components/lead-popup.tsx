@@ -5,7 +5,9 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 
 const STORAGE_KEY = "kazi-lead-popup-seen"
+const SUBMITTED_KEY = "kazi-lead-submitted-at"
 const DELAY_MS = 20000
+const COOLDOWN_MS = 12 * 60 * 60 * 1000 // 12 hours
 
 function IndiaFlag() {
   return (
@@ -64,6 +66,10 @@ export function LeadPopup() {
     if (typeof window === "undefined") return
     if (sessionStorage.getItem(STORAGE_KEY)) return
 
+    // Don't show popup if submitted within the last 12 hours
+    const submittedAt = localStorage.getItem(SUBMITTED_KEY)
+    if (submittedAt && Date.now() - Number(submittedAt) < COOLDOWN_MS) return
+
     const timer = setTimeout(() => {
       setOpen(true)
       sessionStorage.setItem(STORAGE_KEY, "1")
@@ -96,6 +102,9 @@ export function LeadPopup() {
     const name = String(data.get("name") || "").trim()
     const phone = String(data.get("phone") || "").trim()
     const location = String(data.get("location") || "").trim()
+
+    // Mark submission time for 12-hour cooldown
+    localStorage.setItem(SUBMITTED_KEY, String(Date.now()))
 
     // Save in the background. keepalive lets the request finish even though we
     // navigate away to the thank-you page immediately after.

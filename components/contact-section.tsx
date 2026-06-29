@@ -33,12 +33,26 @@ export function ContactSection() {
   const router = useRouter()
   const officeAddress = contact.mapAddress
   const [saving, setSaving] = useState(false)
+  const [cooldown, setCooldown] = useState(false)
+
+  // Check 12-hour cooldown on mount
+  useState(() => {
+    if (typeof window === "undefined") return
+    const submittedAt = localStorage.getItem("kazi-contact-submitted-at")
+    if (submittedAt && Date.now() - Number(submittedAt) < 12 * 60 * 60 * 1000) {
+      setCooldown(true)
+    }
+  })
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
+    if (cooldown) return
     const form = e.currentTarget
     const data = new FormData(form)
     setSaving(true)
+
+    // Mark submission time for 12-hour cooldown
+    localStorage.setItem("kazi-contact-submitted-at", String(Date.now()))
     try {
       // Save to the logged-in customer's enquiry history (if signed in).
       if (user && isFirebaseConfigured()) {
@@ -206,10 +220,14 @@ export function ContactSection() {
 
               <button
                 type="submit"
-                disabled={saving}
+                disabled={saving || cooldown}
                 className="mt-6 w-full rounded-full bg-primary px-6 py-3.5 text-sm font-semibold uppercase tracking-wider text-primary-foreground shadow-md transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
               >
-                {saving ? "Sending…" : "Send Inquiry"}
+                {cooldown
+                  ? "Already submitted — try again later"
+                  : saving
+                    ? "Sending…"
+                    : "Send Inquiry"}
               </button>
               {!user && (
                 <p className="mt-3 text-xs text-muted-foreground">
