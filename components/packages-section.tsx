@@ -11,6 +11,13 @@ function cleanTier(name: string) {
   return name.replace(/\s*\([^)]*\)\s*$/, "").trim()
 }
 
+// Split a price string like "₹1799 ( Excl GST )" into the price and qualifier.
+function splitPrice(price: string): { amount: string; qualifier: string } {
+  const match = price.match(/^(.+?)\s*(\([^)]*\))$/)
+  if (match) return { amount: match[1].trim(), qualifier: match[2].trim() }
+  return { amount: price, qualifier: "" }
+}
+
 export function PackagesSection() {
   const { packages } = useSiteContent()
   const { tiers, homeTypes } = packages
@@ -64,7 +71,17 @@ export function PackagesSection() {
                       Starting at
                     </span>
                     <p className="font-heading text-2xl font-extrabold text-gold">
-                      {base?.perSqft[i] ?? ""}
+                      {(() => {
+                        const { amount, qualifier } = splitPrice(base?.perSqft[i] ?? "")
+                        return (
+                          <>
+                            {amount}
+                            {qualifier && (
+                              <span className="text-xs font-normal text-gold/70"> {qualifier}</span>
+                            )}
+                          </>
+                        )
+                      })()}
                     </p>
                     <span className="text-xs text-white/50">per sqft</span>
                   </div>

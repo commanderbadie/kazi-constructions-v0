@@ -27,6 +27,18 @@ import {
 import { useSiteContent } from "@/lib/use-site-content"
 import type { PackageCellValue, PackageCategory } from "@/lib/site-content"
 
+// Strip a trailing "( ... )" qualifier from tier name for a clean title.
+function cleanTier(name: string) {
+  return name.replace(/\s*\([^)]*\)\s*$/, "").trim()
+}
+
+// Split a price string like "₹1799 ( Excl GST )" into the price and qualifier.
+function splitPrice(price: string): { amount: string; qualifier: string } {
+  const match = price.match(/^(.+?)\s*(\([^)]*\))$/)
+  if (match) return { amount: match[1].trim(), qualifier: match[2].trim() }
+  return { amount: price, qualifier: "" }
+}
+
 function rowDiffers(values: PackageCellValue[]) {
   return new Set(values.map((v) => String(v))).size > 1
 }
@@ -165,11 +177,11 @@ export function PackagesTable() {
       </div>
 
       {/* Comparison table */}
-      <div className="mt-7 overflow-x-auto rounded-2xl border border-border">
+      <div className="mt-7 overflow-x-auto rounded-2xl border border-border lg:overflow-x-visible">
         <table className="w-full min-w-[760px] border-collapse text-left">
-          <thead>
-            <tr className="border-b border-border bg-muted/40">
-              <th className="w-[26%] p-4 align-middle">
+          <thead className="sticky top-20 z-40 shadow-[0_2px_8px_rgba(0,0,0,0.06)]">
+            <tr className="border-b border-border">
+              <th className="w-[26%] p-4 align-middle bg-muted">
                 <label className="flex items-center gap-3">
                   <button
                     type="button"
@@ -192,12 +204,23 @@ export function PackagesTable() {
                 </label>
               </th>
               {tiers.map((tier, i) => (
-                <th key={tier + i} className="p-4 align-top">
+                <th key={tier + i} className="p-4 align-top bg-muted">
                   <div className="font-heading text-lg font-extrabold text-foreground">
-                    {tier}
+                    {cleanTier(tier)}
                   </div>
                   <div className="mt-0.5 text-sm font-medium text-primary">
-                    {activeType?.perSqft[i] ?? ""} per sqft
+                    {(() => {
+                      const { amount, qualifier } = splitPrice(activeType?.perSqft[i] ?? "")
+                      return (
+                        <>
+                          {amount}
+                          {qualifier && (
+                            <span className="text-xs font-normal text-primary/70"> {qualifier}</span>
+                          )}
+                          {" "}per sqft
+                        </>
+                      )
+                    })()}
                   </div>
                 </th>
               ))}
