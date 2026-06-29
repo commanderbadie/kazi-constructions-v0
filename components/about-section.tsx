@@ -20,7 +20,7 @@ export function AboutSection() {
             alt="Kazi Constructions — On site excellence"
             className="w-full rounded-xl object-cover shadow-lg"
           />
-          <div className="absolute -bottom-6 -right-2 hidden rounded-xl bg-primary px-6 py-5 text-primary-foreground shadow-lg sm:block lg:-right-6">
+          <div className="absolute -top-4 -left-2 hidden rounded-xl bg-primary px-6 py-5 text-primary-foreground shadow-lg sm:block lg:-left-6">
             <p className="font-heading text-3xl font-extrabold">
               {badge.end}
               {badge.suffix}
