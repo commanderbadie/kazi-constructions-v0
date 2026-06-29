@@ -67,9 +67,9 @@ export function ContactSection() {
     const form = e.currentTarget
     const data = new FormData(form)
 
-    // Validate phone: exactly 10 digits (if provided)
+    // Validate phone: exactly 10 digits starting with 6, 7, 8, or 9
     const phoneRaw = String(data.get("phone") || "").trim().replace(/\s/g, "").replace(/^\+91/, "")
-    if (phoneRaw && !/^\d{10}$/.test(phoneRaw)) {
+    if (phoneRaw && !/^[6-9]\d{9}$/.test(phoneRaw)) {
       setPhoneError("Please enter a valid 10-digit mobile number")
       return
     }

@@ -108,8 +108,8 @@ export function LeadPopup() {
     const phone = String(data.get("phone") || "").trim().replace(/\s/g, "")
     const location = String(data.get("location") || "").trim()
 
-    // Validate phone: exactly 10 digits
-    if (!/^\d{10}$/.test(phone)) {
+    // Validate phone: exactly 10 digits starting with 6, 7, 8, or 9
+    if (!/^[6-9]\d{9}$/.test(phone)) {
       setPhoneError("Please enter a valid 10-digit mobile number")
       return
     }
