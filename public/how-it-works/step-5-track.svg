@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 360" fill="none">
+  <!-- Shadow -->
+  <ellipse cx="240" cy="340" rx="180" ry="14" fill="#1B2B4B" opacity="0.05"/>
+  <!-- Dashboard/Monitor -->
+  <rect x="100" y="50" width="280" height="200" rx="12" fill="#1B2B4B"/>
+  <rect x="108" y="58" width="264" height="176" rx="8" fill="#ffffff"/>
+  <!-- Monitor stand -->
+  <rect x="215" y="250" width="50" height="30" fill="#888"/>
+  <rect x="190" y="278" width="100" height="8" rx="4" fill="#666"/>
+  <!-- Dashboard content -->
+  <!-- Header bar -->
+  <rect x="108" y="58" width="264" height="28" rx="8" fill="#1B2B4B" opacity="0.05"/>
+  <circle cx="124" cy="72" r="4" fill="#EF4444" opacity="0.7"/>
+  <circle cx="136" cy="72" r="4" fill="#F59E0B" opacity="0.7"/>
+  <circle cx="148" cy="72" r="4" fill="#22C55E" opacity="0.7"/>
+  <text x="280" y="75" font-family="Arial, sans-serif" font-size="7" fill="#1B2B4B" opacity="0.5">Project Dashboard</text>
+  <!-- Progress chart -->
+  <rect x="120" y="96" width="120" height="60" rx="4" fill="#f9fafb" stroke="#e4e4e7"/>
+  <text x="128" y="108" font-family="Arial, sans-serif" font-size="7" font-weight="bold" fill="#1B2B4B">Progress</text>
+  <!-- Bar chart -->
+  <rect x="130" y="138" width="12" height="12" fill="#C69B3C" opacity="0.4"/>
+  <rect x="148" y="130" width="12" height="20" fill="#C69B3C" opacity="0.6"/>
+  <rect x="166" y="122" width="12" height="28" fill="#C69B3C" opacity="0.8"/>
+  <rect x="184" y="114" width="12" height="36" fill="#C69B3C"/>
+  <rect x="202" y="126" width="12" height="24" fill="#22C55E" opacity="0.6"/>
+  <rect x="220" y="134" width="12" height="16" fill="#1B2B4B" opacity="0.2"/>
+  <!-- Timeline card -->
+  <rect x="250" y="96" width="112" height="60" rx="4" fill="#f9fafb" stroke="#e4e4e7"/>
+  <text x="258" y="108" font-family="Arial, sans-serif" font-size="7" font-weight="bold" fill="#1B2B4B">Timeline</text>
+  <line x1="258" y1="118" x2="352" y2="118" stroke="#e4e4e7"/>
+  <!-- Timeline dots -->
+  <circle cx="268" cy="128" r="4" fill="#22C55E"/>
+  <text x="278" y="131" font-family="Arial, sans-serif" font-size="6" fill="#1B2B4B">Foundation ✓</text>
+  <circle cx="268" cy="140" r="4" fill="#22C55E"/>
+  <text x="278" y="143" font-family="Arial, sans-serif" font-size="6" fill="#1B2B4B">Structure ✓</text>
+  <circle cx="268" cy="152" r="4" fill="#C69B3C"/>
+  <text x="278" y="155" font-family="Arial, sans-serif" font-size="6" fill="#C69B3C">Finishing...</text>
+  <!-- Cost summary -->
+  <rect x="120" y="166" width="120" height="56" rx="4" fill="#f9fafb" stroke="#e4e4e7"/>
+  <text x="128" y="178" font-family="Arial, sans-serif" font-size="7" font-weight="bold" fill="#1B2B4B">Billing</text>
+  <text x="128" y="194" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="#C69B3C">₹18,50,000</text>
+  <text x="128" y="206" font-family="Arial, sans-serif" font-size="6" fill="#1B2B4B" opacity="0.5">Total spent (Stage 3 of 5)</text>
+  <rect x="128" y="212" width="100" height="4" rx="2" fill="#e4e4e7"/>
+  <rect x="128" y="212" width="60" height="4" rx="2" fill="#C69B3C"/>
+  <!-- Status card -->
+  <rect x="250" y="166" width="112" height="56" rx="4" fill="#f9fafb" stroke="#e4e4e7"/>
+  <text x="258" y="178" font-family="Arial, sans-serif" font-size="7" font-weight="bold" fill="#1B2B4B">Status</text>
+  <circle cx="268" cy="200" r="16" fill="none" stroke="#22C55E" stroke-width="3"/>
+  <text x="260" y="204" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="#22C55E">65%</text>
+  <text x="295" y="194" font-family="Arial, sans-serif" font-size="7" fill="#1B2B4B">On Track</text>
+  <text x="295" y="208" font-family="Arial, sans-serif" font-size="6" fill="#1B2B4B" opacity="0.5">Est. completion:</text>
+  <text x="295" y="218" font-family="Arial, sans-serif" font-size="6" fill="#C69B3C">Dec 2026</text>
+</svg>

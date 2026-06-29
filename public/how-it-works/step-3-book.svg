@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 360" fill="none">
+  <!-- Ground shadow -->
+  <ellipse cx="240" cy="330" rx="170" ry="16" fill="#1B2B4B" opacity="0.05"/>
+  <!-- Tablet/Base -->
+  <rect x="100" y="240" width="280" height="16" rx="4" fill="#e4e4e7"/>
+  <rect x="100" y="240" width="280" height="8" rx="4" fill="#f4f4f5"/>
+  <!-- House 3D base -->
+  <path d="M160 240 L160 160 L320 160 L320 240 Z" fill="#ffffff" stroke="#d4d4d8"/>
+  <!-- Roof -->
+  <path d="M140 160 L240 90 L340 160 Z" fill="#1B2B4B"/>
+  <path d="M150 160 L240 98 L330 160 Z" fill="#263B5E"/>
+  <!-- Front wall -->
+  <rect x="180" y="160" width="120" height="80" fill="#f9fafb" stroke="#e4e4e7"/>
+  <!-- Door -->
+  <rect x="220" y="195" width="40" height="45" rx="3" fill="#1B2B4B"/>
+  <rect x="224" y="199" width="32" height="37" rx="2" fill="#263B5E"/>
+  <circle cx="250" cy="218" r="2" fill="#C69B3C"/>
+  <!-- Windows -->
+  <rect x="188" y="172" width="24" height="18" rx="2" fill="#87CEEB" opacity="0.5" stroke="#1B2B4B" stroke-width="0.5"/>
+  <line x1="200" y1="172" x2="200" y2="190" stroke="#1B2B4B" stroke-width="0.5"/>
+  <line x1="188" y1="181" x2="212" y2="181" stroke="#1B2B4B" stroke-width="0.5"/>
+  <rect x="268" y="172" width="24" height="18" rx="2" fill="#87CEEB" opacity="0.5" stroke="#1B2B4B" stroke-width="0.5"/>
+  <line x1="280" y1="172" x2="280" y2="190" stroke="#1B2B4B" stroke-width="0.5"/>
+  <line x1="268" y1="181" x2="292" y2="181" stroke="#1B2B4B" stroke-width="0.5"/>
+  <!-- Garden/grass -->
+  <rect x="160" y="236" width="160" height="4" rx="2" fill="#86EFAC" opacity="0.5"/>
+  <!-- Big Checkmark -->
+  <circle cx="340" cy="120" r="40" fill="#C69B3C" opacity="0.12"/>
+  <circle cx="340" cy="120" r="32" fill="#22C55E" opacity="0.9"/>
+  <path d="M322 120 L334 132 L358 108" stroke="#ffffff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Small decorative elements -->
+  <circle cx="120" cy="120" r="6" fill="#C69B3C" opacity="0.2"/>
+  <circle cx="130" cy="140" r="4" fill="#1B2B4B" opacity="0.15"/>
+  <rect x="365" y="200" width="20" height="3" rx="1.5" fill="#C69B3C" opacity="0.3"/>
+  <rect x="370" y="210" width="15" height="3" rx="1.5" fill="#1B2B4B" opacity="0.15"/>
+</svg>
