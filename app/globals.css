@@ -405,6 +405,15 @@
    edges softly blur and melt into the navy hero. A gentle golden bloom hugs
    the borders, and a thin gold light particle traces the outline — motion
    blurred, looping, and cinematic. */
+
+/* Soft golden glow behind the "Dream Home" hero text */
+.kazi-hero-glow {
+  text-shadow:
+    0 0 20px color-mix(in oklch, var(--gold) 40%, transparent),
+    0 0 60px color-mix(in oklch, var(--gold) 20%, transparent),
+    0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
 .kazi-logo-fx {
   position: relative;
   isolation: isolate;

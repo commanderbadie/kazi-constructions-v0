@@ -26,7 +26,7 @@ export function HeroSection() {
           blueprintRef.current.style.transform = `translate3d(0, ${y * 0.18}px, 0) scale(1.1)`
         }
         if (buildingRef.current) {
-          buildingRef.current.style.transform = `translate3d(0, ${y * 0.08}px, 0)`
+          buildingRef.current.style.transform = `translate3d(${y * -0.04}px, ${y * -0.12}px, 0)`
         }
       })
     }
@@ -42,11 +42,20 @@ export function HeroSection() {
       id="home"
       className="relative overflow-hidden bg-accent text-accent-foreground"
     >
+      {/* Dark gradient overlay — navy to transparent for text readability */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-[1]"
+        style={{
+          background: "linear-gradient(135deg, rgba(27,43,75,0.7) 0%, rgba(27,43,75,0.4) 40%, transparent 70%)",
+        }}
+      />
+
       {/* Brighter blueprint grid layer (parallax) */}
       <div
         ref={blueprintRef}
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-0 opacity-[0.28] will-change-transform"
+        className="pointer-events-none absolute inset-0 z-0 opacity-[0.28] will-change-transform"
         style={{
           backgroundImage: "url(/blueprint-grid.svg)",
           backgroundSize: "cover",
@@ -55,11 +64,11 @@ export function HeroSection() {
         }}
       />
 
-      {/* Faint offset building elevation sketch behind the content */}
+      {/* Building elevation sketch — moves up on scroll like a crane rising */}
       <div
         ref={buildingRef}
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-0 hidden opacity-[0.16] will-change-transform md:block"
+        className="pointer-events-none absolute inset-0 z-0 hidden opacity-[0.18] will-change-transform md:block"
         style={{
           backgroundImage: "url(/building-outline.svg)",
           backgroundRepeat: "no-repeat",
@@ -96,7 +105,7 @@ export function HeroSection() {
             style={{ animationDelay: "0.25s" }}
           >
             <span className="block">{hero.titleLine1}</span>
-            <span className="block text-gold">{hero.titleHighlight}</span>
+            <span className="kazi-hero-glow block text-gold">{hero.titleHighlight}</span>
           </h1>
           <p
             className="animate-fade-blur max-w-xl text-lg leading-relaxed text-accent-foreground/75"
