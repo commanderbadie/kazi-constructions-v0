@@ -29,18 +29,23 @@ export function SiteNavbar() {
   // and go transparent again across the Services → Contact range.
   useEffect(() => {
     const HEADER = 80 // h-20
+    let ticking = false
     const onScroll = () => {
-      setScrolled(window.scrollY > 24)
-      const services = document.getElementById("services")
-      const contact = document.getElementById("contact")
-      if (services && contact) {
-        const start = services.getBoundingClientRect().top <= HEADER
-        // Stay transparent until the Contact section has scrolled past the header.
-        const beforeFooter = contact.getBoundingClientRect().bottom >= HEADER
-        setOverLight(start && beforeFooter)
-      } else {
-        setOverLight(false)
-      }
+      if (ticking) return
+      ticking = true
+      requestAnimationFrame(() => {
+        setScrolled(window.scrollY > 24)
+        const services = document.getElementById("services")
+        const contact = document.getElementById("contact")
+        if (services && contact) {
+          const start = services.getBoundingClientRect().top <= HEADER
+          const beforeFooter = contact.getBoundingClientRect().bottom >= HEADER
+          setOverLight(start && beforeFooter)
+        } else {
+          setOverLight(false)
+        }
+        ticking = false
+      })
     }
     onScroll()
     window.addEventListener("scroll", onScroll, { passive: true })
@@ -92,7 +97,7 @@ export function SiteNavbar() {
 
   return (
     <header
-      className={`fixed top-0 z-50 w-full transition-all duration-500 ${
+      className={`fixed top-0 z-50 w-full will-change-[background-color,border-color] transition-all duration-500 ${
         transparent
           ? "border-b border-transparent bg-transparent"
           : "border-b border-[#e3ddd0] bg-cover bg-center shadow-sm"

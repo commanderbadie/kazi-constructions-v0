@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef } from "react"
 import { ArrowRight, Phone } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useSiteContent } from "@/lib/use-site-content"
@@ -8,7 +8,8 @@ import { useSiteContent } from "@/lib/use-site-content"
 export function HeroSection() {
   const { hero } = useSiteContent()
   const stats = hero.stats
-  const [offset, setOffset] = useState(0)
+  const blueprintRef = useRef<HTMLDivElement>(null)
+  const buildingRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const prefersReduced = window.matchMedia(
@@ -19,7 +20,15 @@ export function HeroSection() {
     let raf = 0
     const onScroll = () => {
       cancelAnimationFrame(raf)
-      raf = requestAnimationFrame(() => setOffset(window.scrollY))
+      raf = requestAnimationFrame(() => {
+        const y = window.scrollY
+        if (blueprintRef.current) {
+          blueprintRef.current.style.transform = `translate3d(0, ${y * 0.18}px, 0) scale(1.1)`
+        }
+        if (buildingRef.current) {
+          buildingRef.current.style.transform = `translate3d(0, ${y * 0.08}px, 0)`
+        }
+      })
     }
     window.addEventListener("scroll", onScroll, { passive: true })
     return () => {
@@ -35,26 +44,28 @@ export function HeroSection() {
     >
       {/* Brighter blueprint grid layer (parallax) */}
       <div
+        ref={blueprintRef}
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-0 opacity-[0.28]"
+        className="pointer-events-none absolute inset-0 -z-0 opacity-[0.28] will-change-transform"
         style={{
           backgroundImage: "url(/blueprint-grid.svg)",
           backgroundSize: "cover",
           backgroundPosition: "center",
-          transform: `translate3d(0, ${offset * 0.18}px, 0) scale(1.1)`,
+          transform: "translate3d(0, 0, 0) scale(1.1)",
         }}
       />
 
       {/* Faint offset building elevation sketch behind the content */}
       <div
+        ref={buildingRef}
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-0 hidden opacity-[0.16] md:block"
+        className="pointer-events-none absolute inset-0 -z-0 hidden opacity-[0.16] will-change-transform md:block"
         style={{
           backgroundImage: "url(/building-outline.svg)",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "right -60px bottom -30px",
           backgroundSize: "auto 118%",
-          transform: `translate3d(0, ${offset * 0.08}px, 0)`,
+          transform: "translate3d(0, 0, 0)",
         }}
       />
 

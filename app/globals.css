@@ -422,7 +422,7 @@
   background-image: url(/hero-3d.png);
   background-size: 100% 100%;
   background-position: center;
-  filter: blur(18px);
+  filter: blur(8px);
   -webkit-mask-image:
     linear-gradient(to right, transparent 0%, #000 12%, #000 88%, transparent 100%),
     linear-gradient(to bottom, transparent 0%, #000 11%, #000 89%, transparent 100%);
@@ -450,9 +450,7 @@
     linear-gradient(to bottom, transparent 0%, #000 5%, #000 95%, transparent 100%);
   -webkit-mask-composite: source-in;
   mask-composite: intersect;
-  filter:
-    drop-shadow(0 0 14px color-mix(in oklch, var(--gold) 34%, transparent))
-    drop-shadow(0 0 40px color-mix(in oklch, var(--gold) 20%, transparent));
+  filter: drop-shadow(0 0 12px color-mix(in oklch, var(--gold) 30%, transparent));
 }
 
 /* A glowing gold rim around the logo's outline. The whole border carries a
@@ -469,17 +467,16 @@
   inset: 0;
   z-index: 2;
   border-radius: inherit;
-  padding: 3px; /* rim thickness */
+  padding: 2px;
   pointer-events: none;
   background: conic-gradient(
     from var(--kazi-border-angle),
-    color-mix(in oklch, var(--gold) 34%, transparent) 0deg,
-    color-mix(in oklch, var(--gold) 34%, transparent) 220deg,
-    color-mix(in oklch, var(--gold) 78%, transparent) 310deg,
-    color-mix(in oklch, var(--gold) 100%, white 18%) 344deg,
-    color-mix(in oklch, var(--gold) 78%, transparent) 360deg
+    color-mix(in oklch, var(--gold) 25%, transparent) 0deg,
+    color-mix(in oklch, var(--gold) 25%, transparent) 240deg,
+    color-mix(in oklch, var(--gold) 70%, transparent) 320deg,
+    var(--gold) 350deg,
+    color-mix(in oklch, var(--gold) 70%, transparent) 360deg
   );
-  /* Show only the rim (border band), keep the interior clear */
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
     linear-gradient(#000 0 0);
@@ -488,11 +485,8 @@
     linear-gradient(#000 0 0) content-box,
     linear-gradient(#000 0 0);
   mask-composite: exclude;
-  filter: blur(1.6px)
-    drop-shadow(0 0 8px color-mix(in oklch, var(--gold) 85%, transparent))
-    drop-shadow(0 0 20px color-mix(in oklch, var(--gold) 60%, transparent))
-    drop-shadow(0 0 40px color-mix(in oklch, var(--gold) 34%, transparent));
-  animation: kazi-border-glow 7s linear infinite;
+  box-shadow: 0 0 12px color-mix(in oklch, var(--gold) 40%, transparent);
+  animation: kazi-border-glow 10s linear infinite;
 }
 
 @keyframes kazi-border-glow {
