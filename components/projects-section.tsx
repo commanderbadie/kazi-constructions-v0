@@ -199,41 +199,32 @@ export function ProjectsSection() {
             </p>
           </div>
           <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            <div className="overflow-hidden rounded-xl border-2 border-navy bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-              <div className="relative aspect-[9/16] w-full">
-                <iframe
-                  src="https://www.youtube.com/embed/Q9NAa51zVyE"
-                  title="Kazi Constructions — Site Progress"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  className="absolute inset-0 h-full w-full"
-                  loading="lazy"
-                />
-              </div>
-            </div>
-            <div className="overflow-hidden rounded-xl border-2 border-navy bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-              <div className="relative aspect-[9/16] w-full">
-                <iframe
-                  src="https://www.youtube.com/embed/bd--1OCS8kM"
-                  title="Kazi Constructions — On Site"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  className="absolute inset-0 h-full w-full"
-                  loading="lazy"
-                />
-              </div>
-            </div>
-            {/* Placeholder for future video */}
-            <div className="hidden overflow-hidden rounded-xl border-2 border-dashed border-navy bg-muted/30 lg:flex lg:items-center lg:justify-center">
-              <div className="p-8 text-center">
-                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-gold/10">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6 text-gold">
-                    <polygon points="5 3 19 12 5 21 5 3" />
-                  </svg>
+            {content.videos.map((video, i) => (
+              <div key={video.url + i} className="overflow-hidden rounded-xl border-2 border-navy bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+                <div className="relative aspect-[9/16] w-full">
+                  <iframe
+                    src={video.url}
+                    title={video.title || `Video ${i + 1}`}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    className="absolute inset-0 h-full w-full"
+                    loading="lazy"
+                  />
                 </div>
-                <p className="mt-4 text-sm font-semibold text-muted-foreground">More coming soon</p>
               </div>
-            </div>
+            ))}
+            {content.videos.length < 3 && (
+              <div className="hidden overflow-hidden rounded-xl border-2 border-dashed border-navy bg-muted/30 lg:flex lg:items-center lg:justify-center">
+                <div className="p-8 text-center">
+                  <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-gold/10">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6 text-gold">
+                      <polygon points="5 3 19 12 5 21 5 3" />
+                    </svg>
+                  </div>
+                  <p className="mt-4 text-sm font-semibold text-muted-foreground">More coming soon</p>
+                </div>
+              </div>
+            )}
           </div>
         </Reveal>
       </div>

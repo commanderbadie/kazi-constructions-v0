@@ -20,6 +20,7 @@ import { AdminPanelLeads } from "@/components/admin-panel-leads"
 import { AdminPanelMessages } from "@/components/admin-panel-messages"
 import { AdminPanelDiagnostics } from "@/components/admin-panel-diagnostics"
 import { AdminPanelPackages } from "@/components/admin-panel-packages"
+import { AdminPanelVideos } from "@/components/admin-panel-videos"
 
 // Access to this page is protected by real server-side auth (see middleware.ts
 // and /api/admin/login). By the time this component renders, the request has
@@ -35,6 +36,7 @@ type SectionId =
   | "projects"
   | "faqs"
   | "packages"
+  | "videos"
   | "customerProjects"
   | "customerDocuments"
   | "leads"
@@ -51,6 +53,7 @@ const SECTIONS: { id: SectionId; label: string; hint: string }[] = [
   { id: "projects", label: "Projects", hint: "Portfolio cards" },
   { id: "faqs", label: "FAQs", hint: "Chat assistant answers" },
   { id: "packages", label: "Packages", hint: "Tiers, pricing & specs" },
+  { id: "videos", label: "Videos", hint: "YouTube videos on homepage" },
   {
     id: "customerProjects",
     label: "Customer Projects",
@@ -1131,6 +1134,13 @@ export default function AdminPage() {
             <AdminPanelPackages
               value={draft.packages}
               onChange={(p) => patch("packages", p)}
+            />
+          )}
+
+          {section === "videos" && (
+            <AdminPanelVideos
+              value={draft.videos}
+              onChange={(v) => patch("videos", v)}
             />
           )}
 

@@ -114,6 +114,12 @@ export type SiteContent = {
   projects: Project[]
   faqs: Faq[]
   packages: PackagesContent
+  videos: VideoItem[]
+}
+
+export type VideoItem = {
+  url: string
+  title: string
 }
 
 export const STORAGE_KEY = "kazi-site-content-v1"
@@ -648,6 +654,10 @@ export const defaultContent: SiteContent = {
       },
     ],
   },
+  videos: [
+    { url: "https://www.youtube.com/embed/Q9NAa51zVyE", title: "Kazi Constructions — Site Progress" },
+    { url: "https://www.youtube.com/embed/bd--1OCS8kM", title: "Kazi Constructions — On Site" },
+  ],
 }
 
 // Image options the admin can choose from for project covers. These are files
