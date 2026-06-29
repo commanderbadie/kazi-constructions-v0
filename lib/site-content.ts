@@ -449,7 +449,7 @@ export const defaultContent: SiteContent = {
             values: [true, true, true, true],
           },
           {
-            label: "New item",
+            label: "Bathroom Accessories",
             values: [
               false,
               false,
@@ -639,7 +639,7 @@ export const defaultContent: SiteContent = {
             label: "Copper Gas Connection",
             values: [
               false,
-              "",
+              false,
               false,
               "1 no. per dwelling unit of 1500 sqft of package area",
             ],
