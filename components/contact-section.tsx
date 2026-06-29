@@ -34,25 +34,51 @@ export function ContactSection() {
   const officeAddress = contact.mapAddress
   const [saving, setSaving] = useState(false)
   const [cooldown, setCooldown] = useState(false)
+  const [warning, setWarning] = useState("")
+  const [phoneError, setPhoneError] = useState("")
 
-  // Check 12-hour cooldown on mount
+  // Check 15-min cooldown on mount
   useState(() => {
     if (typeof window === "undefined") return
     const submittedAt = localStorage.getItem("kazi-contact-submitted-at")
     if (submittedAt && Date.now() - Number(submittedAt) < 15 * 60 * 1000) {
       setCooldown(true)
+      const minsLeft = Math.ceil(
+        (15 * 60 * 1000 - (Date.now() - Number(submittedAt))) / 60000
+      )
+      setWarning(`You've already submitted. Please try again in ${minsLeft} minute${minsLeft > 1 ? "s" : ""}.`)
     }
   })
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    if (cooldown) return
+    setWarning("")
+    setPhoneError("")
+
+    if (cooldown) {
+      const submittedAt = localStorage.getItem("kazi-contact-submitted-at")
+      const minsLeft = submittedAt
+        ? Math.ceil((15 * 60 * 1000 - (Date.now() - Number(submittedAt))) / 60000)
+        : 15
+      setWarning(`You've already submitted. Please try again in ${minsLeft} minute${minsLeft > 1 ? "s" : ""}.`)
+      return
+    }
+
     const form = e.currentTarget
     const data = new FormData(form)
+
+    // Validate phone: exactly 10 digits (if provided)
+    const phoneRaw = String(data.get("phone") || "").trim().replace(/\s/g, "").replace(/^\+91/, "")
+    if (phoneRaw && !/^\d{10}$/.test(phoneRaw)) {
+      setPhoneError("Please enter a valid 10-digit mobile number")
+      return
+    }
+
     setSaving(true)
 
-    // Mark submission time for 12-hour cooldown
+    // Mark submission time for 15-min cooldown
     localStorage.setItem("kazi-contact-submitted-at", String(Date.now()))
+    setCooldown(true)
     try {
       // Save to the logged-in customer's enquiry history (if signed in).
       if (user && isFirebaseConfigured()) {
@@ -166,6 +192,11 @@ export function ContactSection() {
               onSubmit={handleSubmit}
               className="rounded-2xl border border-border bg-card p-6 shadow-sm sm:p-8"
             >
+              {warning && (
+                <p className="mb-5 rounded-lg bg-amber-50 px-4 py-3 text-center text-sm font-medium text-amber-700">
+                  {warning}
+                </p>
+              )}
               <div className="space-y-5">
                 <div>
                   <label htmlFor="name" className={labelClass}>
@@ -199,9 +230,15 @@ export function ContactSection() {
                   <input
                     id="phone"
                     name="phone"
-                    placeholder="+1 (555) 000-0000"
+                    type="tel"
+                    maxLength={10}
+                    placeholder="10-digit mobile number"
+                    onChange={() => setPhoneError("")}
                     className={inputClass}
                   />
+                  {phoneError && (
+                    <p className="mt-1.5 text-xs font-medium text-red-600">{phoneError}</p>
+                  )}
                 </div>
                 <div>
                   <label htmlFor="message" className={labelClass}>
