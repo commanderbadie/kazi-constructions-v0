@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { PageNavbar } from "@/components/page-navbar"
 import { PackagesTable } from "@/components/packages-table"
+import { HowItWorks } from "@/components/how-it-works"
 import { Button } from "@/components/ui/button"
 
 export const metadata: Metadata = {
@@ -28,6 +29,10 @@ export default function PackagesPage() {
             tier. Compare specifications side by side and pick what suits your
             home and budget.
           </p>
+        </div>
+
+        <div className="mt-10">
+          <HowItWorks />
         </div>
 
         <div className="mt-10">

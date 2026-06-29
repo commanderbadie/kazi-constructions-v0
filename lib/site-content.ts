@@ -148,7 +148,7 @@ export const defaultContent: SiteContent = {
     titleLine1: "Build Your",
     titleHighlight: "Dream Home",
     paragraph:
-      "Kazi Constructions delivers residential, commercial, and industrial projects with precision engineering, transparent costing, and uncompromising craftsmanship across Hyderabad.",
+      "Kazi Constructions is a trusted construction, contracting, and engineering consultancy firm based in Hyderabad, delivering residential, commercial, and industrial projects with precision, quality, and accountability. Founded and led by Kazi Waheeduddin Siddiqi, M.Tech (Civil), B.Tech (Civil), GHMC Licensed Engineer, and Autodesk Certified Draftsman, every project is personally guided with expert engineering and meticulous attention to detail.",
     stats: [
       { value: "10+", label: "Years Experience" },
       { value: "25+", label: "Projects Delivered" },
