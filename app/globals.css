@@ -315,6 +315,34 @@
   animation: kazi-preloader-float 2.4s ease-in-out infinite;
 }
 
+.kazi-glow-box {
+  box-shadow:
+    0 0 15px 2px color-mix(in oklch, var(--gold) 40%, transparent),
+    0 0 40px 8px color-mix(in oklch, var(--gold) 20%, transparent),
+    0 0 80px 16px color-mix(in oklch, var(--gold) 10%, transparent),
+    inset 0 0 8px 0 color-mix(in oklch, var(--gold) 8%, transparent);
+  animation:
+    kazi-preloader-float 2.4s ease-in-out infinite,
+    kazi-glow-pulse 2s ease-in-out infinite;
+}
+
+@keyframes kazi-glow-pulse {
+  0%, 100% {
+    box-shadow:
+      0 0 15px 2px color-mix(in oklch, var(--gold) 40%, transparent),
+      0 0 40px 8px color-mix(in oklch, var(--gold) 20%, transparent),
+      0 0 80px 16px color-mix(in oklch, var(--gold) 10%, transparent),
+      inset 0 0 8px 0 color-mix(in oklch, var(--gold) 8%, transparent);
+  }
+  50% {
+    box-shadow:
+      0 0 20px 4px color-mix(in oklch, var(--gold) 55%, transparent),
+      0 0 50px 12px color-mix(in oklch, var(--gold) 30%, transparent),
+      0 0 100px 24px color-mix(in oklch, var(--gold) 15%, transparent),
+      inset 0 0 12px 0 color-mix(in oklch, var(--gold) 12%, transparent);
+  }
+}
+
 .kazi-loader-track {
   position: relative;
   margin-top: 2.25rem;
