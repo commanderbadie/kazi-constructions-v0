@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 360" fill="none">
+  <ellipse cx="240" cy="330" rx="190" ry="16" fill="#1B2B4B" opacity="0.05"/>
+  <rect x="130" y="160" width="220" height="140" fill="#ffffff" stroke="#e4e4e7"/>
+  <path d="M110 160 L240 70 L370 160 Z" fill="#1B2B4B"/>
+  <path d="M120 160 L240 78 L360 160 Z" fill="#263B5E"/>
+  <rect x="300" y="90" width="20" height="50" fill="#1B2B4B"/>
+  <rect x="200" y="220" width="60" height="80" rx="4" fill="#7B4F2A"/>
+  <rect x="206" y="226" width="48" height="68" rx="2" fill="#5C3A1E"/>
+  <circle cx="246" cy="260" r="3" fill="#C69B3C"/>
+  <rect x="145" y="180" width="40" height="30" rx="2" fill="#87CEEB" opacity="0.5"
+    stroke="#1B2B4B" stroke-width="0.5"/>
+
+  <line x1="165" y1="180" x2="165" y2="210" stroke="#1B2B4B" stroke-width="0.5"/>
+  <line x1="145" y1="195" x2="185" y2="195" stroke="#1B2B4B" stroke-width="0.5"/>
+  <rect x="295" y="180" width="40" height="30" rx="2" fill="#87CEEB" opacity="0.5"
+    stroke="#1B2B4B" stroke-width="0.5"/>
+  <line x1="315" y1="180" x2="315" y2="210" stroke="#1B2B4B" stroke-width="0.5"/>
+  <line x1="295" y1="195" x2="335" y2="195" stroke="#1B2B4B" stroke-width="0.5"/>
+  <rect x="130" y="296" width="220" height="4" rx="2" fill="#86EFAC" opacity="0.5"/>
+  <rect x="150" y="280" width="16" height="20" rx="8" fill="#22C55E" opacity="0.6"/>
+  <rect x="175" y="275" width="12" height="25" rx="6" fill="#22C55E" opacity="0.4"/>
+  <rect x="310" y="278" width="16" height="22" rx="8" fill="#22C55E" opacity="0.6"/>
+  <circle cx="100" cy="200" r="30" fill="#C69B3C" opacity="0.08"/>
+  <path d="M85 195 L95 205 L100 200 L108 210 L115 195" stroke="#C69B3C"
+    stroke-width="2.5" stroke-linecap="round" fill="none"/>
+  <circle cx="100" cy="180" r="5" fill="#C69B3C" opacity="0.6"/>
+  <circle cx="380" cy="140" r="25" fill="#C69B3C" opacity="0.1"/>
+  <path d="M370 140 L378 148 L392 132" stroke="#C69B3C" stroke-width="3"
+    stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="362" y="170" font-family="Arial, sans-serif" font-size="8"
+    fill="#1B2B4B" opacity="0.5">Welcome Home!</text>
+</svg>
