@@ -16,9 +16,9 @@ export function AboutSection() {
       <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8">
         <Reveal className="relative">
           <img
-            src="/about-site.svg"
-            alt="Kazi Constructions team reviewing blueprints on a job site"
-            className="aspect-[4/3] w-full rounded-xl object-cover"
+            src="/kazi-banner.jpeg"
+            alt="Kazi Constructions — On site excellence"
+            className="w-full rounded-xl object-cover shadow-lg"
           />
           <div className="absolute -bottom-6 -right-2 hidden rounded-xl bg-primary px-6 py-5 text-primary-foreground shadow-lg sm:block lg:-right-6">
             <p className="font-heading text-3xl font-extrabold">
