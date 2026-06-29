@@ -67,6 +67,13 @@ export function ContactSection() {
     const form = e.currentTarget
     const data = new FormData(form)
 
+    // Validate name: 2-50 characters
+    const nameVal = String(data.get("name") || "").trim()
+    if (nameVal.length < 2 || nameVal.length > 50) {
+      setWarning("Name must be between 2 and 50 characters.")
+      return
+    }
+
     // Validate phone: exactly 10 digits starting with 6, 7, 8, or 9
     const phoneRaw = String(data.get("phone") || "").trim().replace(/\s/g, "").replace(/^\+91/, "")
     if (phoneRaw && !/^[6-9]\d{9}$/.test(phoneRaw)) {
@@ -76,8 +83,9 @@ export function ContactSection() {
 
     setSaving(true)
 
-    // Mark submission time for 15-min cooldown
+    // Mark submission time and phone for 15-min cooldown
     localStorage.setItem("kazi-contact-submitted-at", String(Date.now()))
+    if (phoneRaw) localStorage.setItem("kazi-contact-submitted-phone", phoneRaw)
     setCooldown(true)
     try {
       // Save to the logged-in customer's enquiry history (if signed in).
@@ -206,7 +214,9 @@ export function ContactSection() {
                     id="name"
                     name="name"
                     required
-                    placeholder="Jane Doe"
+                    minLength={2}
+                    maxLength={50}
+                    placeholder="Full Name"
                     className={inputClass}
                   />
                 </div>

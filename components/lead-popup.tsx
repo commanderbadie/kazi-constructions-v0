@@ -108,14 +108,21 @@ export function LeadPopup() {
     const phone = String(data.get("phone") || "").trim().replace(/\s/g, "")
     const location = String(data.get("location") || "").trim()
 
+    // Validate name: 2-50 characters
+    if (name.length < 2 || name.length > 50) {
+      setWarning("Name must be between 2 and 50 characters.")
+      return
+    }
+
     // Validate phone: exactly 10 digits starting with 6, 7, 8, or 9
     if (!/^[6-9]\d{9}$/.test(phone)) {
       setPhoneError("Please enter a valid 10-digit mobile number")
       return
     }
 
-    // Check 15-minute cooldown
+    // Check 15-minute cooldown (by timestamp AND phone number)
     const submittedAt = localStorage.getItem(SUBMITTED_KEY)
+    const submittedPhone = localStorage.getItem("kazi-lead-submitted-phone")
     if (submittedAt && Date.now() - Number(submittedAt) < COOLDOWN_MS) {
       const minsLeft = Math.ceil(
         (COOLDOWN_MS - (Date.now() - Number(submittedAt))) / 60000
@@ -123,9 +130,15 @@ export function LeadPopup() {
       setWarning(`You've already submitted. Please try again in ${minsLeft} minute${minsLeft > 1 ? "s" : ""}.`)
       return
     }
+    // Also block if same phone was used recently (even if timestamp somehow cleared)
+    if (submittedPhone === phone && submittedAt && Date.now() - Number(submittedAt) < COOLDOWN_MS) {
+      setWarning("This phone number was already submitted. Please try again later.")
+      return
+    }
 
-    // Mark submission time
+    // Mark submission time and phone
     localStorage.setItem(SUBMITTED_KEY, String(Date.now()))
+    localStorage.setItem("kazi-lead-submitted-phone", phone)
 
     // Save in the background
     try {
@@ -210,6 +223,8 @@ export function LeadPopup() {
             type="text"
             name="name"
             required
+            minLength={2}
+            maxLength={50}
             placeholder="Full Name*"
             aria-label="Full Name"
             className={inputClass}
