@@ -35,7 +35,7 @@ export function Preloader() {
     >
       <div className="kazi-preloader-logo flex h-28 w-28 items-center justify-center rounded-[26px] bg-white/95 shadow-2xl shadow-black/40 ring-1 ring-white/10">
         <img
-          src="/kazi-logo-transparent.png"
+          src="/kazi-logo-tick.png"
           alt="Kazi Constructions"
           className="h-[68px] w-[68px] object-contain"
         />
