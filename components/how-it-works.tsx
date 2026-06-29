@@ -1,7 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { ArrowRight, Phone, Pencil, CalendarCheck, PenTool, TrendingUp, Home } from "lucide-react"
+import Image from "next/image"
+import { ArrowRight } from "lucide-react"
 import { Reveal } from "@/components/reveal"
 import { useSiteContent } from "@/lib/use-site-content"
 
@@ -9,7 +10,7 @@ type Step = {
   number: string
   title: string
   description: string
-  icon: React.ReactNode
+  image: string
 }
 
 const steps: Step[] = [
@@ -17,43 +18,43 @@ const steps: Step[] = [
     number: "01",
     title: "Raise a Request",
     description:
-      "Raise a house construction service request or call us. Our team will get in touch with you to understand your requirements in more detail.",
-    icon: <Phone className="h-5 w-5" />,
+      "Raise a house construction service request or call us at +91 88019 58508. Our team will get in touch with you to understand your requirements in more detail.",
+    image: "/how-it-works/step-1-request.svg",
   },
   {
     number: "02",
     title: "Meet our Expert",
     description:
-      "Our construction expert visits your site, understands your vision, evaluates feasibility, and provides a transparent cost estimate tailored to your needs.",
-    icon: <CalendarCheck className="h-5 w-5" />,
+      "Our construction expert visits your site, understands your vision, guides you in selecting the right package, and answers any queries you may have.",
+    image: "/how-it-works/step-2-expert.svg",
   },
   {
     number: "03",
     title: "Book with Us",
     description:
-      "Once you're satisfied with the proposal, book your project with a nominal booking amount. We'll begin planning and scheduling immediately.",
-    icon: <Pencil className="h-5 w-5" />,
+      "Good to go! You pay 10% of the estimated project cost as the booking amount to start the house construction.",
+    image: "/how-it-works/step-3-book.svg",
   },
   {
     number: "04",
     title: "Receive Designs",
     description:
       "Our architects and engineers prepare detailed floor plans, 3D elevations, structural drawings, and MEP layouts — all customised to your requirements.",
-    icon: <PenTool className="h-5 w-5" />,
+    image: "/how-it-works/step-4-designs.svg",
   },
   {
     number: "05",
     title: "Track & Transact",
     description:
       "Stay updated with real-time project progress. Transparent billing at every stage — you pay as we build, with complete visibility into costs and timelines.",
-    icon: <TrendingUp className="h-5 w-5" />,
+    image: "/how-it-works/step-5-track.svg",
   },
   {
     number: "06",
     title: "Settle In",
     description:
       "After final inspection and quality checks, we hand over the keys to your dream home — built to perfection, on time, and within budget.",
-    icon: <Home className="h-5 w-5" />,
+    image: "/how-it-works/step-6-settle.svg",
   },
 ]
 
@@ -77,39 +78,39 @@ export function HowItWorks() {
           </p>
         </Reveal>
 
-        {/* Timeline Steps */}
+        {/* Timeline */}
         <Reveal className="mt-12">
-          <div className="relative flex items-center justify-between">
-            {/* Connecting line */}
-            <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 hidden sm:block">
-              <div className="mx-auto h-[2px] w-full border-t-2 border-dashed border-muted-foreground/30" />
+          <div className="relative">
+            {/* Dashed connecting line */}
+            <div className="absolute left-[8%] right-[8%] top-5 hidden sm:block">
+              <div className="h-[2px] w-full border-t-2 border-dashed border-muted-foreground/30" />
             </div>
 
-            {/* Step circles */}
-            <div className="relative flex w-full items-start justify-between gap-2 sm:gap-0">
+            {/* Step circles + labels */}
+            <div className="relative flex w-full items-start justify-between">
               {steps.map((step, i) => (
                 <button
                   key={step.number}
                   type="button"
                   onClick={() => setActiveStep(i)}
-                  className="group flex flex-col items-center gap-2 sm:gap-3"
+                  className="group flex flex-col items-center gap-2"
                 >
                   <div
-                    className={`relative z-10 flex h-10 w-10 items-center justify-center rounded-full border-2 text-sm font-bold transition-all duration-300 sm:h-12 sm:w-12 sm:text-base ${
+                    className={`relative z-10 flex h-10 w-10 items-center justify-center rounded-full border-2 text-sm font-bold transition-all duration-300 sm:h-11 sm:w-11 ${
                       i === activeStep
-                        ? "border-gold bg-gold text-gold-foreground scale-110 shadow-lg shadow-gold/30"
+                        ? "border-gold bg-gold text-gold-foreground scale-110 shadow-lg shadow-gold/25"
                         : i < activeStep
-                          ? "border-gold/60 bg-gold/10 text-gold"
-                          : "border-muted-foreground/30 bg-background text-muted-foreground hover:border-gold/50 hover:text-gold"
+                          ? "border-foreground bg-foreground text-background"
+                          : "border-muted-foreground/40 bg-background text-muted-foreground hover:border-gold/60"
                     }`}
                   >
                     {i + 1}
                   </div>
                   <span
-                    className={`hidden text-center text-xs font-semibold transition-colors sm:block sm:max-w-[100px] lg:max-w-none lg:text-sm ${
-                      i === activeStep
-                        ? "text-foreground"
-                        : "text-muted-foreground group-hover:text-foreground"
+                    className={`hidden text-center text-xs font-semibold sm:block sm:max-w-[90px] lg:max-w-none lg:text-sm ${
+                      i <= activeStep
+                        ? "text-foreground font-bold"
+                        : "text-muted-foreground"
                     }`}
                   >
                     {step.title}
@@ -120,21 +121,28 @@ export function HowItWorks() {
           </div>
         </Reveal>
 
-        {/* Active Step Detail Card */}
-        <Reveal className="mt-10 sm:mt-14">
+        {/* Illustration */}
+        <Reveal className="mt-10 flex justify-center sm:mt-14">
+          <div className="relative h-[240px] w-full max-w-[400px] sm:h-[300px] sm:max-w-[460px]">
+            <Image
+              src={steps[activeStep].image}
+              alt={steps[activeStep].title}
+              fill
+              className="object-contain transition-opacity duration-300"
+              priority
+            />
+          </div>
+        </Reveal>
+
+        {/* Detail Card */}
+        <Reveal className="mt-8 sm:mt-12">
           <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
-            <div className="flex flex-col gap-6 p-6 sm:flex-row sm:items-center sm:justify-between sm:gap-10 sm:p-8 lg:p-10">
+            <div className="flex flex-col gap-5 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8 lg:p-10">
               {/* Left: Step info */}
               <div className="flex-1">
-                <div className="flex items-center gap-3">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-gold/10 text-gold">
-                    {steps[activeStep].icon}
-                  </span>
-                  <span className="font-heading text-sm font-bold uppercase tracking-wider text-gold">
-                    Step {steps[activeStep].number}
-                  </span>
-                </div>
-                <h3 className="mt-4 font-heading text-xl font-extrabold text-foreground sm:text-2xl">
+                <h3 className="font-heading text-xl font-extrabold text-foreground sm:text-2xl">
+                  <span className="text-gold">{steps[activeStep].number}</span>
+                  {"  "}
                   {steps[activeStep].title}
                 </h3>
                 <p className="mt-3 max-w-lg leading-relaxed text-muted-foreground">
@@ -158,13 +166,15 @@ export function HowItWorks() {
             <div className="h-1 w-full bg-muted">
               <div
                 className="h-full bg-gold transition-all duration-500 ease-out"
-                style={{ width: `${((activeStep + 1) / steps.length) * 100}%` }}
+                style={{
+                  width: `${((activeStep + 1) / steps.length) * 100}%`,
+                }}
               />
             </div>
           </div>
         </Reveal>
 
-        {/* Bottom link */}
+        {/* Learn More link */}
         <Reveal className="mt-8 flex justify-center">
           <a
             href={`https://wa.me/${contact.whatsappNumber}?text=${encodeURIComponent(contact.whatsappMessage)}`}
