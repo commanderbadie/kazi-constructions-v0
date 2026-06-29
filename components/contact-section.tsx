@@ -39,7 +39,7 @@ export function ContactSection() {
   useState(() => {
     if (typeof window === "undefined") return
     const submittedAt = localStorage.getItem("kazi-contact-submitted-at")
-    if (submittedAt && Date.now() - Number(submittedAt) < 12 * 60 * 60 * 1000) {
+    if (submittedAt && Date.now() - Number(submittedAt) < 15 * 60 * 1000) {
       setCooldown(true)
     }
   })

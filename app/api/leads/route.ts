@@ -64,18 +64,18 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: true })
   }
 
-  // Rate limit: 1 lead per phone number per 12 hours
+  // Rate limit: 1 lead per phone number per 15 minutes
   try {
-    const twelveHoursAgo = new Date(Date.now() - 12 * 60 * 60 * 1000)
+    const fifteenMinsAgo = new Date(Date.now() - 15 * 60 * 1000)
     const existing = await getAdminDb()
       .collection("leads")
       .where("phone", "==", phone)
-      .where("createdAt", ">=", twelveHoursAgo)
+      .where("createdAt", ">=", fifteenMinsAgo)
       .limit(1)
       .get()
 
     if (!existing.empty) {
-      // Already submitted within 12 hours — silently succeed
+      // Already submitted within 15 minutes — silently succeed
       return NextResponse.json({ ok: true })
     }
   } catch (err) {
