@@ -30,7 +30,7 @@ export type Testimonial = {
   initials: string
 }
 
-export type ProjectGallery = "interior" | "circulation" | "tolichowki-300" | "nizambad" | "jalpally" | "tolichowki-200" | "suncity" | "noorkhan-bazar" | "none"
+export type ProjectGallery = "interior" | "circulation" | "tolichowki-300" | "nizambad" | "jalpally" | "tolichowki-200" | "suncity" | "noorkhan-bazar" | "suleman-nagar" | "none"
 
 export type Project = {
   category: string
@@ -294,6 +294,13 @@ export const defaultContent: SiteContent = {
         "NoorKhan Bazar — residential construction with on-site progress and quality workmanship.",
       image: "/gallery/noorkhan-bazar/1.jpeg",
       gallery: "noorkhan-bazar",
+    },
+    {
+      category: "Residential",
+      description:
+        "Suleman Nagar — residential project with floor plans and construction documentation.",
+      image: "/gallery/suleman-nagar/1.jpeg",
+      gallery: "suleman-nagar",
     },
     {
       category: "Commercial",
@@ -713,14 +720,15 @@ export const galleryLengths: Record<Exclude<ProjectGallery, "none">, number> = {
   "tolichowki-200": 14,
   suncity: 5,
   "noorkhan-bazar": 2,
+  "suleman-nagar": 1,
 }
 
 export function buildGallery(kind: ProjectGallery): string[] {
   if (kind === "none") return []
   const length = galleryLengths[kind]
   // tolichowki-300, jalpally, and tolichowki-200 use .jpeg; nizambad and older galleries use .jpg
-  const ext = (kind === "tolichowki-300" || kind === "jalpally" || kind === "tolichowki-200" || kind === "suncity" || kind === "noorkhan-bazar") ? "jpeg" : "jpg"
-  const prefix = (kind === "tolichowki-300" || kind === "nizambad" || kind === "jalpally" || kind === "tolichowki-200" || kind === "suncity" || kind === "noorkhan-bazar") ? "" : `${kind}-`
+  const ext = (kind === "tolichowki-300" || kind === "jalpally" || kind === "tolichowki-200" || kind === "suncity" || kind === "noorkhan-bazar" || kind === "suleman-nagar") ? "jpeg" : "jpg"
+  const prefix = (kind === "tolichowki-300" || kind === "nizambad" || kind === "jalpally" || kind === "tolichowki-200" || kind === "suncity" || kind === "noorkhan-bazar" || kind === "suleman-nagar") ? "" : `${kind}-`
   return Array.from(
     { length },
     (_, i) => `/gallery/${kind}/${prefix}${i + 1}.${ext}`,
