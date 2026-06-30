@@ -3,6 +3,7 @@
 import type React from "react"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
+import { generateRef, validateIndianMobile } from "@/lib/phone"
 
 const STORAGE_KEY = "kazi-lead-popup-seen"
 const SUBMITTED_KEY = "kazi-lead-submitted-at"
@@ -105,7 +106,7 @@ export function LeadPopup() {
 
     const data = new FormData(e.currentTarget)
     const name = String(data.get("name") || "").trim()
-    const phone = String(data.get("phone") || "").trim().replace(/\s/g, "")
+    const rawPhone = String(data.get("phone") || "").trim().replace(/\s/g, "")
     const location = String(data.get("location") || "").trim()
 
     // Validate name: 2-50 characters
@@ -114,11 +115,13 @@ export function LeadPopup() {
       return
     }
 
-    // Validate phone: exactly 10 digits starting with 6, 7, 8, or 9
-    if (!/^[6-9]\d{9}$/.test(phone)) {
-      setPhoneError("Please enter a valid 10-digit mobile number")
+    // Validate phone: real-looking 10-digit Indian mobile (rejects junk/sequential)
+    const phoneCheck = validateIndianMobile(rawPhone)
+    if (!phoneCheck.ok) {
+      setPhoneError(phoneCheck.reason)
       return
     }
+    const phone = phoneCheck.phone
 
     // Check 15-minute cooldown (by timestamp AND phone number)
     const submittedAt = localStorage.getItem(SUBMITTED_KEY)
@@ -140,6 +143,9 @@ export function LeadPopup() {
     localStorage.setItem(SUBMITTED_KEY, String(Date.now()))
     localStorage.setItem("kazi-lead-submitted-phone", phone)
 
+    // A short reference code links this lead to a later WhatsApp confirmation.
+    const ref = generateRef()
+
     // Save in the background
     try {
       void fetch("/api/leads", {
@@ -150,6 +156,7 @@ export function LeadPopup() {
           name,
           phone,
           location,
+          ref,
           website: data.get("website"), // honeypot
         }),
       })
@@ -166,6 +173,7 @@ export function LeadPopup() {
     if (name) qs.set("name", name)
     if (phone) qs.set("phone", `+91 ${phone}`)
     if (location) qs.set("city", location)
+    qs.set("ref", ref)
     router.push(`/thank-you?${qs.toString()}`)
   }
 

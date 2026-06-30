@@ -36,6 +36,13 @@ export async function GET(req: Request) {
         phone: data.phone ?? "",
         location: data.location ?? "",
         source: data.source ?? "",
+        ref: data.ref ?? "",
+        status: data.status ?? "new",
+        whatsappClicked: Boolean(data.whatsappClicked),
+        qualified: Boolean(data.qualified),
+        timeline: data.timeline ?? "",
+        budget: data.budget ?? "",
+        registered: data.registered ?? "",
         createdAt: data.createdAt
           ? { seconds: data.createdAt.seconds, nanoseconds: data.createdAt.nanoseconds }
           : null,
