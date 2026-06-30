@@ -16,6 +16,7 @@ type Project = {
   image: string
   gallery?: string[]
   videos?: string[]
+  district?: string
 }
 
 export function ProjectsSection() {
@@ -67,12 +68,14 @@ export function ProjectsSection() {
           image: p.image,
           gallery: gallery.length ? gallery : undefined,
           videos: videos.length ? videos : undefined,
+          district: p.district,
         }
       }),
     [content.projects],
   )
 
   const [activeFilter, setActiveFilter] = useState("All")
+  const [district, setDistrict] = useState("All")
   const [galleryProject, setGalleryProject] = useState<Project | null>(null)
   const [lightbox, setLightbox] = useState<number | null>(null)
 
@@ -81,13 +84,38 @@ export function ProjectsSection() {
     [projects],
   )
 
-  const visibleProjects = useMemo(
-    () =>
-      activeFilter === "All"
-        ? projects
-        : projects.filter((p) => p.category === activeFilter),
-    [activeFilter, projects],
-  )
+  const visibleProjects = useMemo(() => {
+    // Filter by district first
+    let filtered = district === "All"
+      ? projects
+      : projects.filter((p) => p.district === district)
+
+    // Then filter by category
+    if (activeFilter !== "All") {
+      filtered = filtered.filter((p) => p.category === activeFilter)
+    }
+
+    // Shuffle when showing "All" categories — mix different types together
+    if (activeFilter === "All" && filtered.length > 3) {
+      const categories = [...new Set(filtered.map((p) => p.category))]
+      if (categories.length > 1) {
+        const byCategory: Record<string, Project[]> = {}
+        categories.forEach((c) => {
+          byCategory[c] = filtered.filter((p) => p.category === c)
+        })
+        const shuffled: Project[] = []
+        let maxLen = Math.max(...Object.values(byCategory).map((a) => a.length))
+        for (let i = 0; i < maxLen; i++) {
+          for (const cat of categories) {
+            if (byCategory[cat][i]) shuffled.push(byCategory[cat][i])
+          }
+        }
+        return shuffled
+      }
+    }
+
+    return filtered
+  }, [activeFilter, district, projects])
 
   const galleryImages = galleryProject?.gallery ?? []
   const galleryVideos = galleryProject?.videos ?? []
@@ -143,7 +171,24 @@ export function ProjectsSection() {
           </p>
         </Reveal>
 
-        <div className="mt-10 flex flex-wrap justify-center gap-3">
+        {/* District dropdown */}
+        <div className="mt-8 flex items-center justify-center gap-2 text-sm">
+          <span className="text-muted-foreground">Currently showing for</span>
+          <select
+            value={district}
+            onChange={(e) => setDistrict(e.target.value)}
+            className="appearance-none border-none bg-transparent font-extrabold uppercase tracking-wide text-gold outline-none cursor-pointer"
+          >
+            <option value="All">ALL</option>
+            <option value="Hyderabad">HYDERABAD</option>
+            <option value="Nizambad">NIZAMBAD</option>
+          </select>
+          <svg className="h-3 w-3 text-gold -ml-1" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M3 5l3 3 3-3" />
+          </svg>
+        </div>
+
+        <div className="mt-6 flex flex-wrap justify-center gap-3">
           {filters.map((filter) => (
             <button
               key={filter}

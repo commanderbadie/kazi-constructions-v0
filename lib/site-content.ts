@@ -37,6 +37,7 @@ export type Project = {
   description: string
   image: string
   gallery: ProjectGallery
+  district?: string
 }
 
 export type Faq = { label: string; answer: string }
@@ -252,6 +253,7 @@ export const defaultContent: SiteContent = {
         "A close-up look at our residential work — on-site construction progress, interiors and finished living spaces.",
       image: "/gallery/circulation/circulation-1.jpg",
       gallery: "circulation",
+      district: "Hyderabad",
     },
     {
       category: "Residential",
@@ -259,6 +261,7 @@ export const defaultContent: SiteContent = {
         "Tolichowki 300 — a complete residential build from foundation to finish, showcasing our quality craftsmanship and attention to detail.",
       image: "/gallery/tolichowki-300/1.jpeg",
       gallery: "tolichowki-300",
+      district: "Hyderabad",
     },
     {
       category: "Residential",
@@ -266,6 +269,7 @@ export const defaultContent: SiteContent = {
         "Nizambad — residential construction with detailed elevations, structural work, and quality finishing from start to handover.",
       image: "/gallery/nizambad/1.jpg",
       gallery: "nizambad",
+      district: "Nizambad",
     },
     {
       category: "Residential",
@@ -273,6 +277,7 @@ export const defaultContent: SiteContent = {
         "Jalpally — residential project showcasing on-site progress, structural framework, and quality construction work.",
       image: "/gallery/jalpally/1.jpeg",
       gallery: "jalpally",
+      district: "Hyderabad",
     },
     {
       category: "Residential",
@@ -280,6 +285,7 @@ export const defaultContent: SiteContent = {
         "Tolichowki 200 — residential build with detailed construction progress, plastering, and finishing stages.",
       image: "/gallery/tolichowki-200/1.jpeg",
       gallery: "tolichowki-200",
+      district: "Hyderabad",
     },
     {
       category: "Residential",
@@ -287,6 +293,7 @@ export const defaultContent: SiteContent = {
         "Suncity — residential project featuring structural work, brickwork, and construction milestones.",
       image: "/gallery/suncity/1.jpeg",
       gallery: "suncity",
+      district: "Hyderabad",
     },
     {
       category: "Residential",
@@ -294,6 +301,7 @@ export const defaultContent: SiteContent = {
         "NoorKhan Bazar — residential construction with on-site progress and quality workmanship.",
       image: "/gallery/noorkhan-bazar/1.jpeg",
       gallery: "noorkhan-bazar",
+      district: "Hyderabad",
     },
     {
       category: "Residential",
@@ -301,6 +309,7 @@ export const defaultContent: SiteContent = {
         "Suleman Nagar — residential project with floor plans and construction documentation.",
       image: "/gallery/suleman-nagar/1.jpeg",
       gallery: "suleman-nagar",
+      district: "Hyderabad",
     },
     {
       category: "Commercial",
@@ -308,6 +317,7 @@ export const defaultContent: SiteContent = {
         "Attapur Masjid — commercial construction with detailed elevations, structural work, and on-site progress.",
       image: "/gallery/attapur-masjid/1.jpg",
       gallery: "attapur-masjid",
+      district: "Hyderabad",
     },
     {
       category: "Renovation",
@@ -315,6 +325,7 @@ export const defaultContent: SiteContent = {
         "Panjesha — renovation project with structural repairs, modernization, and quality restoration work.",
       image: "/gallery/panjesha/1.jpeg",
       gallery: "panjesha",
+      district: "Hyderabad",
     },
     {
       category: "Renovation",
@@ -322,6 +333,7 @@ export const defaultContent: SiteContent = {
         "Shamshabad — renovation with detailed elevations, structural upgrades, and complete transformation.",
       image: "/gallery/shamshabad/1.jpg",
       gallery: "shamshabad",
+      district: "Hyderabad",
     },
     {
       category: "Interior",
@@ -329,6 +341,7 @@ export const defaultContent: SiteContent = {
         "Interior fit-outs — modular kitchens, custom joinery, dressing units and premium finishes.",
       image: "/gallery/interior/interior-1.jpg",
       gallery: "interior",
+      district: "Hyderabad",
     },
     {
       category: "Interior",
@@ -336,6 +349,7 @@ export const defaultContent: SiteContent = {
         "Interior work — modern designs, premium finishing, custom woodwork and complete interior transformations.",
       image: "/gallery/interior-new/1.jpeg",
       gallery: "interior-new",
+      district: "Hyderabad",
     },
   ],
   faqs: [
