@@ -192,7 +192,7 @@ function CompareSlider({ item, active }: { item: Comparison; active: boolean }) 
   )
 }
 
-export function BeforeAfterSection() {
+export function BeforeAfterSection({ embedded = false }: { embedded?: boolean }) {
   const [index, setIndex] = useState(0)
   const count = comparisons.length
 
@@ -204,10 +204,14 @@ export function BeforeAfterSection() {
   return (
     <section
       id="transformations"
-      className="bg-background py-20 lg:py-28"
+      className={cn(embedded ? "mt-16" : "bg-background py-20 lg:py-28")}
       aria-roledescription="carousel"
     >
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div
+        className={cn(
+          embedded ? "" : "mx-auto max-w-6xl px-4 sm:px-6 lg:px-8",
+        )}
+      >
         <Reveal className="mx-auto max-w-2xl text-center">
           <span className="text-sm font-semibold uppercase tracking-wider text-primary">
             From blueprint to building

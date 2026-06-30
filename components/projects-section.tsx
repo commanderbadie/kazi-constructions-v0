@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react"
 import { MapPin } from "lucide-react"
 import { Reveal } from "@/components/reveal"
 import { ProjectImage } from "@/components/project-image"
+import { BeforeAfterSection } from "@/components/before-after-section"
 import { cn } from "@/lib/utils"
 import { useSiteContent } from "@/lib/use-site-content"
 import { buildGallery } from "@/lib/site-content"
@@ -269,6 +270,9 @@ export function ProjectsSection() {
             })}
           </div>
         </Reveal>
+
+        {/* 3D Design to Reality slider */}
+        <BeforeAfterSection embedded />
 
         {/* YouTube Videos */}
         <Reveal className="mt-16">
