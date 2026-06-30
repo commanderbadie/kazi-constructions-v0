@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server"
-import { put } from "@vercel/blob"
 import { SESSION_COOKIE, verifySessionToken } from "@/lib/auth"
 
 export const runtime = "nodejs"
@@ -27,6 +26,11 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
 
+  const token = process.env.BLOB_READ_WRITE_TOKEN
+  if (!token) {
+    return NextResponse.json({ error: "Blob storage not configured" }, { status: 503 })
+  }
+
   try {
     const formData = await req.formData()
     const file = formData.get("file") as File | null
@@ -42,12 +46,29 @@ export async function POST(req: Request) {
       )
     }
 
-    // Upload to Vercel Blob
-    const blob = await put(
-      `documents/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9._-]/g, "_")}`,
-      file,
-      { access: "public" },
+    const fileName = `documents/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9._-]/g, "_")}`
+
+    // Upload to Vercel Blob via REST API
+    const uploadRes = await fetch(
+      `https://blob.vercel-storage.com/${fileName}`,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "x-content-type": file.type || "application/octet-stream",
+          "x-cache-control-max-age": "31536000",
+        },
+        body: file,
+      },
     )
+
+    if (!uploadRes.ok) {
+      const err = await uploadRes.text().catch(() => "Unknown error")
+      console.error("Blob upload failed:", err)
+      return NextResponse.json({ error: "Upload failed" }, { status: 500 })
+    }
+
+    const blob = await uploadRes.json()
 
     return NextResponse.json({ ok: true, url: blob.url, fileName: file.name })
   } catch (err) {
