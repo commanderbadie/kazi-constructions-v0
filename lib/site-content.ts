@@ -30,7 +30,7 @@ export type Testimonial = {
   initials: string
 }
 
-export type ProjectGallery = "interior" | "circulation" | "tolichowki-300" | "nizambad" | "jalpally" | "tolichowki-200" | "suncity" | "noorkhan-bazar" | "suleman-nagar" | "attapur-masjid" | "panjesha" | "shamshabad" | "none"
+export type ProjectGallery = "interior" | "circulation" | "tolichowki-300" | "nizambad" | "jalpally" | "tolichowki-200" | "suncity" | "noorkhan-bazar" | "suleman-nagar" | "attapur-masjid" | "panjesha" | "shamshabad" | "interior-new" | "none"
 
 export type Project = {
   category: string
@@ -350,6 +350,13 @@ export const defaultContent: SiteContent = {
         "Interior fit-outs — modular kitchens, custom joinery, dressing units and premium finishes.",
       image: "/gallery/interior/interior-1.jpg",
       gallery: "interior",
+    },
+    {
+      category: "Interior",
+      description:
+        "Interior work — modern designs, premium finishing, custom woodwork and complete interior transformations.",
+      image: "/gallery/interior-new/1.jpeg",
+      gallery: "interior-new",
     },
   ],
   faqs: [
@@ -745,14 +752,15 @@ export const galleryLengths: Record<Exclude<ProjectGallery, "none">, number> = {
   "attapur-masjid": 4,
   panjesha: 3,
   shamshabad: 7,
+  "interior-new": 12,
 }
 
 export function buildGallery(kind: ProjectGallery): string[] {
   if (kind === "none") return []
   const length = galleryLengths[kind]
   // tolichowki-300, jalpally, and tolichowki-200 use .jpeg; nizambad and older galleries use .jpg
-  const ext = (kind === "tolichowki-300" || kind === "jalpally" || kind === "tolichowki-200" || kind === "suncity" || kind === "noorkhan-bazar" || kind === "suleman-nagar" || kind === "panjesha") ? "jpeg" : "jpg"
-  const prefix = (kind === "tolichowki-300" || kind === "nizambad" || kind === "jalpally" || kind === "tolichowki-200" || kind === "suncity" || kind === "noorkhan-bazar" || kind === "suleman-nagar" || kind === "attapur-masjid" || kind === "panjesha" || kind === "shamshabad") ? "" : `${kind}-`
+  const ext = (kind === "tolichowki-300" || kind === "jalpally" || kind === "tolichowki-200" || kind === "suncity" || kind === "noorkhan-bazar" || kind === "suleman-nagar" || kind === "panjesha" || kind === "interior-new") ? "jpeg" : "jpg"
+  const prefix = (kind === "tolichowki-300" || kind === "nizambad" || kind === "jalpally" || kind === "tolichowki-200" || kind === "suncity" || kind === "noorkhan-bazar" || kind === "suleman-nagar" || kind === "attapur-masjid" || kind === "panjesha" || kind === "shamshabad" || kind === "interior-new") ? "" : `${kind}-`
   return Array.from(
     { length },
     (_, i) => `/gallery/${kind}/${prefix}${i + 1}.${ext}`,
