@@ -39,6 +39,11 @@ export function ProjectsSection() {
             "/gallery/jalpally/video-2.mp4",
           )
         }
+        if (p.gallery === "tolichowki-200") {
+          videos.push(
+            "/gallery/tolichowki-200/video-1.mp4",
+          )
+        }
         return {
           category: p.category,
           description: p.description,
