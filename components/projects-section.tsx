@@ -174,18 +174,20 @@ export function ProjectsSection() {
         {/* District dropdown */}
         <div className="mt-8 flex items-center justify-center gap-2 text-sm">
           <span className="text-muted-foreground">Currently showing for</span>
-          <select
-            value={district}
-            onChange={(e) => setDistrict(e.target.value)}
-            className="appearance-none border-none bg-transparent font-extrabold uppercase tracking-wide text-gold outline-none cursor-pointer"
-          >
-            <option value="All">ALL</option>
-            <option value="Hyderabad">HYDERABAD</option>
-            <option value="Nizambad">NIZAMBAD</option>
-          </select>
-          <svg className="h-3 w-3 text-gold -ml-1" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M3 5l3 3 3-3" />
-          </svg>
+          <div className="relative">
+            <select
+              value={district}
+              onChange={(e) => setDistrict(e.target.value)}
+              className="appearance-none rounded-full border-2 border-gold/30 bg-gold/5 px-5 py-2 pr-9 font-extrabold uppercase tracking-wide text-gold outline-none cursor-pointer transition-all hover:border-gold/60 hover:bg-gold/10 focus:border-gold focus:ring-2 focus:ring-gold/20"
+            >
+              <option value="All">ALL</option>
+              <option value="Hyderabad">HYDERABAD</option>
+              <option value="Nizambad">NIZAMBAD</option>
+            </select>
+            <svg className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gold" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <path d="M4 6l4 4 4-4" />
+            </svg>
+          </div>
         </div>
 
         <div className="mt-6 flex flex-wrap justify-center gap-3">
