@@ -42,17 +42,21 @@ export function HeroSection() {
           <span className="block text-gold drop-shadow-lg">{hero.titleHighlight}</span>
         </h1>
 
-        {/* Paragraph */}
-        <p
-          className="animate-fade-blur mt-7 max-w-2xl text-lg font-medium leading-relaxed text-white/85"
-          style={{ animationDelay: "0.45s", textShadow: "0 1px 4px rgba(0,0,0,0.4)" }}
-        >
-          {hero.paragraph}
-        </p>
-
-        {/* CTA buttons */}
+        {/* Paragraph — frosted glass backdrop for readability */}
         <div
-          className="animate-fade-blur mt-9 flex flex-col gap-3 sm:flex-row"
+          className="animate-fade-blur mt-8 rounded-2xl bg-navy/40 px-6 py-5 backdrop-blur-md sm:px-8"
+          style={{ animationDelay: "0.45s" }}
+        >
+          <p
+            className="max-w-2xl text-base font-medium leading-relaxed text-white sm:text-lg"
+          >
+            {hero.paragraph}
+          </p>
+        </div>
+
+        {/* CTA buttons — pushed down for breathing room */}
+        <div
+          className="animate-fade-blur mt-12 flex flex-col gap-3 sm:flex-row"
           style={{ animationDelay: "0.65s" }}
         >
           <Button
