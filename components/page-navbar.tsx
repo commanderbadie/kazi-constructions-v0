@@ -1,7 +1,7 @@
 "use client"
 
-import { useState } from "react"
-import { Menu, X, Phone } from "lucide-react"
+import { useEffect, useState } from "react"
+import { Menu, X, Phone, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { BrandLogo } from "@/components/brand-logo"
 import { useSiteContent } from "@/lib/use-site-content"
@@ -18,6 +18,19 @@ const navLinks = [
 export function PageNavbar() {
   const { contact } = useSiteContent()
   const [open, setOpen] = useState(false)
+  const [showLetsBuild, setShowLetsBuild] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => {
+      const btn = document.getElementById("lets-build-btn")
+      if (!btn) return
+      const rect = btn.getBoundingClientRect()
+      // Show in navbar when the button scrolls out of view (above viewport)
+      setShowLetsBuild(rect.bottom < 0)
+    }
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
+  }, [])
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-accent-foreground/10 bg-accent/95 backdrop-blur-sm">
@@ -38,7 +51,7 @@ export function PageNavbar() {
           ))}
         </nav>
 
-        <div className="hidden items-center gap-5 lg:flex">
+        <div className="hidden items-center gap-3 lg:flex">
           <a
             href={`tel:${contact.phoneRaw}`}
             className="flex items-center gap-2 text-sm font-semibold text-accent-foreground/85 transition-colors hover:text-accent-foreground"
@@ -46,6 +59,15 @@ export function PageNavbar() {
             <Phone className="h-4 w-4 text-gold" />
             {contact.phoneDisplay}
           </a>
+          {showLetsBuild && (
+            <a
+              href="/#contact"
+              className="inline-flex items-center gap-1.5 rounded-full bg-gold px-5 py-2.5 text-sm font-semibold uppercase tracking-wide text-gold-foreground shadow-md transition-all duration-300 hover:bg-gold/90 animate-in fade-in-0 slide-in-from-right-4"
+            >
+              Let&apos;s Build
+              <ArrowRight className="h-3.5 w-3.5" />
+            </a>
+          )}
           <Button
             size="lg"
             nativeButton={false}

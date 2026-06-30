@@ -151,6 +151,7 @@ export function HowItWorks() {
               {/* Right: CTA */}
               <div className="shrink-0">
                 <a
+                  id="lets-build-btn"
                   href="/#contact"
                   className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold uppercase tracking-wide text-primary-foreground shadow-md transition-all hover:bg-primary/90 hover:shadow-lg"
                 >
