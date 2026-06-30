@@ -323,16 +323,6 @@ export const defaultContent: SiteContent = {
           "₹2599 ( Excl GST )",
         ],
       },
-      {
-        name: "Luxury Homes",
-        startsAt: "₹4280 ( Excl GST )",
-        perSqft: [
-          "₹4280 ( Excl GST )",
-          "₹4600 ( Excl GST )",
-          "₹5200 ( Excl GST )",
-          "₹5800 ( Excl GST )",
-        ],
-      },
     ],
     categories: [
       {
