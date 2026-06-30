@@ -5,6 +5,7 @@ import { ProcessSection } from "@/components/process-section"
 import { TestimonialsSection } from "@/components/testimonials-section"
 import { ServicesSection } from "@/components/services-section"
 import { ProjectsSection } from "@/components/projects-section"
+import { BeforeAfterSection } from "@/components/before-after-section"
 import { PackagesSection } from "@/components/packages-section"
 import { ContactSection } from "@/components/contact-section"
 import { SiteFooter } from "@/components/site-footer"
@@ -25,6 +26,8 @@ export default function Page() {
         <ServicesSection />
         <SectionDivider />
         <ProjectsSection />
+        <SectionDivider />
+        <BeforeAfterSection />
         <SectionDivider />
         <PackagesSection />
         <SectionDivider />
