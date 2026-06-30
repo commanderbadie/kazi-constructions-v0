@@ -44,15 +44,15 @@ export function HeroSection() {
 
         {/* Paragraph */}
         <p
-          className="animate-fade-blur mt-7 max-w-2xl text-lg font-medium leading-relaxed text-white/85"
-          style={{ animationDelay: "0.45s", textShadow: "0 1px 4px rgba(0,0,0,0.4)" }}
+          className="animate-fade-blur mt-7 max-w-2xl text-base font-semibold leading-relaxed text-white sm:text-lg"
+          style={{ animationDelay: "0.45s", textShadow: "0 2px 8px rgba(0,0,0,0.7), 0 0 20px rgba(0,0,0,0.4)" }}
         >
           {hero.paragraph}
         </p>
 
         {/* CTA buttons */}
         <div
-          className="animate-fade-blur mt-9 flex flex-col gap-3 sm:flex-row"
+          className="animate-fade-blur mt-52 flex flex-col gap-3 sm:flex-row"
           style={{ animationDelay: "0.65s" }}
         >
           <Button
