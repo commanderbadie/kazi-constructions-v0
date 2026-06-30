@@ -30,7 +30,7 @@ export type Testimonial = {
   initials: string
 }
 
-export type ProjectGallery = "interior" | "circulation" | "tolichowki-300" | "none"
+export type ProjectGallery = "interior" | "circulation" | "tolichowki-300" | "nizambad" | "none"
 
 export type Project = {
   category: string
@@ -259,6 +259,13 @@ export const defaultContent: SiteContent = {
         "Tolichowki 300 — a complete residential build from foundation to finish, showcasing our quality craftsmanship and attention to detail.",
       image: "/gallery/tolichowki-300/1.jpeg",
       gallery: "tolichowki-300",
+    },
+    {
+      category: "Residential",
+      description:
+        "Nizambad — residential construction with detailed elevations, structural work, and quality finishing from start to handover.",
+      image: "/gallery/nizambad/1.jpg",
+      gallery: "nizambad",
     },
     {
       category: "Commercial",
@@ -673,14 +680,15 @@ export const galleryLengths: Record<Exclude<ProjectGallery, "none">, number> = {
   interior: 11,
   circulation: 9,
   "tolichowki-300": 10,
+  nizambad: 18,
 }
 
 export function buildGallery(kind: ProjectGallery): string[] {
   if (kind === "none") return []
   const length = galleryLengths[kind]
-  // tolichowki-300 uses .jpeg numbered files; older galleries use kind-N.jpg
+  // tolichowki-300 uses .jpeg numbered files; nizambad and older galleries use .jpg
   const ext = kind === "tolichowki-300" ? "jpeg" : "jpg"
-  const prefix = kind === "tolichowki-300" ? "" : `${kind}-`
+  const prefix = kind === "tolichowki-300" || kind === "nizambad" ? "" : `${kind}-`
   return Array.from(
     { length },
     (_, i) => `/gallery/${kind}/${prefix}${i + 1}.${ext}`,
