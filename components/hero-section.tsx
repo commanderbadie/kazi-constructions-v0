@@ -43,21 +43,23 @@ export function HeroSection() {
       className="relative overflow-hidden text-accent-foreground"
       style={{
         backgroundImage: "url(/hero-bg.jpg)",
-        backgroundSize: "cover",
+        backgroundSize: "contain",
         backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        backgroundColor: "var(--accent)",
       }}
     >
       {/* Dark overlay for text readability */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-0 bg-accent/85"
+        className="pointer-events-none absolute inset-0 z-0 bg-accent/75"
       />
 
-      {/* Brighter blueprint grid layer (parallax) */}
+      {/* Blueprint grid layer (parallax) — very subtle */}
       <div
         ref={blueprintRef}
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-0 opacity-[0.28] will-change-transform"
+        className="pointer-events-none absolute inset-0 z-0 opacity-[0.1] will-change-transform"
         style={{
           backgroundImage: "url(/blueprint-grid.svg)",
           backgroundSize: "cover",
