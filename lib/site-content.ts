@@ -305,23 +305,9 @@ export const defaultContent: SiteContent = {
     {
       category: "Commercial",
       description:
-        "Commercial builds — office towers and workspaces with structural steel and energy-efficient facades.",
-      image: "/projects/commercial-tower.svg",
-      gallery: "none",
-    },
-    {
-      category: "Commercial",
-      description:
         "Attapur Masjid — commercial construction with detailed elevations, structural work, and on-site progress.",
       image: "/gallery/attapur-masjid/1.jpg",
       gallery: "attapur-masjid",
-    },
-    {
-      category: "Renovation",
-      description:
-        "Renovation & retrofit work — structural strengthening and full interior remodels that transform existing spaces.",
-      image: "/projects/renovation-loft.svg",
-      gallery: "none",
     },
     {
       category: "Renovation",
@@ -336,13 +322,6 @@ export const defaultContent: SiteContent = {
         "Shamshabad — renovation with detailed elevations, structural upgrades, and complete transformation.",
       image: "/gallery/shamshabad/1.jpg",
       gallery: "shamshabad",
-    },
-    {
-      category: "Commercial",
-      description:
-        "Retail, dining and mixed-use developments delivered on schedule with full site coordination.",
-      image: "/projects/retail-plaza.svg",
-      gallery: "none",
     },
     {
       category: "Interior",
