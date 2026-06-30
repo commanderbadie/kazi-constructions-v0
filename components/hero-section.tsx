@@ -40,8 +40,19 @@ export function HeroSection() {
   return (
     <section
       id="home"
-      className="relative overflow-hidden bg-accent text-accent-foreground"
+      className="relative overflow-hidden text-accent-foreground"
+      style={{
+        backgroundImage: "url(/hero-bg.jpg)",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
     >
+      {/* Dark overlay for text readability */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-0 bg-accent/85"
+      />
+
       {/* Brighter blueprint grid layer (parallax) */}
       <div
         ref={blueprintRef}
