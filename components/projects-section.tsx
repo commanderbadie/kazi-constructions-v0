@@ -56,6 +56,11 @@ export function ProjectsSection() {
             "/gallery/attapur-masjid/video-2.mp4",
           )
         }
+        if (p.gallery === "interior-new") {
+          videos.push(
+            "/gallery/interior-new/video-1.mp4",
+          )
+        }
         return {
           category: p.category,
           description: p.description,
