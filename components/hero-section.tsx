@@ -52,7 +52,7 @@ export function HeroSection() {
 
         {/* CTA buttons — pushed way down so logo/background is visible */}
         <div
-          className="animate-fade-blur mt-20 flex flex-col gap-3 sm:flex-row"
+          className="animate-fade-blur mt-32 flex flex-col gap-3 sm:flex-row"
           style={{ animationDelay: "0.65s" }}
         >
           <Button
