@@ -15,6 +15,7 @@ type Project = {
   description: string
   image: string
   gallery?: string[]
+  videos?: string[]
 }
 
 export function ProjectsSection() {
@@ -23,11 +24,21 @@ export function ProjectsSection() {
     () =>
       content.projects.map((p) => {
         const gallery = buildGallery(p.gallery)
+        // Load videos for projects that have them
+        const videos: string[] = []
+        if (p.gallery === "tolichowki-300") {
+          videos.push(
+            "/gallery/tolichowki-300/video-1.mp4",
+            "/gallery/tolichowki-300/video-2.mp4",
+            "/gallery/tolichowki-300/video-3.mp4",
+          )
+        }
         return {
           category: p.category,
           description: p.description,
           image: p.image,
           gallery: gallery.length ? gallery : undefined,
+          videos: videos.length ? videos : undefined,
         }
       }),
     [content.projects],
@@ -51,6 +62,7 @@ export function ProjectsSection() {
   )
 
   const galleryImages = galleryProject?.gallery ?? []
+  const galleryVideos = galleryProject?.videos ?? []
 
   useEffect(() => {
     if (!galleryProject) return
@@ -282,6 +294,31 @@ export function ProjectsSection() {
                 </button>
               ))}
             </div>
+
+            {/* Videos */}
+            {galleryVideos.length > 0 && (
+              <div className="mt-6">
+                <span className="text-xs font-bold uppercase tracking-[0.18em] text-gold">
+                  Videos
+                </span>
+                <div className="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {galleryVideos.map((src, index) => (
+                    <div
+                      key={src}
+                      className="overflow-hidden rounded-xl border-2 border-navy shadow-md"
+                      style={{ animationDelay: `${(galleryImages.length + index) * 45}ms` }}
+                    >
+                      <video
+                        src={src}
+                        controls
+                        preload="metadata"
+                        className="aspect-[9/16] w-full bg-black object-contain"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}
