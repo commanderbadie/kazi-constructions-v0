@@ -44,6 +44,12 @@ export function ProjectsSection() {
             "/gallery/tolichowki-200/video-1.mp4",
           )
         }
+        if (p.gallery === "noorkhan-bazar") {
+          videos.push(
+            "/gallery/noorkhan-bazar/video-1.mp4",
+            "/gallery/noorkhan-bazar/video-2.mp4",
+          )
+        }
         return {
           category: p.category,
           description: p.description,
