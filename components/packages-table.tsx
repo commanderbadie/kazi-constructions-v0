@@ -128,7 +128,7 @@ export function PackagesTable() {
   )
 
   function toggleCat(name: string) {
-    setOpenCats((prev) => ({ ...prev, [name]: !(prev[name] ?? true) }))
+    setOpenCats((prev) => ({ ...prev, [name]: !(prev[name] ?? false) }))
   }
 
   const activeType = homeTypes[homeTypeIdx] ?? homeTypes[0]
@@ -257,7 +257,7 @@ export function PackagesTable() {
                 category={category}
                 tierCount={tiers.length}
                 highlight={highlight}
-                open={openCats[category.name] ?? true}
+                open={openCats[category.name] ?? false}
                 onToggle={() => toggleCat(category.name)}
               />
             ))}

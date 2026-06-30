@@ -3,6 +3,7 @@ import { PageNavbar } from "@/components/page-navbar"
 import { PackagesTable } from "@/components/packages-table"
 import { HowItWorks } from "@/components/how-it-works"
 import { Button } from "@/components/ui/button"
+import { ArrowRight } from "lucide-react"
 
 export const metadata: Metadata = {
   title: "Our Packages | Kazi Constructions",
@@ -15,20 +16,29 @@ export default function PackagesPage() {
     <div className="min-h-screen bg-background">
       <PageNavbar />
       <main className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
-        <div className="max-w-2xl">
-          <span className="inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.2em] text-gold">
-            <span className="h-px w-8 bg-gold" aria-hidden="true" />
-            Our Packages
-          </span>
-          <h1 className="mt-4 font-heading text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
-            Choose the build that{" "}
-            <span className="font-normal italic text-primary">fits you</span>
-          </h1>
-          <p className="mt-5 leading-relaxed text-muted-foreground">
-            Transparent, all-inclusive pricing with quality materials at every
-            tier. Compare specifications side by side and pick what suits your
-            home and budget.
-          </p>
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
+          <div className="max-w-2xl">
+            <span className="inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.2em] text-gold">
+              <span className="h-px w-8 bg-gold" aria-hidden="true" />
+              Our Packages
+            </span>
+            <h1 className="mt-4 font-heading text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
+              Choose the build that{" "}
+              <span className="font-normal italic text-primary">fits you</span>
+            </h1>
+            <p className="mt-5 leading-relaxed text-muted-foreground">
+              Transparent, all-inclusive pricing with quality materials at every
+              tier. Compare specifications side by side and pick what suits your
+              home and budget.
+            </p>
+          </div>
+          <a
+            href="/#contact"
+            className="mt-2 inline-flex shrink-0 items-center gap-2 self-start rounded-full bg-primary px-6 py-3 text-sm font-semibold uppercase tracking-wide text-primary-foreground shadow-md transition-all hover:bg-primary/90 hover:shadow-lg sm:self-center"
+          >
+            Let&apos;s Build
+            <ArrowRight className="h-4 w-4" />
+          </a>
         </div>
 
         <div className="mt-10">
