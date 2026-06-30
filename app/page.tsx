@@ -25,9 +25,9 @@ export default function Page() {
         <SectionDivider />
         <ServicesSection />
         <SectionDivider />
-        <BeforeAfterSection />
-        <SectionDivider />
         <ProjectsSection />
+        <SectionDivider />
+        <BeforeAfterSection />
         <SectionDivider />
         <PackagesSection />
         <SectionDivider />
