@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
+import { put } from "@vercel/blob"
 import { SESSION_COOKIE, verifySessionToken } from "@/lib/auth"
-import { getAdminStorage, isAdminSdkConfigured } from "@/lib/firebase-admin"
 
 export const runtime = "nodejs"
 
@@ -26,9 +26,6 @@ export async function POST(req: Request) {
   if (!(await requireAdmin(req))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
-  if (!isAdminSdkConfigured()) {
-    return NextResponse.json({ error: "Not configured" }, { status: 503 })
-  }
 
   try {
     const formData = await req.formData()
@@ -45,27 +42,14 @@ export async function POST(req: Request) {
       )
     }
 
-    // Read file buffer
-    const buffer = Buffer.from(await file.arrayBuffer())
-    const fileName = `documents/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9._-]/g, "_")}`
+    // Upload to Vercel Blob
+    const blob = await put(
+      `documents/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9._-]/g, "_")}`,
+      file,
+      { access: "public" },
+    )
 
-    // Upload to Firebase Storage
-    const bucket = getAdminStorage().bucket()
-    const fileRef = bucket.file(fileName)
-
-    await fileRef.save(buffer, {
-      metadata: {
-        contentType: file.type || "application/octet-stream",
-      },
-    })
-
-    // Make file publicly accessible
-    await fileRef.makePublic()
-
-    // Get the public URL
-    const publicUrl = `https://storage.googleapis.com/${bucket.name}/${fileName}`
-
-    return NextResponse.json({ ok: true, url: publicUrl, fileName: file.name })
+    return NextResponse.json({ ok: true, url: blob.url, fileName: file.name })
   } catch (err) {
     console.error("File upload failed:", err)
     return NextResponse.json({ error: "Upload failed" }, { status: 500 })
